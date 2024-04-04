@@ -26,7 +26,7 @@ export const commands: MenuComponent = (session) => () =>
       click: async () => {
         await session.projects.showRecents()
       },
-      submenu: (session.projects.getRecent()).map((project) => ({
+      submenu: session.projects.getRecent().map((project) => ({
         click: async () => {
           await session.api.projects.load(project)
         },
