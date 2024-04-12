@@ -1,5 +1,6 @@
-import omit from 'lodash/fp/omit'
-import { Mutator } from '../../types/base'
+import omit from "lodash/fp/omit";
+import { Mutator } from "../../types/base";
+
 
 /**
  * Start a running test, using a range to optionally control start
@@ -23,18 +24,18 @@ export const mutator: Mutator<Shape> = (
       commands:
         playRange[0] === 0
           ? omit(
-              session.project.tests
-                .find((t) => t.id === testID)
-                ?.commands.map((cmd) => cmd.id)
-                .slice(
-                  playRange[0],
-                  playRange[1] === -1 ? undefined : playRange[1]
-                ) ?? [],
-              session.state.playback.commands
-            )
-          : session.state.playback.commands,
+            session.project.tests
+              .find((t) => t.id === testID)
+              ?.commands.map((cmd) => cmd.id)
+              .slice(
+                playRange[0],
+                playRange[1] === -1 ? undefined : playRange[1]
+              ) ?? [],
+            session.state.playback.commands
+          )
+          : session.state.playback.commands
     },
-    status: 'playing',
-    stopIndex: playRange[1],
-  },
-})
+    status: "playing",
+    stopIndex: playRange[1]
+  }
+});

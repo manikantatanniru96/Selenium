@@ -6,7 +6,7 @@ import Box from '@mui/material/Box'
 import {PaperProps} from '@mui/material/Paper'
 import Tooltip from '@mui/material/Tooltip'
 import IconButton from '@mui/material/IconButton'
-import React, { FC } from 'react'
+import React, { FC, useEffect, useState } from "react";
 import DrawerHeader from './Header'
 import baseControlProps from '../Controls/BaseProps'
 
@@ -32,11 +32,22 @@ export const EditorToolbarIcons: FC<EditorToolbarIconsProps> = ({
   removeText = 'Remove',
   onView,
   viewText = 'View',
-}) => (
-  <>
+}) => {
+  const [languageMap, setLanguageMap] = useState<any>({
+    testsTab: {
+      add: "Add",
+      remove: "Remove"
+    }
+  });
+  useEffect(() => {
+    window.sideAPI.system.getLanguageMap().then(result => {
+      setLanguageMap(result);
+    });
+  }, []);
+ return  <>
     {onRemove ? (
       <Box sx={{ flex: 0 }}>
-        <Tooltip title={removeText}>
+        <Tooltip title={languageMap.testsTab.remove?languageMap.testsTab.remove:removeText}>
           <IconButton
             {...baseControlProps}
             color="warning"
@@ -78,7 +89,7 @@ export const EditorToolbarIcons: FC<EditorToolbarIconsProps> = ({
     ) : null}
     {onAdd ? (
       <Box sx={{ flex: 0 }}>
-        <Tooltip title={addText}>
+        <Tooltip title={languageMap.testsTab.add?languageMap.testsTab.add:addText}>
           <IconButton
             {...baseControlProps}
             color="success"
@@ -91,7 +102,7 @@ export const EditorToolbarIcons: FC<EditorToolbarIconsProps> = ({
       </Box>
     ) : null}
   </>
-)
+}
 
 export const EditorToolbarShell: FC<PaperProps> = ({
   children,
@@ -125,8 +136,8 @@ const EditorToolbar: FC<EditorToolbarProps> = ({
   onView,
   viewText = 'View',
   ...props
-}) => (
-  <DrawerHeader
+}) => {
+  return <DrawerHeader
     className={className + ' flex flex-row'}
     elevation={elevation}
     square
@@ -145,6 +156,6 @@ const EditorToolbar: FC<EditorToolbarProps> = ({
       viewText={viewText}
     />
   </DrawerHeader>
-)
+}
 
 export default EditorToolbar

@@ -75,34 +75,24 @@ async function main() {
       } catch (e) {}
     }
     await driver.switchTo().window(handles[0])
-
-    const projectTab = await driver.wait(
-      webdriver.until.elementLocated(webdriver.By.id('tab-2')),
-      5000
-    )
-    await projectTab.click()
-
     const url = await driver.wait(
-      webdriver.until.elementLocated(webdriver.By.id('project-url')),
+      webdriver.until.elementLocated(webdriver.By.css('[data-url]')),
       5000
     )
+    await url.click()
     while ((await url.getAttribute('value')) !== '') {
       await url.sendKeys(webdriver.Key.BACK_SPACE)
     }
-    await url.sendKeys('http://localhost:8080')
-  
-    const testTab = await driver.wait(
-      webdriver.until.elementLocated(webdriver.By.id('tab-0')),
-      5000
-    )
-    await testTab.click()
-
+    const host = 'http://localhost:8080'
+    for (const index in host) {
+      await url.sendKeys(host[index])
+      await driver.sleep(10)
+    }
     const record = await driver.wait(
       webdriver.until.elementLocated(webdriver.By.css('[data-record]')),
       1000
     )
     await record.click()
-
     let handles2 = await driver.getAllWindowHandles()
     while (handles2.length < 2) {
       await driver.sleep(100)

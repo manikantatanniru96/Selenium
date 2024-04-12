@@ -6,7 +6,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select'
 import { Browser } from '@seleniumhq/get-driver'
 import { VerboseBoolean } from '@seleniumhq/side-api'
 import { BrowserInfo, BrowsersInfo } from 'main/types'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 
 const browserToString = (browser: BrowserInfo): string =>
   `${browser.browser}|${browser.version}`
@@ -20,10 +20,17 @@ const DriverSelector = () => {
     browsers: [],
     selected: { browser: 'chrome', useBidi: false, version: '' },
   })
+  const [languageMap, setLanguageMap] = useState<any>({
+      systemConfig: { bidi:"Use Bidi",bidiHelper: "Bidi settings (Experimental / Non working)", playbackBrowser: "Selected Playback Browser"
+      }})
+
   useEffect(() => {
     window.sideAPI.driver.listBrowsers().then(async (info) => {
       setBrowserInfo(info)
     })
+    window.sideAPI.system.getLanguageMap().then(result => {
+      setLanguageMap(result);
+    });
   }, [])
   const processBrowserSelection = async (browser: BrowserInfo) => {
     console.log('Setting browser', browser)
@@ -53,14 +60,14 @@ const DriverSelector = () => {
   }
   return (
     <>
-      <Typography variant='caption'>Bidi settings (Experimental / Non working)</Typography>
+      <Typography variant='caption'>{languageMap.systemConfig.bidiHelper}</Typography>
       <FormControl>
         <InputLabel id="useBidi">
           Use Bidi
         </InputLabel>
         <Select
           id="useBidi"
-          label="Use Bidi"
+          label={languageMap.systemConfig.bidi}
           name="useBidi"
           value={browserInfo.selected?.useBidi ? 'Yes' : 'No'}
           onChange={(e) => {
@@ -74,7 +81,7 @@ const DriverSelector = () => {
         </Select>
       </FormControl>
       <FormControl>
-        <InputLabel id="browser-label">Selected Playback Browser</InputLabel>
+        <InputLabel id="browser-label">{languageMap.systemConfig.playbackBrowser}</InputLabel>
         {browserInfo.selected ? (
           <Select
             disabled={!browserInfo.selected?.useBidi}

@@ -13,6 +13,7 @@ app.commandLine.appendSwitch('remote-debugging-port', '8315')
 const log = configureLogging()
 autoUpdater.logger = log
 
+
 // Capture and show unhandled exceptions
 process.on('unhandledRejection', function handleWarning(reason) {
   console.log('[PROCESS] Unhandled Promise Rejection')
@@ -58,7 +59,7 @@ app.on('ready', async () => {
       app.exit(0)
     }
   })
-
+  
   app.on('window-all-closed', async () => {
     allWindowsClosed = true
     if (process.platform === 'darwin') {
@@ -67,7 +68,7 @@ app.on('ready', async () => {
       await session.system.quit()
     }
   })
-
+  
   app.on(
     'certificate-error',
     (event, _webContents, _url, _error, _certificate, callback) => {

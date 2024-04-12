@@ -1,41 +1,43 @@
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import React from 'react'
-import { TabShape } from '../PlaybackTabBar/tab'
+import React, { useEffect, useState } from "react";
+import { SIDEMainProps } from '../types'
 
 const {
-  windows: { navigatePlaybackWindow },
+  projects: { update },
 } = window.sideAPI
 
-const URLBar: React.FC<{ tab: null | TabShape }> = ({ tab }) => {
-  const tabURL = tab?.url ?? ''
-  const ref = React.useRef<HTMLInputElement>(null)
-  React.useEffect(() => {
-    if (ref.current) {
-      ref.current.value = tabURL
+const URLBar: React.FC<Pick<SIDEMainProps, 'session'>> = ({ session }) => {
+  const [languageMap, setLanguageMap] = useState<any>({
+    playback: {
+      url:"URL"
     }
-  }, [tabURL])
+  });
+  useEffect(() => {
+    window.sideAPI.system.getLanguageMap().then(result => {
+      setLanguageMap(result);
+    });
+  }, []);
   return (
     <>
-      <Box className="flex flex-col flex-initial" justifyContent="center">
-        <Typography>URL</Typography>
+      <Box className="flex flex-col flex-initial ps-4" justifyContent="center">
+        <Typography>{languageMap.playback.url}</Typography>
       </Box>
-      <Box className="flex-1 justify-content-center no-window-drag px-3">
+      <Box className="flex-1 px-3 py-2">
         <TextField
           className="width-100"
           inputProps={{
             ['data-url']: true,
           }}
-          inputRef={ref}
-          onKeyDown={(e) => {
-            const value = (e.target as HTMLInputElement).value
-            if (e.key === 'Enter') {
-              navigatePlaybackWindow(tab!.id, value)
-            }
+          onChange={(e: any) => {
+            update({
+              url: e.target.value,
+            })
           }}
           margin="none"
           size="small"
+          value={session.project.url}
         />
       </Box>
     </>

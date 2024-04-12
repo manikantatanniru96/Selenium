@@ -6,9 +6,7 @@ import { BaseListener } from '../../types/base'
 export type OnPlaybackWindowOpened = [
   id: number,
   update: {
-    test?: string
-    title?: string
-    url: string
+    title: string
   }
 ]
 export type Shape = BaseListener<OnPlaybackWindowOpened>

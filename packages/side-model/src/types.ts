@@ -58,6 +58,9 @@ export interface ProjectShape {
   name: string
   url: string
   urls: string[]
+  /*********以下为我新增***********/
+  timeout?: number
+  /**********以上为我新增********************/
   delay?: number
   plugins: string[]
   tests: TestShape[]

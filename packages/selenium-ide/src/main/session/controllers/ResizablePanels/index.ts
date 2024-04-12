@@ -43,43 +43,24 @@ export default class ResizablePanelsController extends BaseController {
     const panelScreenPosition = await this.getPanelScreenPosition(
       'playback-panel'
     )
-    const offset = { x: 0, y: 0 }
-    switch (process.platform) {
-      case 'win32':
-        offset.x = 6
-        offset.y = 24
-        break
-      case 'darwin':
-        offset.x = 0
-        offset.y = -29
-        break
-      default:
-        offset.x = 0
-        offset.y = 0
-    }
+    const isWindows = process.platform === 'win32'
     this.cachedPlaybackWindowDimensions = {
       position: [
-        panelScreenPosition.x + offset.x,
-        panelScreenPosition.y + offset.y,
+        panelScreenPosition.x + (isWindows ? 12 : 0),
+        panelScreenPosition.y + (isWindows ? 21 : 0),
       ],
       size: [panelScreenPosition.width, panelScreenPosition.height],
     } as {
       position: [number, number]
       size: [number, number]
     }
-    return this.cachedPlaybackWindowDimensions!
+    return this.cachedPlaybackWindowDimensions!;
   }
 
   async recalculatePlaybackWindows() {
-    const { active, height, width } =
-      this.session.state.state.editor.overrideWindowSize
     const panelDims = await this.getPlaybackWindowDimensions()
-    if (active) {
-      this.session.windows.resizePlaybackWindows(width, height)
-    } else {
-      this.session.windows.resizePlaybackWindows(...panelDims.size)
-    }
     this.session.windows.playbackWindows.forEach((playbackWindow) => {
+      playbackWindow.setSize(...panelDims.size)
       playbackWindow.setPosition(...panelDims.position)
     })
   }

@@ -15,7 +15,7 @@ export const commands: MenuComponent = (session) => () =>
           const window = BrowserWindow.getFocusedWindow()
           window?.webContents.openDevTools()
         },
-        label: 'Show DevTools',
+        label: session.store.get('languageMap').viewMenuTree.showDevTools,
       }
     ),
     {
@@ -23,28 +23,7 @@ export const commands: MenuComponent = (session) => () =>
       click: async () => {
         await session.windows.initializePlaybackWindow()
       },
-      label: 'Reset Playback Windows',
-    },
-    {
-      accelerator: 'CommandOrControl+R',
-      label: 'Refresh Playback Window',
-      click: async () => {
-        const window = await session.windows.getActivePlaybackWindow()
-        if (window) {
-          await window.webContents.executeJavaScript('window.location.reload()')
-          if (session.state.state.status === 'recording') {
-            await session.api.recorder.recordNewCommand(
-              {
-                command: 'executeScript',
-                comment: 'Reload the page',
-                target: 'window.location.reload()',
-                value: '',
-              },
-              true
-            )
-          }
-        }
-      },
+      label: session.store.get('languageMap').viewMenuTree.resetPlaybackWindows,
     },
   ]
 

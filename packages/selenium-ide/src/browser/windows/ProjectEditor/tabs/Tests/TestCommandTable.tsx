@@ -1,40 +1,55 @@
-import { CommandShape } from '@seleniumhq/side-model'
-import { CommandsStateShape } from '@seleniumhq/side-api'
-import useReorderPreview from 'browser/hooks/useReorderPreview'
-import React, { FC } from 'react'
-import CommandRow from './TestCommandRow'
-import EditorToolbar from '../../../../components/Drawer/EditorToolbar'
-import makeKeyboundNav from 'browser/hooks/useKeyboundNav'
-import ReorderableList from 'browser/components/ReorderableList'
-import { Box } from '@mui/material'
+import { CommandShape } from "@seleniumhq/side-model";
+import { CommandsStateShape } from "@seleniumhq/side-api";
+import useReorderPreview from "browser/hooks/useReorderPreview";
+import React, { FC, useEffect, useState } from "react";
+import CommandRow from "./TestCommandRow";
+import EditorToolbar from "../../../../components/Drawer/EditorToolbar";
+import makeKeyboundNav from "browser/hooks/useKeyboundNav";
+import ReorderableList from "browser/components/ReorderableList";
+import { Box } from "@mui/material";
 
 export interface CommandListProps {
-  activeTest: string
-  commands: CommandShape[]
-  commandStates: CommandsStateShape
-  disabled?: boolean
-  selectedCommandIndexes: number[]
+  activeTest: string;
+  commands: CommandShape[];
+  commandStates: CommandsStateShape;
+  disabled?: boolean;
+  selectedCommandIndexes: number[];
 }
 
-const useKeyboundNav = makeKeyboundNav(window.sideAPI.state.updateStepSelection)
+const useKeyboundNav = makeKeyboundNav(window.sideAPI.state.updateStepSelection);
 
 const CommandList: FC<CommandListProps> = ({
-  activeTest,
-  commandStates,
-  commands,
-  disabled,
-  selectedCommandIndexes,
-}) => {
+                                             activeTest,
+                                             commandStates,
+                                             commands,
+                                             disabled,
+                                             selectedCommandIndexes
+                                           }) => {
+  const [languageMap, setLanguageMap] = useState<any>({
+    testCore: {
+      tabCommand: "Cmd",
+      tabTarget: "Target",
+      tabValue: "Value",
+      removeCommand:"Remove Command",
+      addCommand:"Add Command"
+    }
+  });
+
+  useEffect(() => {
+    window.sideAPI.system.getLanguageMap().then(result => {
+      setLanguageMap(result);
+    });
+  }, []);
   const [preview, reorderPreview, resetPreview] = useReorderPreview(
     commands,
     selectedCommandIndexes,
     (c) => c.id
-  )
-  useKeyboundNav(commands, selectedCommandIndexes)
+  );
+  useKeyboundNav(commands, selectedCommandIndexes);
   return (
     <>
       <EditorToolbar
-        className='z-1'
+        className="z-1"
         elevation={2}
         onAdd={() =>
           window.sideAPI.tests.addSteps(
@@ -42,37 +57,37 @@ const CommandList: FC<CommandListProps> = ({
             Math.max(selectedCommandIndexes.slice(-1)[0], 0)
           )
         }
-        addText='Add Command'
+        addText={languageMap.testCore.addCommand}
         onRemove={
           commands.length > 1
             ? () =>
-                window.sideAPI.tests.removeSteps(
-                  activeTest,
-                  selectedCommandIndexes
-                )
+              window.sideAPI.tests.removeSteps(
+                activeTest,
+                selectedCommandIndexes
+              )
             : undefined
         }
-        removeText='Remove Command'
+        removeText={languageMap.testCore.removeCommand}
       >
-        <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+        <Box sx={{ display: "flex", flexDirection: "row" }}>
           <Box className="flex" sx={{ flex: 0, flexBasis: 50 }}>&nbsp;</Box>
-          <Box className="flex" sx={{ flex: 1 }}>Cmd</Box>
-          <Box className="flex" sx={{ flex: 2, paddingLeft: 2 }}>Target</Box>
-          <Box className="flex" sx={{ flex: 2, paddingLeft: 2 }}>Value</Box>
+          <Box className="flex" sx={{ flex: 1 }}>{languageMap.testCore.tabCommand}</Box>
+          <Box className="flex" sx={{ flex: 2, paddingLeft: 2 }}>&nbsp;&nbsp;{languageMap.testCore.tabTarget}</Box>
+          <Box className="flex" sx={{ flex: 2, paddingLeft: 2 }}>&nbsp;&nbsp;{languageMap.testCore.tabValue}</Box>
         </Box>
       </EditorToolbar>
       <ReorderableList
         aria-disabled={disabled}
         classes={{
-          root: 'flex-1 flex-col overflow-y pt-0',
+          root: "flex-1 flex-col overflow-y pt-0"
         }}
         dense
       >
         {preview.map(([command, origIndex], index) => {
           if (!command) {
-            return null
+            return null;
           }
-          const { id } = command
+          const { id } = command;
           return (
             <CommandRow
               activeTest={activeTest}
@@ -85,11 +100,11 @@ const CommandList: FC<CommandListProps> = ({
               resetPreview={resetPreview}
               selected={selectedCommandIndexes.includes(origIndex)}
             />
-          )
+          );
         })}
       </ReorderableList>
     </>
-  )
-}
+  );
+};
 
-export default CommandList
+export default CommandList;

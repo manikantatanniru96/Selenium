@@ -6,19 +6,32 @@ import SuitesTab from '../../windows/ProjectEditor/tabs/Suites/SuitesTab'
 import TestsTab from '../../windows/ProjectEditor/tabs/Tests/TestsTab'
 import { SIDEMainProps } from '../types'
 
-const SIDEMain: React.FC<Pick<SIDEMainProps, 'setTab' | 'tab'>> = ({
+const SIDEMain: React.FC<Pick<SIDEMainProps, 'session' | 'setTab' | 'tab'>> = ({
+  session,
   setTab,
   tab,
 }) => (
   <>
     <TabPanel index={TESTS_TAB} value={tab}>
-      <TestsTab />
+      <TestsTab
+        session={session}
+        setTab={setTab}
+        tab={tab}
+      />
     </TabPanel>
     <TabPanel index={SUITES_TAB} value={tab}>
-      <SuitesTab />
+      <SuitesTab
+        session={session}
+        setTab={setTab}
+        tab={tab}
+      />
     </TabPanel>
     <TabPanel index={PROJECT_TAB} value={tab}>
-      <ProjectTab setTab={setTab} tab={tab} />
+      <ProjectTab
+        session={session}
+        setTab={setTab}
+        tab={tab}
+      />
     </TabPanel>
   </>
 )

@@ -5,7 +5,7 @@ import { loadingID } from '@seleniumhq/side-api/dist/constants/loadingID'
 import { getActiveSuite } from '@seleniumhq/side-api/dist/helpers/getActiveData'
 import { TestShape } from '@seleniumhq/side-model'
 import { SIDEMainProps } from 'browser/components/types'
-import React from 'react'
+import React, { useEffect, useState } from "react";
 import SuiteEditor from './SuiteEditor'
 import AvailableSuiteTestList from './AvailableSuiteTestList'
 import CurrentSuiteTestList from './CurrentSuiteTestList'
@@ -13,6 +13,17 @@ import CurrentSuiteTestList from './CurrentSuiteTestList'
 const SuiteCustomizer: React.FC<Pick<SIDEMainProps, 'session'>> = ({
   session,
 }) => {
+  const [languageMap, setLanguageMap] = useState<any>({
+    suitesTab: {
+      noSuiteSelected: "No Suite Selected"
+    }
+  });
+
+  useEffect(() => {
+    window.sideAPI.system.getLanguageMap().then(result => {
+      setLanguageMap(result);
+    });
+  }, []);
   const activeSuite = getActiveSuite(session)
   const activeTests = activeSuite.tests.map(
     (id) => session.project.tests.find((t) => t.id === id) as TestShape
@@ -24,7 +35,7 @@ const SuiteCustomizer: React.FC<Pick<SIDEMainProps, 'session'>> = ({
   if (activeSuite.id === loadingID) {
     return (
       <Box className="flex-1 width-100" textAlign="center">
-        <Typography className="p-4">No Suite Selected</Typography>
+        <Typography className="p-4">{languageMap.suitesTab.noSuiteSelected}</Typography>
       </Box>
     )
   }

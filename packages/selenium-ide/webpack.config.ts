@@ -1,4 +1,3 @@
-import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin'
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 import fs from 'fs'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
@@ -6,19 +5,13 @@ import HtmlWebpackPlugin from 'html-webpack-plugin'
 import kebabCase from 'lodash/fp/kebabCase'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import path from 'path'
-// eslint-disable-next-line node/no-unpublished-import
-import ReactRefreshTypeScript from 'react-refresh-typescript'
 import {
   Configuration,
   SourceMapDevToolPlugin,
   WebpackPluginInstance,
 } from 'webpack'
-// eslint-disable-next-line node/no-unpublished-import
-import type { Configuration as DevServerConfiguration } from 'webpack-dev-server'
 
 const isProduction = process.env.NODE_ENV === 'production'
-const isDevelopment = !isProduction
-const useHMR = process.env.SIDE_DEV === '1' && isDevelopment
 
 const commonPlugins: WebpackPluginInstance[] = [
   new ForkTsCheckerWebpackPlugin(),
@@ -29,16 +22,11 @@ const commonPlugins: WebpackPluginInstance[] = [
 if (isProduction) {
   commonPlugins.push(new MiniCssExtractPlugin())
 }
-if (useHMR) {
-  commonPlugins.push(new ReactRefreshWebpackPlugin())
-}
 
 const commonConfig: Pick<
   Configuration,
   'devtool' | 'externals' | 'mode' | 'module' | 'resolve' | 'output'
-> & {
-  devServer?: DevServerConfiguration
-} = {
+> = {
   devtool: 'source-map',
   externals: ['utf-8-validate', 'bufferutil'],
   mode: isProduction ? 'production' : 'development',
@@ -51,13 +39,9 @@ const commonConfig: Pick<
       },
       {
         test: /\.tsx?$/,
+        loader: 'ts-loader',
         exclude: /node_modules/,
-        // eslint-disable-next-line node/no-unpublished-require
-        loader: require.resolve('ts-loader'),
         options: {
-          getCustomTransformers: () => ({
-            before: [useHMR && ReactRefreshTypeScript()].filter(Boolean),
-          }),
           transpileOnly: true,
         },
       },
@@ -127,15 +111,6 @@ const rendererEntries = windowData
 
 const rendererConfig: Configuration = {
   ...commonConfig,
-  devServer: useHMR
-    ? {
-        devMiddleware: {
-          writeToDisk: true,
-        },
-        hot: isDevelopment,
-        port: 8083,
-      }
-    : undefined,
   entry: Object.fromEntries(rendererEntries),
   plugins: commonPlugins.concat(
     Object.values(rendererEntries).map(
@@ -174,22 +149,18 @@ const playbackRendererBidiConfig: Configuration = {
       'renderer.tsx'
     ),
   },
-  plugins: commonPlugins
-    .concat(
-      getBrowserPlugin(
-        'playback-window-bidi'
-      ) as unknown as WebpackPluginInstance
-    )
-    .concat(
-      new CopyWebpackPlugin({
-        patterns: [
-          {
-            from: 'src/browser/*.css',
-            to: '[name].css',
-          },
-        ],
-      })
-    ),
+  plugins: commonPlugins.concat(
+    getBrowserPlugin('playback-window-bidi') as unknown as WebpackPluginInstance
+  ).concat(
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: 'src/browser/*.css',
+          to: '[name].css',
+        },
+      ],
+    })
+  ),
   target: 'web',
 }
 
@@ -203,11 +174,11 @@ const mainConfig: Configuration = {
 }
 
 export default [
-  rendererConfig,
+  mainConfig,
   preloadConfig,
+  rendererConfig,
   playbackPreloadBidiConfig,
   playbackRendererBidiConfig,
-  mainConfig,
 ]
 
 function getBrowserPlugin(filename: string) {

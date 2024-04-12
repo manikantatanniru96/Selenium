@@ -1,12 +1,10 @@
 import { ipcMain, WebContents } from 'electron'
-import {
-  BaseListener,
-  EventMutator,
-  ListenerFn,
-  VariadicArgs,
-} from '@seleniumhq/side-api'
+import { BaseListener, EventMutator, ListenerFn, VariadicArgs } from '@seleniumhq/side-api'
 import { Session } from 'main/types'
 import getCore from '../helpers/getCore'
+import { COLOR_CYAN, vdebuglog } from 'main/util'
+
+const apiDebugLog = vdebuglog('api', COLOR_CYAN)
 
 const baseListener = <ARGS extends VariadicArgs>(
   path: string,
@@ -16,11 +14,11 @@ const baseListener = <ARGS extends VariadicArgs>(
   const listeners: any[] = []
   return {
     addListener(listener) {
-      session.system.loggers.api('Listener added', path)
+      apiDebugLog('Listener added', path)
       listeners.push(listener)
     },
     async dispatchEvent(...args) {
-      session.system.loggers.api('Dispatch event', path, args)
+      apiDebugLog('Dispatch event', path, args)
       if (mutator) {
         const newState = mutator(getCore(session), args)
         session.projects.project = newState.project
@@ -28,7 +26,7 @@ const baseListener = <ARGS extends VariadicArgs>(
         session.api.state.onMutate.dispatchEvent(path, args)
       }
       const results = await Promise.all(listeners.map((fn) => fn(...args)))
-      return results
+      return results;
     },
     hasListener(listener) {
       return listeners.includes(listener)
@@ -39,7 +37,7 @@ const baseListener = <ARGS extends VariadicArgs>(
       if (index === -1) {
         throw new Error(`Unable to remove listener for ${path} ${listener}`)
       }
-      session.system.loggers.api('Listener removed', path)
+      apiDebugLog('Listener removed', path)
       listeners.splice(index, 1)
     },
   }

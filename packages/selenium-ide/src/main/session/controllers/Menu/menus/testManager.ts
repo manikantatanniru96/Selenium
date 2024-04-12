@@ -1,30 +1,31 @@
-import { MenuComponent } from 'main/types'
-import { menuFactoryFromCommandFactory } from '../utils'
+import { MenuComponent } from "main/types";
+import { menuFactoryFromCommandFactory } from "../utils";
 
 export const commands: MenuComponent<[string[]]> = (session) => (testIDs) => {
-  const outputFormats = session.outputFormats.getFormats()
+  const outputFormats = session.outputFormats.getFormats();
+  const languageMap = session.store.get("languageMap")
   return [
     {
-      accelerator: 'CommandOrControl+Shift+Delete',
+      accelerator: "CommandOrControl+Shift+Delete",
       click: async () => {
         await Promise.all(
           testIDs.map((testID) => session.api.tests.delete(testID))
-        )
+        );
       },
-      label: 'Delete test(s)',
+      label: languageMap.testsTab.deleteTest
     },
-    { type: 'separator' },
+    { type: "separator" },
     ...outputFormats.map((formatName) => ({
-      label: `Export test(s) to ${formatName}`,
+      label: languageMap.testsTab.exportTest + formatName,
       click: async () => {
         await Promise.all(
           testIDs.map((testID) =>
             session.outputFormats.exportTestToFormat(formatName, testID)
           )
-        )
-      },
-    })),
-  ]
-}
+        );
+      }
+    }))
+  ];
+};
 
-export default menuFactoryFromCommandFactory(commands)
+export default menuFactoryFromCommandFactory(commands);

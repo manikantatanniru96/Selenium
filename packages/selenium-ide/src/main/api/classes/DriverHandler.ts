@@ -6,7 +6,11 @@ import {
   Mutator,
 } from '@seleniumhq/side-api'
 import noop from 'lodash/fp/noop'
+import { COLOR_CYAN, vdebuglog } from 'main/util'
+import getCore from '../helpers/getCore'
 import { Session, SessionControllerKeys } from '../../types'
+
+const apiDebugLog = vdebuglog('api', COLOR_CYAN)
 
 export type AsyncHandler<HANDLER extends ApiHandler> = (
   ...args: Parameters<HANDLER>
@@ -48,14 +52,19 @@ const Handler =
     const handler = factory(path, session)
     const doAPI = async (...params: Parameters<HANDLER>) => {
       const result = await handler(...params)
-      await session.state.mutate(mutator, params, result, path)
+      if (mutator) {
+        const { project, state } = mutator(getCore(session), { params, result })
+        session.projects.project = project
+        session.state.state = state
+        session.api.state.onMutate.dispatchEvent(path, { params, result })
+      }
       return result
     }
     ipcMain.handle(path, async (_event, ...args) => {
-      session.system.loggers.api('Received API Request', path, args)
+      apiDebugLog('Received API Request', path, args)
       const result = await doAPI(...(args as Parameters<HANDLER>))
-      session.system.loggers.api('Resolved API Request', path, result)
-      return result
+      apiDebugLog('Resolved API Request', path, result)
+      return result;
     })
     return doAPI
   }

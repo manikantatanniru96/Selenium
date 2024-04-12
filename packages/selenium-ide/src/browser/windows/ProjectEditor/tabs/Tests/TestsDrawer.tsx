@@ -3,34 +3,49 @@ import FormControl from '@mui/material/FormControl'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
 import Stack from '@mui/material/Stack'
-import React, { FC, useContext } from 'react'
+import React, { FC, useEffect, useState } from "react";
 import Drawer from 'browser/components/Drawer/Wrapper'
 import EditorToolbar from 'browser/components/Drawer/EditorToolbar'
 import RenamableListItem from 'browser/components/Drawer/RenamableListItem'
 import TestCreateDialog from './TestCreateDialog'
-import { context as activeTestContext } from 'browser/contexts/active-test'
-import { context as suitesContext } from 'browser/contexts/suites'
-import { context as testsContext } from 'browser/contexts/tests'
-import { context as testResultsContext } from 'browser/contexts/playback-test-results'
+import { SIDEMainProps } from 'browser/components/types'
+import { Tooltip } from "@mui/material";
 
 const {
   state: { setActiveTest: setSelected, setActiveSuite },
   tests: { rename },
 } = window.sideAPI
 
-const TestsDrawer: FC = () => {
-  const {activeSuiteID, activeTestID} = useContext(activeTestContext)
-  const suites = useContext(suitesContext)
-  const tests = useContext(testsContext)
-  const testResults = useContext(testResultsContext)
+const TestsDrawer: FC<Pick<SIDEMainProps, 'session'>> = ({ session }) => {
+  const activeSuite = session.state.activeSuiteID
+  const activeTest = session.state.activeTestID
+  const {
+    project: { tests, suites },
+    state: {
+      playback: { commands: testResults },
+    },
+  } = session
   const [confirmNew, setConfirmNew] = React.useState(false)
-  const testList = activeSuiteID
+  const testList = activeSuite
     ? suites
-        .find((s) => s.id === activeSuiteID)
+        .find((s) => s.id === activeSuite)
         ?.tests.map((id) => tests.find((t) => t.id === id)!) ?? tests
     : tests
-  const safeSuiteID = suites.find((s) => s.id === activeSuiteID)?.id ?? ''
+  const safeSuiteID = suites.find((s) => s.id === activeSuite)?.id ?? ''
+  const [languageMap, setLanguageMap] = useState<any>({
+    testsTab: {
+      allTests: "[All tests]",
+      deleteNotice: "Delete this test?",
+      tooltip: "double click to modify the name,right click to export or delete test case",
+      notDeleteNotice:"only one test case is not allowed to be deleted!"
+    }
+  });
 
+  useEffect(() => {
+    window.sideAPI.system.getLanguageMap().then(result => {
+      setLanguageMap(result);
+    });
+  }, []);
   return (
     <Drawer>
       <TestCreateDialog open={confirmNew} setOpen={setConfirmNew} />
@@ -40,12 +55,15 @@ const TestsDrawer: FC = () => {
           onRemove={
             tests.length > 1
               ? () => {
-                  const doDelete = window.confirm('Delete this test?')
+                  const doDelete = window.confirm(languageMap.testsTab.deleteNotice)
                   if (doDelete) {
-                    window.sideAPI.tests.delete(activeTestID)
+                    window.sideAPI.tests.delete(activeTest)
                   }
-                }
-              : undefined
+                }: () => {
+            window.confirm(languageMap.testsTab.notDeleteNotice);
+          }
+
+              // : undefined
           }
         />
         <FormControl size="small">
@@ -67,7 +85,7 @@ const TestsDrawer: FC = () => {
             sx={{ bottom: 0 }}
             value={safeSuiteID}
           >
-            <MenuItem value="">[All tests]</MenuItem>
+            <MenuItem value="">{languageMap.testsTab.allTests}</MenuItem>
             {suites.map((s) => (
               <MenuItem key={s.id} value={s.id}>
                 {s.name}
@@ -83,6 +101,7 @@ const TestsDrawer: FC = () => {
           .map(({ id, name }) => {
             const testState = testResults[id]?.state
             return (
+              <Tooltip title={languageMap.testsTab.tooltip}>
               <RenamableListItem
                 id={id}
                 key={id}
@@ -91,10 +110,11 @@ const TestsDrawer: FC = () => {
                   window.sideAPI.menus.open('testManager', [id])
                 }}
                 rename={rename}
-                selected={id === activeTestID}
+                selected={id === activeTest}
                 setSelected={setSelected}
                 state={testState}
               />
+              </Tooltip>
             )
           })}
       </List>

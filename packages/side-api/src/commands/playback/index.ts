@@ -10,6 +10,10 @@ import type { Shape as Play } from './play'
 import type { Shape as PlaySuite } from './playSuite'
 import type { Shape as Resume } from './resume'
 import type { Shape as Stop } from './stop'
+/*****************以下是我新增*******************/
+import type { Shape as OpenBrowser } from './openBrowser'
+/*****************以上是我新增*******************/
+
 
 import * as onAfter from './onAfter'
 import * as onAfterAll from './onAfterAll'
@@ -24,6 +28,10 @@ import * as playSuite from './playSuite'
 import * as resume from './resume'
 import * as stop from './stop'
 
+/*****************以下是我新增*******************/
+import * as openBrowser from './openBrowser'
+/*****************以上是我新建*******************/
+
 export const commands = {
   onAfter,
   onAfterAll,
@@ -37,6 +45,10 @@ export const commands = {
   playSuite,
   resume,
   stop,
+  /*****************以下是我新增*******************/
+  openBrowser,
+  /*****************以上是我新增*******************/
+
 }
 
 /**
@@ -55,4 +67,8 @@ export type Shape = {
   playSuite: PlaySuite
   resume: Resume
   stop: Stop
+  /*****************以下是我新增*******************/
+  openBrowser: OpenBrowser
+  /*****************以上是我新增*******************/
+
 }

@@ -1,24 +1,15 @@
-import { MenuComponent, Session } from 'main/types'
-import { menuFactoryFromCommandFactory } from '../utils'
+import { MenuComponent } from "main/types";
+import { menuFactoryFromCommandFactory } from "../utils";
 
-export const commands: MenuComponent = (session: Session) => () =>
+export const commands: MenuComponent = (session) => () =>
   [
-    {
-      accelerator: 'CommandOrControl+Z',
-      click: () => session.api.state.undo(),
-      enabled: session.state.prevHistory.length !== 0,
-      label: 'Undo',
-    },
-    {
-      accelerator: 'CommandOrControl+Shift+Z',
-      click: () => session.api.state.redo(),
-      enabled: session.state.nextHistory.length !== 0,
-      label: 'Redo',
-    },
-    { type: 'separator' },
-    { label: 'Cut', role: 'cut' },
-    { label: 'Copy', role: 'copy' },
-    { label: 'Paste', role: 'paste' },
-  ]
+    { label: session.store.get("languageMap").editMenuTree.undo, role: "undo" },
+    { label: session.store.get("languageMap").editMenuTree.redo, role: "redo" },
+    { type: "separator" },
+    { label: session.store.get("languageMap").editMenuTree.cut, role: "cut" },
+    { label: session.store.get("languageMap").editMenuTree.copy, role: "copy" },
+    { label: session.store.get("languageMap").editMenuTree.paste, role: "paste" }
+  ];
 
-export default menuFactoryFromCommandFactory(commands)
+
+export default menuFactoryFromCommandFactory(commands);

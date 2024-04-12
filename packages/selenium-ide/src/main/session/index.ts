@@ -21,12 +21,16 @@ import Store from '../store'
 import { Session } from '../types'
 import OutputFormatsController from './controllers/OutputFormats'
 
-export default async function createSession(app: App): Promise<Session> {
+export default async function createSession(
+  app: App,
+): Promise<Session> {
   // Building our session object
   const partialSession: Partial<Session> = {
     app,
     store: await Store(),
   }
+
+  console.info('partialSession:'+JSON.stringify(partialSession.store))
   partialSession.polyfill = new PolyfillController(partialSession as Session)
   partialSession.channels = new ChannelsController(partialSession as Session)
   partialSession.dialogs = new DialogsController(partialSession as Session)
@@ -34,16 +38,12 @@ export default async function createSession(app: App): Promise<Session> {
   partialSession.commands = new CommandsController(partialSession as Session)
   partialSession.driver = new DriverController(partialSession as Session)
   partialSession.menus = new MenuController(partialSession as Session)
-  partialSession.outputFormats = new OutputFormatsController(
-    partialSession as Session
-  )
+  partialSession.outputFormats = new OutputFormatsController(partialSession as Session)
   partialSession.playback = new PlaybackController(partialSession as Session)
   partialSession.plugins = new PluginsController(partialSession as Session)
   partialSession.projects = new ProjectsController(partialSession as Session)
   partialSession.recorder = new RecorderController(partialSession as Session)
-  partialSession.resizablePanels = new ResizablePanelsController(
-    partialSession as Session
-  )
+  partialSession.resizablePanels = new ResizablePanelsController(partialSession as Session)
   partialSession.state = new StateController(partialSession as Session)
   partialSession.suites = new SuitesController(partialSession as Session)
   partialSession.system = new SystemController(partialSession as Session)
@@ -52,5 +52,6 @@ export default async function createSession(app: App): Promise<Session> {
   partialSession.api = Api(partialSession as Session)
 
   const session = partialSession as Session
+
   return session
 }

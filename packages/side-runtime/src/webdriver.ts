@@ -168,8 +168,8 @@ export default class WebDriverExecutor {
   >): webdriver.ThenableWebDriver {
     const { browserName, ...capabilities } = this
       .capabilities as ExpandedCapabilities
-    if (debug) {
-      logger.info('Building driver for ' + browserName)
+    debug && logger.info('Building driver for ' + browserName)
+    debug &&
       logger.info(
         'Driver attributes:' +
           inspect({
@@ -178,7 +178,6 @@ export default class WebDriverExecutor {
             browserName,
           })
       )
-    }
     let builder = new webdriver.Builder().withCapabilities(capabilities)
     if (this.server) {
       builder = builder.usingServer(this.server)
@@ -243,7 +242,6 @@ export default class WebDriverExecutor {
     this.logger = logger
     this.variables = variables
     this[state] = {}
-
     if (!this.driver) {
       this.driver = await this.getDriver({ debug, logger })
     }
@@ -1521,12 +1519,8 @@ export default class WebDriverExecutor {
       this.withCancel(async () => {
         const el = await this.elementIsLocated(locator, fallback)
         if (!el) return null
-        try {
-          const elText = (await el.getText()).replace(/\u00A0/g, ' ').trim()
-          return elText === text.replace(/\u00A0/g, ' ').trim()
-        } catch (e) {
-          return null
-        }
+        const elText = await el.getText()
+        return elText === text
       })
     )
     await this.driver.wait<boolean>(textCondition, timeout)
@@ -2019,11 +2013,11 @@ const OPTIONS_LOCATORS = {
       switch (type) {
         case 'mostly-equals':
           return By.xpath(
-            `.//option[normalize-space(translate(., '${nbsp}', ' ')) = '${labelBody}']`
+            `//option[normalize-space(translate(., '${nbsp}', ' ')) = '${labelBody}']`
           )
       }
     }
-    return By.xpath(`.//option[. = '${label}']`)
+    return By.xpath(`//option[. = '${label}']`)
   },
   index: (index: string) => By.css(`*:nth-child(${index})`),
 }

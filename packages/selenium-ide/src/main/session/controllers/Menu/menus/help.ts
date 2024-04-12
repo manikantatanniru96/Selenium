@@ -1,16 +1,16 @@
-import { MenuComponent } from 'main/types'
-import { menuFactoryFromCommandFactory } from '../utils'
+import { MenuComponent } from "main/types";
+import { menuFactoryFromCommandFactory } from "../utils";
 
 export const commands: MenuComponent = (session) => () =>
   [
     {
-      accelerator: 'CommandOrControl+Shift+D',
+      accelerator: "CommandOrControl+Shift+D",
       click: async () => {
-        await session.system.dumpSession()
+        await session.system.dumpSession();
       },
-      label: 'Dump Session To File',
-    },
-  ]
+      label: session.store.get("languageMap").helpMenuTree.dumpSession
+    }
+  ];
 
 
-export default menuFactoryFromCommandFactory(commands)
+export default menuFactoryFromCommandFactory(commands);

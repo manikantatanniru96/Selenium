@@ -1,203 +1,206 @@
-import { hasID } from '@seleniumhq/side-api'
+import { hasID } from "@seleniumhq/side-api";
 import {
   getActiveCommand,
   getActiveCommandIndex,
-  getActiveTest,
-} from '@seleniumhq/side-api/dist/helpers/getActiveData'
-import { MenuComponent, Session } from 'main/types'
-import { menuFactoryFromCommandFactory } from '../utils'
+  getActiveTest
+} from "@seleniumhq/side-api/dist/helpers/getActiveData";
+import { MenuComponent, Session } from "main/types";
+import { menuFactoryFromCommandFactory } from "../utils";
 
 export const pluralize = (str: string, num: number) =>
-  num < 2 ? str : `${str}s`
+  num < 2 ? str : `${str}s`;
 
 export const commandList: MenuComponent = (session) => () => {
-  const sessionData = session.state.get()
-  const editorState = sessionData.state.editor
-  const copiedCommandCount = editorState.copiedCommands.length
-  const selectedCommandCount = editorState.selectedCommandIndexes.length
+  const sessionData = session.state.get();
+  const editorState = sessionData.state.editor;
+  const copiedCommandCount = editorState.copiedCommands.length;
+  const selectedCommandCount = editorState.selectedCommandIndexes.length;
+  const languageMap = session.store.get("languageMap");
   return [
     {
-      accelerator: 'CommandOrControl+Shift+X',
+      accelerator: "CommandOrControl+Shift+X",
       click: async () => {
-        await session.api.state.setCopiedCommands()
+        await session.api.state.setCopiedCommands();
         await session.api.tests.removeSteps(
           sessionData.state.activeTestID,
           sessionData.state.editor.selectedCommandIndexes
-        )
+        );
       },
       enabled: Boolean(selectedCommandCount),
-      label: pluralize('Cut Command', selectedCommandCount),
+      label: pluralize(languageMap.testCore.cutCommand, selectedCommandCount)
     },
     {
-      accelerator: 'CommandOrControl+Shift+C',
+      accelerator: "CommandOrControl+Shift+C",
       click: async () => {
-        await session.api.state.setCopiedCommands()
+        await session.api.state.setCopiedCommands();
       },
       enabled: Boolean(selectedCommandCount),
-      label: pluralize('Copy Command', selectedCommandCount),
+      label: pluralize(languageMap.testCore.copyCommand, selectedCommandCount)
     },
     {
-      accelerator: 'CommandOrControl+Shift+V',
+      accelerator: "CommandOrControl+Shift+V",
       click: async () => {
         await session.api.tests.addSteps(
           sessionData.state.activeTestID,
           Math.max(getActiveCommandIndex(sessionData) - 1),
           sessionData.state.editor.copiedCommands
-        )
+        );
       },
       enabled: Boolean(copiedCommandCount),
-      label: pluralize('Paste Command', copiedCommandCount),
+      label: pluralize(languageMap.testCore.pasteCommand, copiedCommandCount)
     },
     {
-      accelerator: 'CommandOrControl+Shift+D',
+      accelerator: "CommandOrControl+Shift+D",
       click: async () => {
-        const cmds = getActiveTest(sessionData).commands
+        const cmds = getActiveTest(sessionData).commands;
         const allCommandsDisabled =
           sessionData.state.editor.selectedCommandIndexes
             .map((index) => cmds[index])
-            .findIndex((cmd) => !cmd.command.startsWith('//')) === -1
+            .findIndex((cmd) => !cmd.command.startsWith("//")) === -1;
 
-        session.api.tests.toggleStepDisability(!allCommandsDisabled)
+        session.api.tests.toggleStepDisability(!allCommandsDisabled);
       },
       enabled: Boolean(selectedCommandCount),
-      label: pluralize('Disable Command', selectedCommandCount),
+      label: pluralize(languageMap.testCore.disableCommandSide, selectedCommandCount)
     },
     {
-      accelerator: 'Delete',
+      accelerator: "Delete",
       click: async () => {
         await session.api.tests.removeSteps(
           sessionData.state.activeTestID,
           sessionData.state.editor.selectedCommandIndexes
-        )
+        );
       },
       enabled: Boolean(selectedCommandCount),
-      label: pluralize('Delete Command', selectedCommandCount),
+      label: pluralize(languageMap.testCore.deleteCommand, selectedCommandCount)
     },
     {
-      accelerator: 'Backspace',
+      accelerator: "Backspace",
       acceleratorWorksWhenHidden: true,
       click: async () => {
         await session.api.tests.removeSteps(
           sessionData.state.activeTestID,
           sessionData.state.editor.selectedCommandIndexes
-        )
+        );
       },
       enabled: Boolean(selectedCommandCount),
-      label: pluralize('Delete Command', selectedCommandCount),
-      visible: false,
+      label: pluralize(languageMap.testCore.deleteCommand, selectedCommandCount),
+      visible: false
     },
     {
-      accelerator: 'CommandOrControl+Shift+A',
+      accelerator: "CommandOrControl+Shift+A",
       click: async () => {
         await session.api.tests.addSteps(
           sessionData.state.activeTestID,
           Math.max(0, getActiveCommandIndex(sessionData)),
-          [{ command: 'click', target: '', value: '' }]
-        )
+          [{ command: "click", target: "", value: "" }]
+        );
       },
       enabled: true,
-      label: 'Append Command',
+      label: languageMap.testCore.addCommand
     },
     {
-      accelerator: 'CommandOrControl+Shift+I',
+      accelerator: "CommandOrControl+Shift+I",
       click: async () => {
         await session.api.tests.addSteps(
           sessionData.state.activeTestID,
           Math.max(0, getActiveCommandIndex(sessionData) - 1),
-          [{ command: 'click', target: '', value: '' }]
-        )
+          [{ command: "click", target: "", value: "" }]
+        );
       },
       enabled: true,
-      label: 'Insert Command',
-    },
-  ]
-}
+      label: languageMap.testCore.insertCommand
+    }
+  ];
+};
 
 export const recorderList = (session: Session) => () => {
   const selectedCommandCount =
-    session.state.state.editor.selectedCommandIndexes.length
+    session.state.state.editor.selectedCommandIndexes.length;
+  const languageMap = session.store.get("languageMap");
   return [
     {
-      accelerator: 'CommandOrControl+R',
+      accelerator: "CommandOrControl+R",
       enabled: selectedCommandCount === 1,
-      label: 'Record From Here',
+      label: languageMap.testCore.recordFromHere,
       click: async () => {
-        await session.api.recorder.start()
-      },
-    },
-  ]
-}
+        await session.api.recorder.start();
+      }
+    }
+  ];
+};
 
 export const playbackList: MenuComponent =
   (session) => (_commandID?: string) => {
     const selectedCommandCount =
-      session.state.state.editor.selectedCommandIndexes.length
+      session.state.state.editor.selectedCommandIndexes.length;
+    const languageMap = session.store.get("languageMap");
     return [
       {
         click: async () => {
-          const sessionData = await session.state.get()
+          const sessionData = await session.state.get();
           const commandID: string =
-            _commandID || getActiveCommand(sessionData).id
-          const activeTest = getActiveTest(sessionData)
+            _commandID || getActiveCommand(sessionData).id;
+          const activeTest = getActiveTest(sessionData);
           await session.api.playback.play(sessionData.state.activeTestID, [
             0,
-            activeTest.commands.findIndex((cmd) => cmd.id === commandID),
-          ])
+            activeTest.commands.findIndex((cmd) => cmd.id === commandID)
+          ]);
         },
-        label: 'Play To Here',
+        label: languageMap.testCore.playToHere
       },
       {
-        accelerator: 'CommandOrControl+P',
+        accelerator: "CommandOrControl+P",
         click: async () => {
-          const sessionData = await session.state.get()
+          const sessionData = await session.state.get();
           const commandID: string =
-            _commandID || getActiveCommand(sessionData).id
-          const activeTest = getActiveTest(sessionData)
+            _commandID || getActiveCommand(sessionData).id;
+          const activeTest = getActiveTest(sessionData);
           await session.api.playback.play(sessionData.state.activeTestID, [
             activeTest.commands.findIndex((cmd) => cmd.id === commandID),
-            -1,
-          ])
+            -1
+          ]);
         },
         enabled: selectedCommandCount === 1,
-        label: 'Play From Here',
+        label: languageMap.testCore.playFromHere
       },
       {
         click: async () => {
-          const sessionData = await session.state.get()
+          const sessionData = await session.state.get();
           const commandID: string =
-            _commandID || getActiveCommand(sessionData).id
-          const activeTest = getActiveTest(sessionData)
-          const index = activeTest.commands.findIndex(hasID(commandID))
+            _commandID || getActiveCommand(sessionData).id;
+          const activeTest = getActiveTest(sessionData);
+          const index = activeTest.commands.findIndex(hasID(commandID));
           await session.api.playback.play(sessionData.state.activeTestID, [
             index,
-            index,
-          ])
+            index
+          ]);
         },
         enabled: selectedCommandCount === 1,
-        label: 'Play This Step',
+        label: languageMap.testCore.playThisStep
       },
       {
-        accelerator: 'CommandOrControl+Shift+P',
+        accelerator: "CommandOrControl+Shift+P",
         click: async () => {
-          const sessionData = await session.state.get()
-          await session.api.playback.play(sessionData.state.activeTestID)
+          const sessionData = await session.state.get();
+          await session.api.playback.play(sessionData.state.activeTestID);
         },
-        label: 'Play From Start',
-      },
-    ]
-  }
+        label: languageMap.testCore.playFromStart
+      }
+    ];
+  };
 
 export const commands: MenuComponent = (session) => () => {
-  const commands = commandList(session)()
-  const recorder = recorderList(session)()
-  const playback = playbackList(session)()
+  const commands = commandList(session)();
+  const recorder = recorderList(session)();
+  const playback = playbackList(session)();
   return [
     ...commands,
-    { type: 'separator' },
+    { type: "separator" },
     ...recorder,
-    { type: 'separator' },
-    ...playback,
-  ]
-}
+    { type: "separator" },
+    ...playback
+  ];
+};
 
-export default menuFactoryFromCommandFactory(commands)
+export default menuFactoryFromCommandFactory(commands);

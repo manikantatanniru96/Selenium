@@ -2,25 +2,25 @@ import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
-import React, { useContext } from 'react'
+import React from 'react'
+import { SIDEMainProps } from '../../../../components/types'
 import EditorToolbar from '../../../../components/Drawer/EditorToolbar'
 import TestCreateDialog from './TestCreateDialog'
 import TestRenameDialog from './TestRenameDialog'
 import TestDeleteDialog from './TestDeleteDialog'
-import { context as activetestIDContext } from 'browser/contexts/active-test'
-import { context as testsContext } from 'browser/contexts/tests'
 
-const TestSelector: React.FC = () => {
+const TestSelector: React.FC<Pick<SIDEMainProps, 'session'>> = ({
+  session,
+}) => {
+  const {
+    project: { tests },
+    state: { activeTestID },
+  } = session
   const [disabled /*, setDisabled*/] = React.useState(false)
   const [confirmDelete, setConfirmDelete] = React.useState(false)
   const [confirmRename, setConfirmRename] = React.useState(false)
   const [confirmCreate, setConfirmCreate] = React.useState(false)
-  const { activeTestID } = useContext(activetestIDContext)
-  const tests = useContext(testsContext)
-  const activeTest = React.useMemo(() => tests.find((t) => t.id === activeTestID), [
-    tests,
-    activeTestID,
-  ])
+  const activeTestName = tests.find((t) => t.id === activeTestID)?.name ?? ''
   return (
     <>
       <EditorToolbar
@@ -39,7 +39,10 @@ const TestSelector: React.FC = () => {
             <Select
               label="test-select-label"
               onChange={async (event) => {
-                await window.sideAPI.state.setActiveTest(event.target.value)
+                const test = tests.find((t) => t.id === event.target.value)
+                if (test) {
+                  await window.sideAPI.state.setActiveTest(test.id)
+                }
               }}
               margin="dense"
               placeholder={tests.length ? 'Select a test' : 'No tests found'}
@@ -60,7 +63,7 @@ const TestSelector: React.FC = () => {
           open
           setOpen={setConfirmDelete}
           testID={activeTestID}
-          testName={activeTest?.name || ''}
+          testName={activeTestName}
         />
       )}
       {confirmRename && (
@@ -68,7 +71,7 @@ const TestSelector: React.FC = () => {
           open
           setOpen={setConfirmRename}
           testID={activeTestID}
-          testName={activeTest?.name || ''}
+          testName={activeTestName}
         />
       )}
       {confirmCreate && <TestCreateDialog open setOpen={setConfirmCreate} />}
