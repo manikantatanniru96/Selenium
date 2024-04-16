@@ -90,7 +90,7 @@ async function main() {
       await url.sendKeys(webdriver.Key.BACK_SPACE)
     }
     await url.sendKeys('http://localhost:8080')
-  
+
     const testTab = await driver.wait(
       webdriver.until.elementLocated(webdriver.By.id('tab-0')),
       5000
@@ -142,7 +142,12 @@ function startWebdriverBackend() {
   const successMessage = 'was started successfully.'
   return new Promise((resolve) => {
     let initialized = false
-    const args = ['--verbose', `--port=${port}`]
+    const args = [
+      '--verbose',
+      `--port=${port}`,
+      '--disable-dev-shm-usage',
+      '--no-sandbox',
+    ]
     if (fs.existsSync(driverPath)) {
       const proc = spawn(driverPath.replace(/\s/g, ' '), args, {
         env: {},
