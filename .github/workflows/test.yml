@@ -19,7 +19,7 @@ jobs:
       repository-projects: read
       security-events: read
       statuses: read
-    runs-on: macos-11
+    runs-on: ubuntu-latest
     if: github.repository == 'seleniumhq/selenium-ide'
     steps:
       - uses: actions/checkout@v4
