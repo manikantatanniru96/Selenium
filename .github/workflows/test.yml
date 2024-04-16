@@ -34,7 +34,9 @@ jobs:
         run: pnpm -r i
       - name: Build side-runner and selenium-ide
         run: npm run build
+      - name: Install xvfb-maybe
+        run: npm i -g xvfb-maybe
       - name: Run all tests and also use xvfb
         uses: coactions/setup-xvfb@v1
         with:
-          run: npm i -g xvfb-maybe && xvfb-maybe npm run test:ci
+          run: xvfb-maybe npm run test:ci
