@@ -34,5 +34,7 @@ jobs:
         run: pnpm -r i
       - name: Build side-runner and selenium-ide
         run: npm run build
-      - name: Run all tests
-        run: npm run test:ci
+      - name: Run all tests and also use xvfb
+        uses: coactions/setup-xvfb@v1
+        with:
+          run: npm run test:ci
