@@ -34,9 +34,9 @@ jobs:
         run: pnpm -r i
       - name: Build side-runner and selenium-ide
         run: npm run build
-      - name: Install xvfb-maybe
-        run: npm i -g xvfb-maybe
+      - name: Install xvfb
+        run: sudo apt-get update && sudo apt-get install -y xvfb x11-xserver-utils
       - name: Run all tests and also use xvfb
-        uses: coactions/setup-xvfb@v1
-        with:
-          run: xvfb-maybe npm run test:ci
+        run: xvfb-run --server-num=99 npm run test:ci
+        env:
+          DISPLAY: :99
