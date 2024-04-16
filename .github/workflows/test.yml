@@ -19,8 +19,6 @@ jobs:
       repository-projects: read
       security-events: read
       statuses: read
-    env:
-      DISPLAY: :99
     runs-on: ubuntu-latest
     if: github.repository == 'seleniumhq/selenium-ide'
     steps:
@@ -39,5 +37,5 @@ jobs:
       - name: Install xvfb
         run: sudo apt-get update && sudo apt-get install -y xvfb x11-xserver-utils
       - name: Run all tests and also use xvfb
-        run: xvfb-run --server-num=99 npm run test:ci
+        run: xvfb-run --auto-servernum --server-args="-screen 0 1280x960x24" -- npm run test:ci
 
