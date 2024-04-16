@@ -27,7 +27,9 @@ const baseListener = <ARGS extends VariadicArgs, RESULT extends any>(
       listeners.push(listener)
     },
     async dispatchEvent(...args) {
-      session.system.loggers.api('Dispatch event', path, args)
+      if (path !== 'system.onLog') {
+        session.system.loggers.api('Dispatch event', path, args)
+      }
       if (mutator) {
         session.api.state.onMutate.dispatchEvent(path, args)
         const newState = mutator(getCore(session), args)
@@ -37,7 +39,9 @@ const baseListener = <ARGS extends VariadicArgs, RESULT extends any>(
       return await Promise.all<RESULT>(listeners.map((fn) => fn(...args)))
     },
     async dispatchEventAsync(...args) {
-      session.system.loggers.api('Dispatch event async', path, args)
+      if (path !== 'system.onLog') {
+        session.system.loggers.api('Dispatch event async', path, args)
+      }
       if (mutator) {
         session.api.state.onMutate.dispatchEvent(path, args)
         const newState = mutator(getCore(session), args)
