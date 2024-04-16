@@ -446,10 +446,10 @@ export default class WindowsController extends BaseController {
     throw new Error('Failed to register playback window')
   }
 
-  async requestPlaybackWindow() {
+  async requestPlaybackWindow(url?: string) {
     const window = await this.openPlaybackWindow(null)
     const projectURL = this.session.projects.project.url
-    window.loadURL(projectURL)
+    window.loadURL(url || projectURL)
   }
 
   async calculateScaleAndZoom(_targetWidth: number, _targetHeight: number) {

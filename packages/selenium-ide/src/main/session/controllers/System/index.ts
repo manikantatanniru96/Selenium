@@ -51,7 +51,8 @@ export default class SystemController extends BaseController {
   }
 
   async startup() {
-    this.isDev = process.env.SIDE_DEV === '1'
+    this.isDev =
+      process.env.SIDE_DEV === '1' && process.env.NODE_ENV !== 'production'
     if (this.isDown) {
       // If automated, assume we already have a chromedriver process running
       if (!isAutomated) {
