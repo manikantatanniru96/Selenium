@@ -7,7 +7,7 @@ import Stack from '@mui/material/Stack'
 import EditorToolbar from 'browser/components/Drawer/EditorToolbar'
 import TextField from 'browser/components/UncontrolledTextField'
 import { context } from 'browser/contexts/config'
-import React, { FC } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 
 export interface MiniProjectShape {
   id: string
@@ -20,18 +20,35 @@ const {
 } = window.sideAPI
 const ProjectSettings: FC = () => {
   const {
-    project: { delay, name, plugins, url },
+    project: { delay, name, plugins, timeout, url },
   } = React.useContext(context)
   if (url === 'http://loading') {
     return null
   }
+  const [languageMap, setLanguageMap] = useState<any>({
+    projectConfig: {
+      name: 'name',
+      stepTimeout: 'Step Timeout (MILLISECONDS)',
+      stepTimeoutHelper:
+        'Steps will fail if they take longer than this setting',
+      stepDelay: 'Step Delay (MILLISECONDS)',
+      stepDelayHelper: 'Each step will pause by this setting',
+      projectPlugins: 'Project Plugins',
+    },
+  })
+
+  useEffect(() => {
+    window.sideAPI.system.getLanguageMap().then((result) => {
+      setLanguageMap(result)
+    })
+  }, [])
   return (
     <>
       <Stack className="p-4" spacing={1}>
         <FormControl>
           <TextField
             id="name"
-            label="Name"
+            label={languageMap.projectConfig.name}
             name="name"
             onChange={(e: any) => {
               update({
@@ -44,23 +61,28 @@ const ProjectSettings: FC = () => {
         </FormControl>
         <FormControl>
           <TextField
-            id="project-url"
-            label="Project URL"
-            name="project-url"
+            id="timeout"
+            label={languageMap.projectConfig.stepTimeout}
+            helperText={languageMap.projectConfig.stepTimeoutHelper}
+            name="timeout"
+            type="number"
+            inputProps={{ min: 0, step: 1000 }}
             onChange={(e: any) => {
               update({
-                url: e.target.value,
+                // delay: Math.max(parseInt(e.target.value || "0"), 0)
+                timeout: Math.max(parseInt(e.target.value || '0'), 0),
               })
             }}
             size="small"
-            value={url}
+            // value={project.delay || 0}
+            value={timeout || 0}
           />
         </FormControl>
         <FormControl>
           <TextField
             id="delay"
-            label="Step Delay (MILLISECONDS)"
-            helperText="Each step will pause by this setting"
+            label={languageMap.projectConfig.stepDelay}
+            helperText={languageMap.projectConfig.stepDelayHelper}
             name="delay"
             type="number"
             inputProps={{ min: 0, step: 1000 }}
@@ -78,7 +100,7 @@ const ProjectSettings: FC = () => {
         dense
         subheader={
           <EditorToolbar onAdd={() => projectCreate()} addText="Add Plugin">
-            <span className="ps-4">Project Plugins</span>
+            {languageMap.projectConfig.projectPlugins}
           </EditorToolbar>
         }
         sx={{

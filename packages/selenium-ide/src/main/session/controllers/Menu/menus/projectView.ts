@@ -15,7 +15,7 @@ export const commands: MenuComponent = (session) => () =>
           const window = BrowserWindow.getFocusedWindow()
           window?.webContents.openDevTools()
         },
-        label: 'Show DevTools',
+        label: session.store.get('languageMap').viewMenuTree.showDevTools,
       }
     ),
     {
@@ -23,7 +23,7 @@ export const commands: MenuComponent = (session) => () =>
       click: async () => {
         await session.windows.initializePlaybackWindow()
       },
-      label: 'Reset Playback Windows',
+      label: session.store.get('languageMap').viewMenuTree.resetPlaybackWindows,
     },
     {
       accelerator: 'CommandOrControl+R',

@@ -20,6 +20,17 @@ const SuiteDeleteDialog: React.FC<SuiteDeleteDialogProps> = ({
   suiteID,
   suiteName,
 }) => {
+  const [languageMap, setLanguageMap] = React.useState<any>({
+    suitesTab: {
+      deleteNotice: 'Are you sure you want to delete suite SUITE_NAME?',
+    },
+  })
+
+  React.useEffect(() => {
+    window.sideAPI.system.getLanguageMap().then((result) => {
+      setLanguageMap(result)
+    })
+  }, [])
   const handleClose = async (value: CloseReason) => {
     if (value === 'Delete') {
       await window.sideAPI.suites.delete(suiteID)
@@ -51,7 +62,7 @@ const SuiteDeleteDialog: React.FC<SuiteDeleteDialogProps> = ({
     >
       <DialogContent>
         <DialogContentText>
-          Are you sure you want to delete suite {suiteName}
+          {languageMap.suitesTab.deleteNotice.replace('SUITE_NAME', suiteName)}
         </DialogContentText>
       </DialogContent>
       <DialogActions>

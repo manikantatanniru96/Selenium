@@ -3,7 +3,8 @@ import FormControl from '@mui/material/FormControl'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
 import Stack from '@mui/material/Stack'
-import React, { FC, useContext } from 'react'
+import Tooltip from '@mui/material/Tooltip'
+import React, { FC, useContext, useEffect, useState } from 'react'
 import Drawer from 'browser/components/Drawer/Wrapper'
 import EditorToolbar from 'browser/components/Drawer/EditorToolbar'
 import RenamableListItem from 'browser/components/Drawer/RenamableListItem'
@@ -19,7 +20,7 @@ const {
 } = window.sideAPI
 
 const TestsDrawer: FC = () => {
-  const {activeSuiteID, activeTestID} = useContext(activeTestContext)
+  const { activeSuiteID, activeTestID } = useContext(activeTestContext)
   const suites = useContext(suitesContext)
   const tests = useContext(testsContext)
   const testResults = useContext(testResultsContext)
@@ -30,7 +31,21 @@ const TestsDrawer: FC = () => {
         ?.tests.map((id) => tests.find((t) => t.id === id)!) ?? tests
     : tests
   const safeSuiteID = suites.find((s) => s.id === activeSuiteID)?.id ?? ''
+  const [languageMap, setLanguageMap] = useState<any>({
+    testsTab: {
+      allTests: '[All tests]',
+      deleteNotice: 'Delete this test?',
+      tooltip:
+        'double click to modify the name,right click to export or delete test case',
+      notDeleteNotice: 'only one test case is not allowed to be deleted!',
+    },
+  })
 
+  useEffect(() => {
+    window.sideAPI.system.getLanguageMap().then((result) => {
+      setLanguageMap(result)
+    })
+  }, [])
   return (
     <Drawer>
       <TestCreateDialog open={confirmNew} setOpen={setConfirmNew} />
@@ -40,12 +55,16 @@ const TestsDrawer: FC = () => {
           onRemove={
             tests.length > 1
               ? () => {
-                  const doDelete = window.confirm('Delete this test?')
+                  const doDelete = window.confirm(
+                    languageMap.testsTab.deleteNotice
+                  )
                   if (doDelete) {
                     window.sideAPI.tests.delete(activeTestID)
                   }
                 }
-              : undefined
+              : () => {
+                  window.confirm(languageMap.testsTab.notDeleteNotice)
+                }
           }
         />
         <FormControl size="small">
@@ -67,7 +86,7 @@ const TestsDrawer: FC = () => {
             sx={{ bottom: 0 }}
             value={safeSuiteID}
           >
-            <MenuItem value="">[All tests]</MenuItem>
+            <MenuItem value="">{languageMap.testsTab.allTests}</MenuItem>
             {suites.map((s) => (
               <MenuItem key={s.id} value={s.id}>
                 {s.name}
@@ -76,25 +95,27 @@ const TestsDrawer: FC = () => {
           </Select>
         </FormControl>
       </Stack>
-      <List className='flex-col flex-1 overflow-y' dense>
+      <List className="flex-col flex-1 overflow-y" dense>
         {testList
           .slice()
           .sort((a, b) => a.name.localeCompare(b.name))
           .map(({ id, name }) => {
             const testState = testResults[id]?.state
             return (
-              <RenamableListItem
-                id={id}
-                key={id}
-                name={name}
-                onContextMenu={() => {
-                  window.sideAPI.menus.open('testManager', [id])
-                }}
-                rename={rename}
-                selected={id === activeTestID}
-                setSelected={setSelected}
-                state={testState}
-              />
+              <Tooltip title={languageMap.testsTab.tooltip}>
+                <RenamableListItem
+                  id={id}
+                  key={id}
+                  name={name}
+                  onContextMenu={() => {
+                    window.sideAPI.menus.open('testManager', [id])
+                  }}
+                  rename={rename}
+                  selected={id === activeTestID}
+                  setSelected={setSelected}
+                  state={testState}
+                />
+              </Tooltip>
             )
           })}
       </List>

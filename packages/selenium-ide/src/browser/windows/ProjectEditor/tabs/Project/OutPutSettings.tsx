@@ -1,8 +1,8 @@
 import FormControl from '@mui/material/FormControl'
 import Stack from '@mui/material/Stack'
 import TextField from 'browser/components/UncontrolledTextField'
-import React, { FC, useEffect, useState } from 'react'
-import { CoreSessionData, ProjectShape } from '@seleniumhq/side-api'
+import React, { FC, useContext, useEffect, useState } from 'react'
+import { ProjectShape } from '@seleniumhq/side-api'
 import message from './Message'
 import Button from '@mui/material/Button'
 import MenuItem from '@mui/material/MenuItem'
@@ -10,6 +10,7 @@ import FormHelperText from '@mui/material/FormHelperText'
 import Select from '@mui/material/Select'
 import InputLabel from '@mui/material/InputLabel'
 import { styled } from '@mui/material/styles'
+import { context } from 'browser/contexts/session'
 
 const CustomButton = styled(Button)({
   marginLeft: 'auto',
@@ -50,11 +51,8 @@ const CustomButton = styled(Button)({
   },
 })
 
-export interface OutPutSettingsProps {
-  outPut: CoreSessionData['project']
-}
-
-const OutPutSettings: FC<OutPutSettingsProps> = ({ outPut }) => {
+const OutPutSettings: FC = () => {
+  const { project: outPut } = useContext(context)
   const [options, setOptions] = React.useState([])
   const [host, setHost] = React.useState('http://127.0.0.1:9998')
   const [testPlatform, setTestPlatform] = React.useState(

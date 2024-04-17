@@ -12,17 +12,32 @@ export const commands: MenuComponent = (session: Session) => () =>
     {
       label: 'Selenium IDE',
       submenu: [
-        { role: 'about' },
+        {
+          label: session.store.get('languageMap').electronMenuTree.about,
+          role: 'about',
+        },
         { type: 'separator' },
-        { role: 'services' },
+        {
+          label: session.store.get('languageMap').electronMenuTree.services,
+          role: 'services',
+        },
         { type: 'separator' },
-        { role: 'hide' },
-        { role: 'hideOthers' },
-        { role: 'unhide' },
+        {
+          label: session.store.get('languageMap').electronMenuTree.hideElectron,
+          role: 'hide',
+        },
+        {
+          label: session.store.get('languageMap').electronMenuTree.hideOthers,
+          role: 'hideOthers',
+        },
+        {
+          label: session.store.get('languageMap').electronMenuTree.showAll,
+          role: 'unhide',
+        },
         { type: 'separator' },
         {
           accelerator: platform() === 'win32' ? 'Alt+F4' : 'CommandOrControl+Q',
-          label: 'Quit',
+          label: session.store.get('languageMap').electronMenuTree.quit,
           click: async () => {
             await session.system.quit()
           },
@@ -30,22 +45,22 @@ export const commands: MenuComponent = (session: Session) => () =>
       ],
     },
     {
-      label: '&File',
+      label: session.store.get('languageMap').windowTab.file,
       submenu: projectEditorCommands(session)(),
     },
     {
-      label: '&Edit',
+      label: session.store.get('languageMap').windowTab.edit,
       submenu: [
         ...editBasicsCommands(session)(),
         ...testEditorCommands(session)(),
       ],
     },
     {
-      label: '&View',
+      label: session.store.get('languageMap').windowTab.view,
       submenu: projectViewCommands(session)(),
     },
     {
-      label: '&Help',
+      label: session.store.get('languageMap').windowTab.help,
       submenu: helpMenuCommands(session)(),
     },
   ]

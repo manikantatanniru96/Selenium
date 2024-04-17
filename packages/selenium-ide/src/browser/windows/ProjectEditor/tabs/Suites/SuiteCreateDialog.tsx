@@ -5,6 +5,7 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import TextField from '@mui/material/TextField'
+import { useEffect, useState } from 'react'
 
 const {
   state: { setActiveSuite: setSelected },
@@ -40,7 +41,20 @@ const SuiteNewDialog: React.FC<SuiteNewDialogProps> = ({ open, setOpen }) => {
       handleClose('Create')
     }
   }
+  const [languageMap, setLanguageMap] = useState<any>({
+    suitesTab: {
+      dialogTitle: 'Please specify the new suite name',
+      suiteName: 'Suite Name',
+      cancel: 'Cancel',
+      create: 'Create',
+    },
+  })
 
+  useEffect(() => {
+    window.sideAPI.system.getLanguageMap().then((result) => {
+      setLanguageMap(result)
+    })
+  }, [])
   return (
     <Dialog
       classes={{
@@ -50,12 +64,14 @@ const SuiteNewDialog: React.FC<SuiteNewDialogProps> = ({ open, setOpen }) => {
       open={open}
     >
       <DialogContent>
-        <DialogContentText>Please specify the new suite name</DialogContentText>
+        <DialogContentText>
+          {languageMap.suitesTab.dialogTitle}
+        </DialogContentText>
         <TextField
           autoFocus
           fullWidth
           id="name"
-          label="Suite Name"
+          label={languageMap.suitesTab.suiteName}
           margin="dense"
           onChange={(e) => setSuiteName(e.target.value)}
           onKeyDown={onKeyDown}
@@ -63,8 +79,12 @@ const SuiteNewDialog: React.FC<SuiteNewDialogProps> = ({ open, setOpen }) => {
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => handleClose('Cancel')}>Cancel</Button>
-        <Button onClick={() => handleClose('Create')}>Create</Button>
+        <Button onClick={() => handleClose('Cancel')}>
+          {languageMap.suitesTab.cancel}
+        </Button>
+        <Button onClick={() => handleClose('Create')}>
+          {languageMap.suitesTab.create}
+        </Button>
       </DialogActions>
     </Dialog>
   )

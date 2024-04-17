@@ -3,7 +3,7 @@ import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import { CommandShape } from '@seleniumhq/side-model'
 import { CoreSessionData } from '@seleniumhq/side-api'
-import React, { FC } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import CommandSelector from './CommandFields/CommandSelector'
 import ArgField from './CommandFields/ArgField'
 import CommandTextField from './CommandFields/TextField'
@@ -35,6 +35,17 @@ const CommandEditor: FC<CommandEditorProps> = ({
     ...command,
     command: isDisabled ? command.command.slice(2) : command.command,
   }
+  const [languageMap, setLanguageMap] = useState<any>({
+    testsTab: {
+      noCommandsSelected: 'No commands selected',
+    },
+  })
+
+  useEffect(() => {
+    window.sideAPI.system.getLanguageMap().then((result) => {
+      setLanguageMap(result)
+    })
+  }, [])
   if (selectedCommandIndexes.length > 1) {
     return (
       <Stack className="p-4" spacing={1}>
@@ -51,7 +62,7 @@ const CommandEditor: FC<CommandEditorProps> = ({
     return (
       <Stack className="p-4" spacing={1}>
         <Typography className="centered py-4" variant="body2">
-          No commands selected
+          {languageMap.testsTab.noCommandsSelected}
         </Typography>
       </Stack>
     )

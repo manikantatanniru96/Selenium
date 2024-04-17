@@ -247,7 +247,9 @@ export default class DriverController extends BaseController {
       },
     }
   ): Promise<WebDriverExecutor> {
+    console.info('使用的server地址:'+server)
     const browserName = browser === 'electron' ? 'chrome' : browser
+    console.info('使用的browserName:'+browserName)
     console.info('Instantiating driver builder for ', browser)
     const driverBuilder = await new Builder()
       .withCapabilities({
@@ -258,6 +260,7 @@ export default class DriverController extends BaseController {
       })
       .usingServer(server)
       .forBrowser(browserName)
+    console.info('使用的配置信息:'+JSON.stringify(capabilities))
     console.debug('Building driver for ' + browser)
     const driver = await retry(
       async () => {
@@ -288,6 +291,10 @@ export default class DriverController extends BaseController {
       hooks: {
         onBeforePlay: (v) => this.session.playback.onBeforePlay(v),
       },
+      /************以下为我新增***************/
+      implicitWait:this.session.projects.project.timeout || 5000
+      /************以上为我新增***************/
+
     })
     return executor
   }

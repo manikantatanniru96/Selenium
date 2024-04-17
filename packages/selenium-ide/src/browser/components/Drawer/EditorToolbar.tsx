@@ -3,10 +3,10 @@ import VisibilityIcon from '@mui/icons-material/Visibility'
 import EditIcon from '@mui/icons-material/Edit'
 import RemoveIcon from '@mui/icons-material/Remove'
 import Box from '@mui/material/Box'
-import {PaperProps} from '@mui/material/Paper'
+import { PaperProps } from '@mui/material/Paper'
 import Tooltip from '@mui/material/Tooltip'
 import IconButton from '@mui/material/IconButton'
-import React, { FC } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import DrawerHeader from './Header'
 import baseControlProps from '../Controls/BaseProps'
 
@@ -25,73 +25,96 @@ export interface EditorToolbarIconsProps {
 export const EditorToolbarIcons: FC<EditorToolbarIconsProps> = ({
   disabled = false,
   onAdd,
-  addText = "Add",
+  addText = 'Add',
   onEdit,
   editText = 'Edit',
   onRemove,
   removeText = 'Remove',
   onView,
   viewText = 'View',
-}) => (
-  <>
-    {onRemove ? (
-      <Box sx={{ flex: 0 }}>
-        <Tooltip title={removeText}>
-          <IconButton
-            {...baseControlProps}
-            color="warning"
-            disabled={disabled}
-            onClick={onRemove}
+}) => {
+  const [languageMap, setLanguageMap] = useState<any>({
+    testsTab: {
+      add: 'Add',
+      remove: 'Remove',
+    },
+  })
+  useEffect(() => {
+    window.sideAPI.system.getLanguageMap().then((result) => {
+      setLanguageMap(result)
+    })
+  }, [])
+  return (
+    <>
+      {onRemove ? (
+        <Box sx={{ flex: 0 }}>
+          <Tooltip
+            title={
+              languageMap.testsTab.remove
+                ? languageMap.testsTab.remove
+                : removeText
+            }
           >
-            <RemoveIcon />
-          </IconButton>
-        </Tooltip>
-      </Box>
-    ) : null}
-    {onEdit ? (
-      <Box sx={{ flex: 0 }}>
-        <Tooltip title={editText}>
-          <IconButton
-            {...baseControlProps}
-            color="info"
-            disabled={disabled}
-            onClick={onEdit}
+            <IconButton
+              {...baseControlProps}
+              color="warning"
+              disabled={disabled}
+              onClick={onRemove}
+            >
+              <RemoveIcon />
+            </IconButton>
+          </Tooltip>
+        </Box>
+      ) : null}
+      {onEdit ? (
+        <Box sx={{ flex: 0 }}>
+          <Tooltip title={editText}>
+            <IconButton
+              {...baseControlProps}
+              color="info"
+              disabled={disabled}
+              onClick={onEdit}
+            >
+              <EditIcon />
+            </IconButton>
+          </Tooltip>
+        </Box>
+      ) : null}
+      {onView ? (
+        <Box sx={{ flex: 0 }}>
+          <Tooltip title={viewText}>
+            <IconButton
+              {...baseControlProps}
+              color="info"
+              disabled={disabled}
+              onClick={onView}
+            >
+              <VisibilityIcon />
+            </IconButton>
+          </Tooltip>
+        </Box>
+      ) : null}
+      {onAdd ? (
+        <Box sx={{ flex: 0 }}>
+          <Tooltip
+            title={
+              languageMap.testsTab.add ? languageMap.testsTab.add : addText
+            }
           >
-            <EditIcon />
-          </IconButton>
-        </Tooltip>
-      </Box>
-    ) : null}
-    {onView ? (
-      <Box sx={{ flex: 0 }}>
-        <Tooltip title={viewText}>
-          <IconButton
-            {...baseControlProps}
-            color="info"
-            disabled={disabled}
-            onClick={onView}
-          >
-            <VisibilityIcon />
-          </IconButton>
-        </Tooltip>
-      </Box>
-    ) : null}
-    {onAdd ? (
-      <Box sx={{ flex: 0 }}>
-        <Tooltip title={addText}>
-          <IconButton
-            {...baseControlProps}
-            color="success"
-            disabled={disabled}
-            onClick={onAdd}
-          >
-            <AddIcon />
-          </IconButton>
-        </Tooltip>
-      </Box>
-    ) : null}
-  </>
-)
+            <IconButton
+              {...baseControlProps}
+              color="success"
+              disabled={disabled}
+              onClick={onAdd}
+            >
+              <AddIcon />
+            </IconButton>
+          </Tooltip>
+        </Box>
+      ) : null}
+    </>
+  )
+}
 
 export const EditorToolbarShell: FC<PaperProps> = ({
   children,
@@ -109,7 +132,9 @@ export const EditorToolbarShell: FC<PaperProps> = ({
   </DrawerHeader>
 )
 
-export interface EditorToolbarProps extends PaperProps, EditorToolbarIconsProps {}
+export interface EditorToolbarProps
+  extends PaperProps,
+    EditorToolbarIconsProps {}
 
 const EditorToolbar: FC<EditorToolbarProps> = ({
   children,
@@ -117,7 +142,7 @@ const EditorToolbar: FC<EditorToolbarProps> = ({
   disabled = false,
   elevation = 0,
   onAdd,
-  addText = "Add",
+  addText = 'Add',
   onEdit,
   editText = 'Edit',
   onRemove,
@@ -125,26 +150,28 @@ const EditorToolbar: FC<EditorToolbarProps> = ({
   onView,
   viewText = 'View',
   ...props
-}) => (
-  <DrawerHeader
-    className={className + ' flex flex-row'}
-    elevation={elevation}
-    square
-    {...props}
-  >
-    <Box sx={{ flex: 1 }}>{children}</Box>
-    <EditorToolbarIcons
-      disabled={disabled}
-      onAdd={onAdd}
-      addText={addText}
-      onEdit={onEdit}
-      editText={editText}
-      onRemove={onRemove}
-      removeText={removeText}
-      onView={onView}
-      viewText={viewText}
-    />
-  </DrawerHeader>
-)
+}) => {
+  return (
+    <DrawerHeader
+      className={className + ' flex flex-row'}
+      elevation={elevation}
+      square
+      {...props}
+    >
+      <Box sx={{ flex: 1 }}>{children}</Box>
+      <EditorToolbarIcons
+        disabled={disabled}
+        onAdd={onAdd}
+        addText={addText}
+        onEdit={onEdit}
+        editText={editText}
+        onRemove={onRemove}
+        removeText={removeText}
+        onView={onView}
+        viewText={viewText}
+      />
+    </DrawerHeader>
+  )
+}
 
 export default EditorToolbar

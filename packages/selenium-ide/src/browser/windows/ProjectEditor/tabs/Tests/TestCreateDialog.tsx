@@ -5,6 +5,7 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import TextField from '@mui/material/TextField'
+import { useEffect, useState } from 'react'
 
 const {
   state: { setActiveTest: setSelected },
@@ -40,22 +41,38 @@ const TestNewDialog: React.FC<TestNewDialogProps> = ({ open, setOpen }) => {
       handleClose('Create')
     }
   }
+  const [languageMap, setLanguageMap] = useState<any>({
+    testsTab: {
+      dialogTitle: 'Please specify the new test name',
+      testName: 'Test Name',
+      cancel: 'Cancel',
+      create: 'Create',
+    },
+  })
+
+  useEffect(() => {
+    window.sideAPI.system.getLanguageMap().then((result) => {
+      setLanguageMap(result)
+    })
+  }, [])
 
   return (
     <Dialog
       classes={{
-        container: 'justify-content-start'
+        container: 'justify-content-start',
       }}
       onClose={handleClose}
       open={open}
     >
       <DialogContent>
-        <DialogContentText>Please specify the new test name</DialogContentText>
+        <DialogContentText>
+          {languageMap.testsTab.dialogTitle}
+        </DialogContentText>
         <TextField
           autoFocus
           fullWidth
           id="name"
-          label="Test Name"
+          label={languageMap.testsTab.testName}
           margin="dense"
           onChange={(e) => setTestName(e.target.value)}
           onKeyDown={onKeyDown}
@@ -63,8 +80,12 @@ const TestNewDialog: React.FC<TestNewDialogProps> = ({ open, setOpen }) => {
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => handleClose('Cancel')}>Cancel</Button>
-        <Button onClick={() => handleClose('Create')}>Create</Button>
+        <Button onClick={() => handleClose('Cancel')}>
+          {languageMap.testsTab.cancel}
+        </Button>
+        <Button onClick={() => handleClose('Create')}>
+          {languageMap.testsTab.create}
+        </Button>
       </DialogActions>
     </Dialog>
   )

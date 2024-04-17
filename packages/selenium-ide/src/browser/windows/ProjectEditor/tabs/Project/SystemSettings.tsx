@@ -4,10 +4,10 @@ import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
 import Stack from '@mui/material/Stack'
-import { VerboseBoolean } from '@seleniumhq/side-api'
-import React, { FC, useContext } from 'react'
-import DriverSelector from './DriverSelect'
 import { context } from 'browser/contexts/config'
+import { VerboseBoolean } from '@seleniumhq/side-api'
+import React, { FC, useContext, useEffect, useState } from 'react'
+import DriverSelector from './DriverSelect'
 
 export interface MiniProjectShape {
   id: string
@@ -16,14 +16,30 @@ export interface MiniProjectShape {
 
 const SystemSettings: FC = () => {
   const config = useContext(context)
+  const [languageMap, setLanguageMap] = useState<any>({
+    systemConfig: {
+      theme: 'Theme preference',
+      themeHelper: 'restart required to take effect',
+      commandInsert: 'New command insert preference',
+      camelCase: 'Camel case various names in UI',
+      ignoreErrors: 'Ignore Certificate/SSL errors',
+      codeExport: 'Disable code export compatibility mode',
+    },
+  })
+
+  useEffect(() => {
+    window.sideAPI.system.getLanguageMap().then((result) => {
+      setLanguageMap(result)
+    })
+  }, [])
   return (
     <Stack className="p-4" spacing={1}>
       <FormControl>
-        <InputLabel id="themePref">Theme preference</InputLabel>
-        <FormHelperText>restart required to take effect</FormHelperText>
+        <InputLabel id="themePref">{languageMap.systemConfig.theme}</InputLabel>
+        <FormHelperText>{languageMap.systemConfig.themeHelper}</FormHelperText>
         <Select
           id="themePref"
-          label="Theme Preference"
+          label="Theme preference"
           name="themePref"
           value={config.system.themePref}
           onChange={(e: any) => {
@@ -37,7 +53,7 @@ const SystemSettings: FC = () => {
       </FormControl>
       <FormControl>
         <InputLabel id="insertNewCommandPref">
-          New command insert preference
+          {languageMap.systemConfig.commandInsert}
         </InputLabel>
         <Select
           id="insertNewCommandPref"
@@ -54,7 +70,7 @@ const SystemSettings: FC = () => {
       </FormControl>
       <FormControl>
         <InputLabel id="camelCaseNames">
-          Camel case various names in UI
+          {languageMap.systemConfig.camelCase}
         </InputLabel>
         <Select
           id="camelCaseNamesPref"
@@ -71,7 +87,7 @@ const SystemSettings: FC = () => {
       </FormControl>
       <FormControl>
         <InputLabel id="ignoreSSLErrors">
-          Ignore Certificate/SSL errors
+          {languageMap.systemConfig.ignoreErrors}
         </InputLabel>
         <Select
           id="ignoreCertificateErrorsPref"
@@ -90,7 +106,7 @@ const SystemSettings: FC = () => {
       </FormControl>
       <FormControl>
         <InputLabel id="disableCodeExportCompat">
-          Disable code export compatibility mode
+          {languageMap.systemConfig.codeExport}
         </InputLabel>
         <Select
           id="disableCodeExportCompatPref"

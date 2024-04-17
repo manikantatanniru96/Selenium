@@ -1,3 +1,4 @@
+import { chineseMap, englishMap } from "browser/enums/I18N";
 import { dialog, ipcMain } from 'electron'
 import { autoUpdater } from 'electron-updater'
 import { COLOR_CYAN, isAutomated, vdebuglog } from 'main/util'
@@ -49,6 +50,26 @@ export default class SystemController extends BaseController {
   async writeToLog(...args: any[]) {
     this.logs.push(args.map((arg) => inspect(arg)).join(' '))
   }
+
+  /***以下是我新增***/
+  async getLanguage() {
+    return this.session.store.get("language");
+  }
+
+  async setLanguage(value: string) {
+    this.session.store.set("language", value);
+    if (value === "cn") {
+      this.session.store.set("languageMap", chineseMap);
+    } else {
+      this.session.store.set("languageMap", englishMap);
+    }
+  }
+
+  async getLanguageMap() {
+    return this.session.store.get("languageMap");
+  }
+
+  /***以上是我新增***/
 
   async startup() {
     this.isDev =

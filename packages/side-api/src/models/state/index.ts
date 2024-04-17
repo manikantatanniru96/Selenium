@@ -45,7 +45,7 @@ export const defaultRecorderState: RecorderStateShape = {
   activeFrame: 'root',
 }
 
-export type ConfigSettingsGroup = 'project' | 'system'
+export type ConfigSettingsGroup = 'project' | 'system' | 'outPut'
 export type VerboseBoolean = 'Yes' | 'No'
 export type InsertCommandPref = 'Before' | 'After'
 export type ThemePref = 'Dark' | 'Light' | 'System'
