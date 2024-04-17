@@ -150,12 +150,7 @@ function startWebdriverBackend() {
   const successMessage = 'was started successfully.'
   return new Promise((resolve) => {
     let initialized = false
-    const args = [
-      '--verbose',
-      `--port=${port}`,
-      '--disable-dev-shm-usage',
-      '--no-sandbox',
-    ]
+    const args = ['--verbose', `--port=${port}`]
     if (fs.existsSync(driverPath)) {
       const proc = spawn(driverPath.replace(/\s/g, ' '), args, {
         env: {},
