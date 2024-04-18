@@ -42,7 +42,7 @@ main()
 async function main() {
   console.log('Starting webdriver backend')
   console.log(`Using display [${process.env.DISPLAY || 'none'}] specified`)
-  const { proc, success } = await startWebdriverBackend({ driver: 'chrome' })
+  const { proc, success } = await startWebdriverBackend()
   if (!success) {
     console.error('Failed to start webdriver backend')
     console.error(proc.error)
