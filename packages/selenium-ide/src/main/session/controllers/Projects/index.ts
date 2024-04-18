@@ -9,7 +9,6 @@ import { randomUUID } from 'crypto'
 import RecentProjects from './Recent'
 import BaseController from '../Base'
 import { isAutomated } from 'main/util'
-import { session } from 'electron'
 
 export default class ProjectsController {
   constructor(session: Session) {
