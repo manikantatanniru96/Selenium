@@ -35,7 +35,7 @@ jobs:
       - name: Build side-runner and selenium-ide
         run: npm run build
       - name: Install xvfb
-        run: sudo apt-get update -y && sudo apt-get install -y xvfb x11-xserver-utils
+        run: sudo apt-get update -y && sudo apt-get install -y libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxss1 libasound2 libxtst6 xauth xvfb
       - name: Run all tests and also use xvfb
         run: xvfb-run --auto-servernum --server-args="-screen 0 1280x960x24" -- npm run test:ci
 
