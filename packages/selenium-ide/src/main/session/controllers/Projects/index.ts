@@ -44,9 +44,6 @@ export default class ProjectsController {
     if (this.loaded) return
     this.filepath = filepath
     this.project = project
-    await session.defaultSession.clearStorageData({
-      storages: ['cookies', 'localstorage'],
-    })
     await this.executeHook('onProjectLoaded')
     this.loaded = true
   }
