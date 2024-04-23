@@ -27,7 +27,7 @@ export const commands: MenuComponent = (session) => () =>
     },
     {
       accelerator: 'CommandOrControl+R',
-      label: 'Refresh Playback Window',
+      label: session.store.get('languageMap').viewMenuTree.refreshPlaybackWindow,
       click: async () => {
         const window = await session.windows.getActivePlaybackWindow()
         if (window) {

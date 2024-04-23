@@ -39,6 +39,10 @@ const CommandEditor: FC<CommandEditorProps> = ({
     testsTab: {
       noCommandsSelected: 'No commands selected',
     },
+    testCore:{
+      windowHandleName: "Window Handle Name",
+      windowHandleNameNote:"Variable name to set to the new window handle"
+    }
   })
 
   useEffect(() => {
@@ -81,8 +85,8 @@ const CommandEditor: FC<CommandEditorProps> = ({
           <CommandTextField
             command={correctedCommand}
             {...props}
-            fieldName="windowHandleName"
-            note="Variable name to set to the new window handle"
+            fieldName={languageMap.testCore.windowHandleName}
+            note={languageMap.testCore.windowHandleNameNote}
           />
         )}
         <CommandTextField

@@ -64,11 +64,13 @@ const editMenuTreeChinese = {
 // 查看菜单
 const viewMenuTreeEnglish = {
   showDevTools: "Show DevTools",
-  resetPlaybackWindows: "Reset Playback Windows"
+  resetPlaybackWindows: "Reset Playback Windows",
+  refreshPlaybackWindow:"Refresh Playback Window"
 };
 const viewMenuTreeChinese = {
   showDevTools: "开发者工具",
-  resetPlaybackWindows: "重置回放窗口"
+  resetPlaybackWindows: "重置回放窗口",
+  refreshPlaybackWindow: "刷新回放窗口"
 };
 
 // 帮助菜单
@@ -307,6 +309,8 @@ const testCoreEnglish = {
   comment: "Comment",
   target: "Target",
   value: "Value",
+  windowHandleName:"Window Handle Name",
+  windowHandleNameNote:"Variable name to set to the new window handle",
   commands: "Commands",
   tabCommand: "Cmd",
   tabTarget: "Target",
@@ -339,6 +343,8 @@ const testCoreChinese = {
   comment: "备注",
   target: "关键字",
   value: "指令值",
+  windowHandleName:"窗口句柄名称",
+  windowHandleNameNote:"要设置为新窗口句柄的变量名称",
   commands: "指令集",
   tabCommand: "指令",
   tabTarget: "关键字",
