@@ -43,7 +43,6 @@ export default class RecentProjectsController extends BaseController {
     return true
   }
   get(): string[] {
-    console.debug('最近打开:' + this.session.store.get('recentProjects', []))
     return this.session.store.get('recentProjects', [])
   }
 }
