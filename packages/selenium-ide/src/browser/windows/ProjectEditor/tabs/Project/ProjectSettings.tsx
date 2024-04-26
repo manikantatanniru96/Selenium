@@ -22,9 +22,6 @@ const ProjectSettings: FC = () => {
   const {
     project: { delay, name, plugins, timeout, url },
   } = React.useContext(context)
-  if (url === 'http://loading') {
-    return null
-  }
   const [languageMap, setLanguageMap] = useState<any>({
     projectConfig: {
       name: 'name',
@@ -42,6 +39,9 @@ const ProjectSettings: FC = () => {
       setLanguageMap(result)
     })
   }, [])
+  if (url === 'http://loading') {
+    return null
+  }
   return (
     <>
       <Stack className="p-4" spacing={1}>

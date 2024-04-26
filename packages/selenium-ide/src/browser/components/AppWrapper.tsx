@@ -7,11 +7,9 @@ import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
 import React, { FC } from 'react'
+import { IntlProvider } from 'react-intl'
 
-interface AppWrapperProps extends React.HTMLAttributes<HTMLDivElement> {
-  className?: string
-}
-
+type AppWrapperProps = Pick<React.HTMLAttributes<HTMLDivElement>, 'children'>
 const AppWrapper: FC<AppWrapperProps> = ({ children }) => {
   const [themePref, setThemePref] = React.useState<ThemePref>('System')
   React.useEffect(() => {
@@ -34,10 +32,13 @@ const AppWrapper: FC<AppWrapperProps> = ({ children }) => {
   )
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      {children}
-    </ThemeProvider>
+    <IntlProvider defaultLocale='en'>
+      {/* @ts-expect-error react-intl has funky versions */}
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        {children}
+      </ThemeProvider>
+    </IntlProvider>
   )
 }
 

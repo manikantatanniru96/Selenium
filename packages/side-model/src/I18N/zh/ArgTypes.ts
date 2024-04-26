@@ -1,21 +1,9 @@
-// Licensed to the Software Freedom Conservancy (SFC) under one
-// or more contributor license agreements.  See the NOTICE file
-// distributed with this work for additional information
-// regarding copyright ownership.  The SFC licenses this file
-// to you under the Apache License, Version 2.0 (the
-// "License"); you may not use this file except in compliance
-// with the License.  You may obtain a copy of the License at
-//
-//   http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing,
-// software distributed under the License is distributed on an
-// "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-// KIND, either express or implied.  See the License for the
-// specific language governing permissions and limitations
-// under the License.
+import { ArgTypes } from '../../ArgTypes'
 
-const argTypes = {
+/**
+ * CN bindings for the argument types
+ */
+export const argTypes: ArgTypes = {
   alertText: {
     name: 'alert text',
     description: 'text to check',
@@ -27,7 +15,7 @@ const argTypes = {
   attributeLocator: {
     name: 'attribute locator',
     description: `An element locator followed by an @ sign and then the name of 
-    the attribute, e.g. "foo@bar"`,
+      the attribute, e.g. "foo@bar"`,
   },
   arrayVariableName: {
     name: 'array variable name',
@@ -36,17 +24,17 @@ const argTypes = {
   conditionalExpression: {
     name: 'conditional expression',
     description: `JavaScript expression that returns a boolean result for use 
-    in control flow commands`,
+      in control flow commands`,
   },
   coord: {
     name: 'coord string',
     description: `Specifies the x,y position (e.g., - 10,20) of the mouse event 
-    relative to the element found from a locator`,
+      relative to the element found from a locator`,
   },
   expectedValue: {
     name: 'expected value',
     description: `The result you expect a variable to contain (e.g., true, false, 
-    or some other value)`,
+      or some other value)`,
   },
   expression: {
     name: 'expression',
@@ -80,8 +68,8 @@ const argTypes = {
   locatorOfDragDestinationObject: {
     name: 'locator of drag destination object',
     description: `The locator of an element whose location (e.g., the center-most 
-    pixel within it) will be the point where locator of object to be dragged is 
-    dropped`,
+      pixel within it) will be the point where locator of object to be dragged is 
+      dropped`,
   },
   locatorOfObjectToBeDragged: {
     name: 'locator of object to be dragged',
@@ -103,12 +91,12 @@ const argTypes = {
   pattern: {
     name: 'text',
     description: `An exact string match. Support for pattern matching is in the 
-    works. See https://github.com/SeleniumHQ/selenium-ide/issues/141 for details`,
+      works. See https://github.com/SeleniumHQ/selenium-ide/issues/141 for details`,
   },
   region: {
     name: 'region',
     description: `Specify a rectangle with coordinates and lengths (e.g., "x: 257, 
-    y: 300, width: 462, height: 280")`,
+      y: 300, width: 462, height: 280")`,
   },
   resolution: {
     name: 'resolution',
@@ -133,7 +121,7 @@ const argTypes = {
   times: {
     name: 'times',
     description: `The number of attempts a times control flow loop will execute 
-    the commands within its block`,
+      the commands within its block`,
   },
   url: {
     name: 'url',
@@ -146,15 +134,15 @@ const argTypes = {
   variableName: {
     name: 'variable name',
     description: `The name of a variable (without brackets). Used to either store 
-    an expression's result in or reference for a check (e.g., with 'assert' or 
-    'verify')`,
+      an expression's result in or reference for a check (e.g., with 'assert' or 
+      'verify')`,
   },
   variableNameOptional: {
     name: 'variable name',
     isOptional: true,
     description: `The name of a variable (without brackets). Used to either store 
-    an expression's result in or reference for a check (e.g., with 'assert' or 
-    'verify')`,
+      an expression's result in or reference for a check (e.g., with 'assert' or 
+      'verify')`,
   },
   waitTime: {
     name: 'wait time',
@@ -165,13 +153,3 @@ const argTypes = {
     description: 'The xpath expression to evaluate',
   },
 }
-
-export type ArgTypes = typeof argTypes
-export type ArgNames = ArgTypes[keyof ArgTypes]['name']
-export interface ArgType {
-  name: ArgNames
-  description: string
-  isOptional?: boolean
-}
-
-export default argTypes

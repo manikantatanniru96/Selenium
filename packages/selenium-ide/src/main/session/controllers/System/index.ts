@@ -53,20 +53,12 @@ export default class SystemController extends BaseController {
 
   /***以下是我新增***/
   async getLanguage() {
-    return this.session.store.get("language");
-  }
-
-  async setLanguage(value: string) {
-    this.session.store.set("language", value);
-    if (value === "cn") {
-      this.session.store.set("languageMap", chineseMap);
-    } else {
-      this.session.store.set("languageMap", englishMap);
-    }
+    return this.session.app.getLocale();
   }
 
   async getLanguageMap() {
-    return this.session.store.get("languageMap");
+    const language = await this.getLanguage();
+    const {default: langaugeMap} = await import(`../../i18n/${language}/Commands`);
   }
 
   /***以上是我新增***/

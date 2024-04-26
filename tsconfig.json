@@ -53,6 +53,9 @@
       "path": "./packages/side-model"
     },
     {
+      "path": "./packages/side-model-locale-data"
+    },
+    {
       "path": "./packages/side-runner"
     },
     {

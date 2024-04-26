@@ -24,10 +24,6 @@ export interface CommandType {
   value?: ArgType
 }
 
-export interface CommandTypes {
-  [key: string]: CommandType
-}
-
 export default {
   acceptAlert: {
     name: 'accept alert',
@@ -633,4 +629,4 @@ export default {
     target: ArgTypes.conditionalExpression,
     value: ArgTypes.loopLimit,
   },
-} as CommandTypes
+}
