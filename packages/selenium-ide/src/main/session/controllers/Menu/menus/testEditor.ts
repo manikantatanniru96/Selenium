@@ -19,7 +19,7 @@ export const commandList: MenuComponent = (session) => () => {
   const editorState = sessionData.state.editor
   const copiedCommandCount = editorState.copiedCommands.length
   const selectedCommandCount = editorState.selectedCommandIndexes.length
-  const languageMap = session.store.get('languageMap')
+  const languageMap = session.system.languageMap
   return [
     {
       accelerator: 'CommandOrControl+Shift+X',
@@ -130,7 +130,7 @@ export const commandList: MenuComponent = (session) => () => {
 export const recorderList = (session: Session) => () => {
   const selectedCommandCount =
     session.state.state.editor.selectedCommandIndexes.length
-  const languageMap = session.store.get('languageMap')
+  const languageMap = session.system.languageMap
   return [
     {
       accelerator: 'CommandOrControl+R',
@@ -147,7 +147,7 @@ export const playbackList: MenuComponent =
   (session) => (_commandID?: string) => {
     const selectedCommandCount =
       session.state.state.editor.selectedCommandIndexes.length
-    const languageMap = session.store.get('languageMap')
+    const languageMap = session.system.languageMap
     return [
       {
         click: async () => {

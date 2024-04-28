@@ -3,7 +3,7 @@ import { menuFactoryFromCommandFactory } from '../utils'
 
 export const commands: MenuComponent<[string[]]> = (session) => (testIDs) => {
   const outputFormats = session.outputFormats.getFormats()
-  const languageMap = session.store.get('languageMap')
+  const languageMap = session.system.languageMap
   return [
     {
       accelerator: 'CommandOrControl+Shift+Delete',

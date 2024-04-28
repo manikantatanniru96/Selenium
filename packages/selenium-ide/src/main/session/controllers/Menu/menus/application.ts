@@ -13,31 +13,31 @@ export const commands: MenuComponent = (session: Session) => () =>
       label: 'Selenium IDE',
       submenu: [
         {
-          label: session.store.get('languageMap').electronMenuTree.about,
+          label: session.system.languageMap.electronMenuTree.about,
           role: 'about',
         },
         { type: 'separator' },
         {
-          label: session.store.get('languageMap').electronMenuTree.services,
+          label: session.system.languageMap.electronMenuTree.services,
           role: 'services',
         },
         { type: 'separator' },
         {
-          label: session.store.get('languageMap').electronMenuTree.hideElectron,
+          label: session.system.languageMap.electronMenuTree.hideElectron,
           role: 'hide',
         },
         {
-          label: session.store.get('languageMap').electronMenuTree.hideOthers,
+          label: session.system.languageMap.electronMenuTree.hideOthers,
           role: 'hideOthers',
         },
         {
-          label: session.store.get('languageMap').electronMenuTree.showAll,
+          label: session.system.languageMap.electronMenuTree.showAll,
           role: 'unhide',
         },
         { type: 'separator' },
         {
           accelerator: platform() === 'win32' ? 'Alt+F4' : 'CommandOrControl+Q',
-          label: session.store.get('languageMap').electronMenuTree.quit,
+          label: session.system.languageMap.electronMenuTree.quit,
           click: async () => {
             await session.system.quit()
           },
@@ -45,22 +45,22 @@ export const commands: MenuComponent = (session: Session) => () =>
       ],
     },
     {
-      label: session.store.get('languageMap').windowTab.file,
+      label: session.system.languageMap.windowTab.file,
       submenu: projectEditorCommands(session)(),
     },
     {
-      label: session.store.get('languageMap').windowTab.edit,
+      label: session.system.languageMap.windowTab.edit,
       submenu: [
         ...editBasicsCommands(session)(),
         ...testEditorCommands(session)(),
       ],
     },
     {
-      label: session.store.get('languageMap').windowTab.view,
+      label: session.system.languageMap.windowTab.view,
       submenu: projectViewCommands(session)(),
     },
     {
-      label: session.store.get('languageMap').windowTab.help,
+      label: session.system.languageMap.windowTab.help,
       submenu: helpMenuCommands(session)(),
     },
   ]

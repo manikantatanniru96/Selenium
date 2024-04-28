@@ -196,7 +196,7 @@ const testCoreEnglish = {
   playFromStart: 'Play From Start',
 }
 
-export const langaugeMapEn = {
+export const backend = {
   windowTab: windowTabEnglish,
   electronMenuTree: electronMenuTreeEnglish,
   fileMenuTree: fileMenuTreeEnglish,
@@ -218,7 +218,6 @@ export const langaugeMapEn = {
 
 // Creating a type of this so other locales are prompted to be filled in by
 // the developer
-export type LanguageMap = typeof langaugeMapEn
+export type LanguageMap = typeof backend
 
-const flattenedMap = flattenNestedObject(langaugeMapEn)
-export default flattenedMap
+export const frontend = flattenNestedObject(backend)

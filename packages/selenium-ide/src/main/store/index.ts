@@ -1,6 +1,5 @@
 import { StateShape, UserPrefs } from "@seleniumhq/side-api";
 import { defaultUserPrefs } from "@seleniumhq/side-api/dist/models/state";
-import englishMap from "browser/I18N/en";
 import { window as ProjectWindow } from "browser/windows/ProjectEditor/controller";
 import { window as PlaybackWindow } from "browser/windows/PlaybackWindow/controller";
 import Store from "electron-store";
@@ -22,12 +21,6 @@ export interface StorageSchema {
   windowSizePlayback: [number, number];
   windowPositionPlayback: [number, number];
   userPrefs: UserPrefs;
-
-  /***********以下是我新增*************/
-  language: string;
-  languageMap: any;
-  /***********以上是我新增*************/
-
 }
 
 export default () => {
@@ -63,8 +56,6 @@ export default () => {
         PlaybackWindowController.y!
       ],
       userPrefs: defaultUserPrefs,
-      language: "en",
-      languageMap:  englishMap,
     }
   });
   return store;

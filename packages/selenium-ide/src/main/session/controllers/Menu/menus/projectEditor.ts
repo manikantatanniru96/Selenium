@@ -5,7 +5,7 @@ export const commands: MenuComponent = (session) => () =>
   [
     {
       accelerator: 'CommandOrControl+N',
-      label: session.store.get('languageMap').fileMenuTree.newProject,
+      label: session.system.languageMap.fileMenuTree.newProject,
       click: async () => {
         await session.api.projects.new()
       },
@@ -13,7 +13,7 @@ export const commands: MenuComponent = (session) => () =>
     { type: 'separator' },
     {
       accelerator: 'CommandOrControl+O',
-      label: session.store.get('languageMap').fileMenuTree.loadProject,
+      label: session.system.languageMap.fileMenuTree.loadProject,
       click: async () => {
         const response = await session.dialogs.open()
         if (response.canceled) return
@@ -22,7 +22,7 @@ export const commands: MenuComponent = (session) => () =>
     },
     {
       accelerator: 'CommandOrControl+R',
-      label: session.store.get('languageMap').fileMenuTree.recentProjects,
+      label: session.system.languageMap.fileMenuTree.recentProjects,
       click: async () => {
         await session.projects.showRecents()
       },
@@ -36,7 +36,7 @@ export const commands: MenuComponent = (session) => () =>
     { type: 'separator' },
     {
       accelerator: 'CommandOrControl+S',
-      label: session.store.get('languageMap').fileMenuTree.saveProject,
+      label: session.system.languageMap.fileMenuTree.saveProject,
       click: async () => {
         await session.projects.save(session.projects.filepath as string)
       },
@@ -44,7 +44,7 @@ export const commands: MenuComponent = (session) => () =>
     },
     {
       accelerator: 'CommandOrControl+Shift+S',
-      label: session.store.get('languageMap').fileMenuTree.saveProjectAs,
+      label: session.system.languageMap.fileMenuTree.saveProjectAs,
       click: async () => {
         const response = await session.dialogs.openSave()
         if (response.canceled) return

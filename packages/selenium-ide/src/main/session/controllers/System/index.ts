@@ -1,4 +1,4 @@
-import enStrings from 'browser/I18N/en'
+import * as langFileEn from 'browser/I18N/en'
 import { dialog, ipcMain } from 'electron'
 import { autoUpdater } from 'electron-updater'
 import { writeFile } from 'fs/promises'
@@ -12,10 +12,12 @@ export default class SystemController extends BaseController {
   constructor(session: any) {
     super(session)
     this.writeToLog = this.writeToLog.bind(this)
+    this.getLanguageMap(false)
   }
   isDown = true
   isDev = false
   shuttingDown = false
+  languageMap: langFileEn.LanguageMap = langFileEn.backend
   logs: string[] = []
   loggers = {
     api: vdebuglog('api', COLOR_CYAN),
@@ -52,21 +54,14 @@ export default class SystemController extends BaseController {
   }
 
   /***以下是我新增***/
-  async getLanguage() {
-    return this.session.app.getLocale()
-  }
-
-  async getLanguageMap() {
-    const language = await this.getLanguage()
+  async getLanguageMap(frontend = false) {
+    const language = await this.session.app.getLocale()
     try {
-      const { default: langaugeMap } = await import(
-        `../../i18n/${language.slice(0, 2)}/Commands`
-      )
-      return {
-        ...langaugeMap,
-      }
+      const langFile = await import(`../../i18n/${language}/Commands`)
+      this.languageMap = langFile.backend
+      return frontend ? langFile.frontend : langFile.backend
     } catch (e) {
-      return enStrings
+      return frontend ? langFileEn.frontend : langFileEn.backend
     }
   }
 

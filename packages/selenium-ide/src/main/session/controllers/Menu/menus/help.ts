@@ -8,7 +8,7 @@ export const commands: MenuComponent = (session) => () =>
       click: async () => {
         await session.system.dumpSession()
       },
-      label: session.store.get('languageMap').helpMenuTree.dumpSession,
+      label: session.system.languageMap.helpMenuTree.dumpSession,
     },
   ]
 

@@ -10,6 +10,12 @@ import { LocatorFields } from '@seleniumhq/side-api'
 import { useIntl } from 'react-intl'
 import languageMap from 'browser/I18N/keys'
 
+const inputLabelProps = {
+  sx: {
+    textOverflow: 'ellipsis',
+  },
+}
+
 const CommandTextField: FC<CommandFieldProps> = ({
   command,
   disabled,
@@ -33,12 +39,16 @@ const CommandTextField: FC<CommandFieldProps> = ({
         return value
     }
   }
+  console.log(
+    languageMap.commandMap[command.command][fieldName as LocatorFields]
+      ?.description,
+    command
+  )
   // 一定会使用languageMap.commandMap,其实是为了兼容参数commands
   const fullNote =
     note ||
     intl.formatMessage({
-      id: languageMap.commandMap[command.command][fieldName as LocatorFields]
-        ?.description,
+      id: `commandMap.${command.command}.${fieldName}.description`,
     })
   const label = fullNote
     ? handleLabel(FieldName) + ' - ' + fullNote
@@ -51,11 +61,7 @@ const CommandTextField: FC<CommandFieldProps> = ({
         disabled={disabled}
         id={`${fieldName}-${command.id}`}
         label={label}
-        InputLabelProps={{
-          sx: {
-            textOverflow: 'ellipsis',
-          },
-        }}
+        InputLabelProps={inputLabelProps}
         name={fieldName}
         onChange={updateText(testID, command.id)}
         onContextMenu={() => {

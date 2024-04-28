@@ -745,9 +745,9 @@ export default class WindowsController extends BaseController {
       this.session.projects?.filepath ??
       this.session.projects.project.name ??
       ''
-    projectWindow.title = `${
-      this.session.store.get('languageMap').windowTab.title
-    }${projectID ? `: ${projectID}` : ''}`
+    projectWindow.title = `${this.session.system.languageMap.windowTab.title}${
+      projectID ? `: ${projectID}` : ''
+    }`
     this.useWindowState(projectWindow, 'windowSize', 'windowPosition')
     projectWindow.on('move', () => {
       this.session.resizablePanels.recalculatePlaybackWindows()

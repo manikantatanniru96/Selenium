@@ -15,6 +15,7 @@ import { context as testsContext } from 'browser/contexts/tests'
 import { context as testResultsContext } from 'browser/contexts/playback-test-results'
 import { FormattedMessage, useIntl } from 'react-intl'
 import languageMap from 'browser/I18N/keys'
+import { QuestionAnswer } from '@mui/icons-material'
 
 const {
   state: { setActiveTest: setSelected, setActiveSuite },
@@ -60,7 +61,13 @@ const TestsDrawer: FC = () => {
                   )
                 }
           }
-        />
+        >
+          <Tooltip
+            title={<FormattedMessage id={languageMap.testsTab.tooltip} />}
+          >
+            <QuestionAnswer />
+          </Tooltip>
+        </EditorToolbar>
         <FormControl size="small">
           <Select
             MenuProps={{
@@ -96,22 +103,17 @@ const TestsDrawer: FC = () => {
           .map(({ id, name }) => {
             const testState = testResults[id]?.state
             return (
-              <Tooltip
-                title={<FormattedMessage id={languageMap.testsTab.tooltip} />}
-              >
-                <RenamableListItem
-                  id={id}
-                  key={id}
-                  name={name}
-                  onContextMenu={() => {
-                    window.sideAPI.menus.open('testManager', [id])
-                  }}
-                  rename={rename}
-                  selected={id === activeTestID}
-                  setSelected={setSelected}
-                  state={testState}
-                />
-              </Tooltip>
+              <RenamableListItem
+                id={id}
+                name={name}
+                onContextMenu={() => {
+                  window.sideAPI.menus.open('testManager', [id])
+                }}
+                rename={rename}
+                selected={id === activeTestID}
+                setSelected={setSelected}
+                state={testState}
+              />
             )
           })}
       </List>
