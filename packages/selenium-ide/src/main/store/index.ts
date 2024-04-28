@@ -1,11 +1,11 @@
 import { StateShape, UserPrefs } from "@seleniumhq/side-api";
 import { defaultUserPrefs } from "@seleniumhq/side-api/dist/models/state";
+import englishMap from "browser/I18N/en";
 import { window as ProjectWindow } from "browser/windows/ProjectEditor/controller";
 import { window as PlaybackWindow } from "browser/windows/PlaybackWindow/controller";
 import Store from "electron-store";
 import { BrowserInfo } from "main/types";
 import config from "./config";
-import { englishMap } from "browser/enums/I18N";
 
 export interface StorageSchema {
   config: typeof config;

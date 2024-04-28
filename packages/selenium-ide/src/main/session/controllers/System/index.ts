@@ -1,11 +1,11 @@
-import { chineseMap, englishMap } from "browser/enums/I18N";
+import enStrings from 'browser/I18N/en'
 import { dialog, ipcMain } from 'electron'
 import { autoUpdater } from 'electron-updater'
-import { COLOR_CYAN, isAutomated, vdebuglog } from 'main/util'
-import { inspect } from 'util'
 import { writeFile } from 'fs/promises'
-import BaseController from '../Base'
+import { COLOR_CYAN, isAutomated, vdebuglog } from 'main/util'
 import { platform } from 'os'
+import { inspect } from 'util'
+import BaseController from '../Base'
 
 let firstTime = true
 export default class SystemController extends BaseController {
@@ -53,12 +53,21 @@ export default class SystemController extends BaseController {
 
   /***以下是我新增***/
   async getLanguage() {
-    return this.session.app.getLocale();
+    return this.session.app.getLocale()
   }
 
   async getLanguageMap() {
-    const language = await this.getLanguage();
-    const {default: langaugeMap} = await import(`../../i18n/${language}/Commands`);
+    const language = await this.getLanguage()
+    try {
+      const { default: langaugeMap } = await import(
+        `../../i18n/${language.slice(0, 2)}/Commands`
+      )
+      return {
+        ...langaugeMap,
+      }
+    } catch (e) {
+      return enStrings
+    }
   }
 
   /***以上是我新增***/

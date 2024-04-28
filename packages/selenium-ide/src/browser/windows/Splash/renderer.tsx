@@ -35,10 +35,10 @@ const ProjectEditor = () => {
           <Typography variant="h4">
             <FormattedMessage id={languageMap.splash.present} /></Typography>
           <Typography variant="caption">
-            {languageMap.splash.logPath} "{logPath}"
+            <FormattedMessage id={languageMap.splash.logPath} /> "{logPath}"
           </Typography>
           <Typography variant="subtitle1">
-            {languageMap.splash.openNotice}
+            <FormattedMessage id={languageMap.splash.openNotice} />
           </Typography>
         </Grid>
         <Grid item xs={6}>

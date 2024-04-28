@@ -1,7 +1,7 @@
 import FormControl from '@mui/material/FormControl'
 import Stack from '@mui/material/Stack'
 import TextField from 'browser/components/UncontrolledTextField'
-import React, { FC, useContext, useEffect, useState } from 'react'
+import React, { FC, useContext } from 'react'
 import { ProjectShape } from '@seleniumhq/side-api'
 import message from './Message'
 import Button from '@mui/material/Button'
@@ -11,6 +11,8 @@ import Select from '@mui/material/Select'
 import InputLabel from '@mui/material/InputLabel'
 import { styled } from '@mui/material/styles'
 import { context } from 'browser/contexts/session'
+import languageMap from 'browser/I18N/keys'
+import { FormattedMessage } from 'react-intl'
 
 const CustomButton = styled(Button)({
   marginLeft: 'auto',
@@ -63,50 +65,15 @@ const OutPutSettings: FC = () => {
     '/webui/case/insertCaseByIde'
   )
   const [pageUrl, setPageUrl] = React.useState('/webui/page/allPage')
-  const [languageMap, setLanguageMap] = useState<any>({
-    outPutConfig: {
-      webLink: 'click to jump to the testing platform',
-      platformUrl: 'test platform address',
-      platformUrlHelper:
-        'The final use case is displayed on this front-end page',
-      serviceHost: 'backend service address',
-      serviceHostHelper:
-        'export the address of the use case to the backend service',
-      businessListUrl: 'business list url address',
-      businessListUrlHelper:
-        'url address of the business list to which the use case belongs',
-      caseInBusiness: 'business to which the use case belongs',
-      caseInBusinessHelper: 'test cases will be classified under this business',
-      exportUrl: 'export interface url address',
-      exportUrlHelper: 'export the url address of the test case',
-      exportBtn: 'export',
-      platformError: 'please enter the testing platform address!',
-      checkUrlError:
-        'please enter the backend service address and the url address for exporting the test case!',
-      checkBusinessUrlError:
-        'please check if the backend service address and the corresponding business list URL address are correct!',
-      warn: 'warn',
-      success: 'export success',
-      fail: 'export fail',
-      caseId: 'exported test case id:',
-      failMessage: 'please contact the backend developer for assistance!',
-    },
-  })
-
-  useEffect(() => {
-    window.sideAPI.system.getLanguageMap().then((result) => {
-      setLanguageMap(result)
-    })
-  }, [])
 
   // 跳转至测试平台
   const linkTestPlatform = async (url: string) => {
     if (url == '' || url == undefined) {
       message.alertMessage({
-        content: languageMap.outPutConfig.platformError,
+        content: <FormattedMessage id={languageMap.outPutConfig.platformError} />,
         duration: 6000,
         type: 'error',
-        title: languageMap.outPutConfig.warn,
+        title: <FormattedMessage id={languageMap.outPutConfig.warn} />,
       })
     } else {
       await window.sideAPI.windows.requestPlaybackWindow(url)
@@ -127,10 +94,12 @@ const OutPutSettings: FC = () => {
   ) => {
     if (host === '' || url === '') {
       message.alertMessage({
-        content: languageMap.outPutConfig.checkUrlError,
+        content: (
+          <FormattedMessage id={languageMap.outPutConfig.checkUrlError} />
+        ),
         duration: 6000,
         type: 'error',
-        title: languageMap.outPutConfig.warn,
+        title: <FormattedMessage id={languageMap.outPutConfig.warn} />,
       })
     } else {
       try {
@@ -159,17 +128,22 @@ const OutPutSettings: FC = () => {
         if (code !== null || code !== undefined) {
           if (code === '1000') {
             message.alertMessage({
-              content: languageMap.outPutConfig.caseId + result.data[0] + '!',
+              content:
+                <FormattedMessage id={languageMap.outPutConfig.caseId} /> +
+                result.data[0] +
+                '!',
               duration: 5000,
               type: 'success',
-              title: languageMap.outPutConfig.success,
+              title: <FormattedMessage id={languageMap.outPutConfig.success} />,
             })
           } else {
             message.alertMessage({
-              content: languageMap.outPutConfig.failMessage,
+              content: (
+                <FormattedMessage id={languageMap.outPutConfig.failMessage} />
+              ),
               duration: 5000,
               type: 'error',
-              title: languageMap.outPutConfig.fail,
+              title: <FormattedMessage id={languageMap.outPutConfig.fail} />,
             })
           }
         }
@@ -201,10 +175,14 @@ const OutPutSettings: FC = () => {
      */
     if (host === '' || pageUrl === '') {
       message.alertMessage({
-        content: languageMap.outPutConfig.checkBusinessUrlError,
+        content: (
+          <FormattedMessage
+            id={languageMap.outPutConfig.checkBusinessUrlError}
+          />
+        ),
         duration: 5000,
         type: 'warning',
-        title: languageMap.outPutConfig.warn,
+        title: <FormattedMessage id={languageMap.outPutConfig.warn} />,
       })
     } else {
       changeUrl()
@@ -220,15 +198,17 @@ const OutPutSettings: FC = () => {
             linkTestPlatform(testPlatform)
           }}
         >
-          {languageMap.outPutConfig.webLink}
+          {<FormattedMessage id={languageMap.outPutConfig.webLink} />}
         </Button>
       </FormControl>
       <FormControl>
         <TextField
           id="host"
-          label={languageMap.outPutConfig.platformUrl}
+          label={<FormattedMessage id={languageMap.outPutConfig.platformUrl} />}
           name="host"
-          helperText={languageMap.outPutConfig.platformUrlHelper}
+          helperText={
+            <FormattedMessage id={languageMap.outPutConfig.platformUrlHelper} />
+          }
           onChange={(e: any) => {
             setTestPlatform(e.target.value)
           }}
@@ -239,9 +219,11 @@ const OutPutSettings: FC = () => {
       <FormControl>
         <TextField
           id="host"
-          label={languageMap.outPutConfig.serviceHost}
+          label={<FormattedMessage id={languageMap.outPutConfig.serviceHost} />}
           name="host"
-          helperText={languageMap.outPutConfig.serviceHostHelper}
+          helperText={
+            <FormattedMessage id={languageMap.outPutConfig.serviceHostHelper} />
+          }
           onBlur={changeUrl}
           onChange={(e: any) => {
             setHost(e.target.value)
@@ -253,9 +235,15 @@ const OutPutSettings: FC = () => {
       <FormControl>
         <TextField
           id="pageUrl"
-          label={languageMap.outPutConfig.businessListUrl}
+          label={
+            <FormattedMessage id={languageMap.outPutConfig.businessListUrl} />
+          }
           name="pageUrl"
-          helperText={languageMap.outPutConfig.businessListUrlHelper}
+          helperText={
+            <FormattedMessage
+              id={languageMap.outPutConfig.businessListUrlHelper}
+            />
+          }
           onBlur={changeUrl}
           onChange={(e: any) => {
             setPageUrl(e.target.value)
@@ -266,7 +254,7 @@ const OutPutSettings: FC = () => {
       </FormControl>
       <FormControl sx={{ m: 1, minWidth: 200 }} size="small" onFocus={checkUrl}>
         <InputLabel id="select-helper-label">
-          {languageMap.outPutConfig.caseInBusiness}
+          {<FormattedMessage id={languageMap.outPutConfig.caseInBusiness} />}
         </InputLabel>
         <Select
           labelId="setProject-label"
@@ -284,15 +272,21 @@ const OutPutSettings: FC = () => {
           ))}
         </Select>
         <FormHelperText>
-          {languageMap.outPutConfig.caseInBusinessHelper}
+          {
+            <FormattedMessage
+              id={languageMap.outPutConfig.caseInBusinessHelper}
+            />
+          }
         </FormHelperText>
       </FormControl>
       <FormControl>
         <TextField
           id="insertUrl"
-          label={languageMap.outPutConfig.exportUrl}
+          label={<FormattedMessage id={languageMap.outPutConfig.exportUrl} />}
           name="insertUrl"
-          helperText={languageMap.outPutConfig.exportUrlHelper}
+          helperText={
+            <FormattedMessage id={languageMap.outPutConfig.exportUrlHelper} />
+          }
           onChange={(e: any) => {
             setInsertUrl(e.target.value)
           }}
@@ -308,7 +302,7 @@ const OutPutSettings: FC = () => {
             exportToUi(outPut, host, insertUrl, page)
           }}
         >
-          {languageMap.outPutConfig.exportBtn}
+          {<FormattedMessage id={languageMap.outPutConfig.exportBtn} />}
         </CustomButton>
       </FormControl>
     </Stack>

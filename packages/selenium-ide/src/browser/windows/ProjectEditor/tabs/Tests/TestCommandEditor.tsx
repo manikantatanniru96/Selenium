@@ -3,10 +3,12 @@ import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import { CommandShape } from '@seleniumhq/side-model'
 import { CoreSessionData } from '@seleniumhq/side-api'
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC } from 'react'
 import CommandSelector from './CommandFields/CommandSelector'
 import ArgField from './CommandFields/ArgField'
 import CommandTextField from './CommandFields/TextField'
+import { FormattedMessage, useIntl } from 'react-intl'
+import languageMap from 'browser/I18N/keys'
 
 export interface CommandEditorProps {
   command: CommandShape
@@ -26,6 +28,7 @@ const CommandEditor: FC<CommandEditorProps> = ({
   selectedCommandIndexes,
   ...props
 }) => {
+  const intl = useIntl()
   if (typeof command.command != 'string') {
     command.command = '//unknown - could not process'
   }
@@ -35,21 +38,6 @@ const CommandEditor: FC<CommandEditorProps> = ({
     ...command,
     command: isDisabled ? command.command.slice(2) : command.command,
   }
-  const [languageMap, setLanguageMap] = useState<any>({
-    testsTab: {
-      noCommandsSelected: 'No commands selected',
-    },
-    testCore:{
-      windowHandleName: "Window Handle Name",
-      windowHandleNameNote:"Variable name to set to the new window handle"
-    }
-  })
-
-  useEffect(() => {
-    window.sideAPI.system.getLanguageMap().then((result) => {
-      setLanguageMap(result)
-    })
-  }, [])
   if (selectedCommandIndexes.length > 1) {
     return (
       <Stack className="p-4" spacing={1}>
@@ -60,13 +48,13 @@ const CommandEditor: FC<CommandEditorProps> = ({
     )
   }
   if (
-    !commands[correctedCommand.command] ||
+    !(correctedCommand.command in commands) ||
     selectedCommandIndexes.length === 0
   ) {
     return (
       <Stack className="p-4" spacing={1}>
         <Typography className="centered py-4" variant="body2">
-          {languageMap.testsTab.noCommandsSelected}
+          {<FormattedMessage id={languageMap.testsTab.noCommandsSelected} />}
         </Typography>
       </Stack>
     )
@@ -85,8 +73,14 @@ const CommandEditor: FC<CommandEditorProps> = ({
           <CommandTextField
             command={correctedCommand}
             {...props}
-            fieldName={languageMap.testCore.windowHandleName}
-            note={languageMap.testCore.windowHandleNameNote}
+            fieldName={
+              intl.formatMessage({
+                id: languageMap.testCore.windowHandleName,
+              }) as 'windowHandleName'
+            }
+            note={intl.formatMessage({
+              id: languageMap.testCore.windowHandleNameNote,
+            })}
           />
         )}
         <CommandTextField

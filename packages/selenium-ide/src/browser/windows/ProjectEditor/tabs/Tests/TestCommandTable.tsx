@@ -1,12 +1,14 @@
 import { CommandShape } from '@seleniumhq/side-model'
 import { CommandsStateShape } from '@seleniumhq/side-api'
 import useReorderPreview from 'browser/hooks/useReorderPreview'
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC } from 'react'
 import CommandRow from './TestCommandRow'
 import EditorToolbar from '../../../../components/Drawer/EditorToolbar'
 import makeKeyboundNav from 'browser/hooks/useKeyboundNav'
 import ReorderableList from 'browser/components/ReorderableList'
 import { Box } from '@mui/material'
+import { useIntl } from 'react-intl'
+import languageMap from 'browser/I18N/keys'
 
 export interface CommandListProps {
   activeTest: string
@@ -25,21 +27,7 @@ const CommandList: FC<CommandListProps> = ({
   disabled,
   selectedCommandIndexes,
 }) => {
-  const [languageMap, setLanguageMap] = useState<any>({
-    testCore: {
-      tabCommand: 'Cmd',
-      tabTarget: 'Target',
-      tabValue: 'Value',
-      removeCommand: 'Remove Command',
-      addCommand: 'Add Command',
-    },
-  })
-
-  useEffect(() => {
-    window.sideAPI.system.getLanguageMap().then((result) => {
-      setLanguageMap(result)
-    })
-  }, [])
+  const intl = useIntl()
   const [preview, reorderPreview, resetPreview] = useReorderPreview(
     commands,
     selectedCommandIndexes,
@@ -57,7 +45,7 @@ const CommandList: FC<CommandListProps> = ({
             Math.max(selectedCommandIndexes.slice(-1)[0], 0)
           )
         }
-        addText={languageMap.testCore.addCommand}
+        addText={intl.formatMessage({ id: languageMap.testCore.addCommand })}
         onRemove={
           commands.length > 1
             ? () =>
@@ -67,20 +55,22 @@ const CommandList: FC<CommandListProps> = ({
                 )
             : undefined
         }
-        removeText={languageMap.testCore.removeCommand}
+        removeText={intl.formatMessage({
+          id: languageMap.testCore.removeCommand,
+        })}
       >
         <Box sx={{ display: 'flex', flexDirection: 'row' }}>
           <Box className="flex" sx={{ flex: 0, flexBasis: 50 }}>
             &nbsp;
           </Box>
           <Box className="flex" sx={{ flex: 1 }}>
-            {languageMap.testCore.tabCommand}
+            {intl.formatMessage({ id: languageMap.testCore.tabCommand })}
           </Box>
           <Box className="flex" sx={{ flex: 2, paddingLeft: 2 }}>
-            {languageMap.testCore.tabTarget}
+            {intl.formatMessage({ id: languageMap.testCore.tabTarget })}
           </Box>
           <Box className="flex" sx={{ flex: 2, paddingLeft: 2 }}>
-            {languageMap.testCore.tabValue}
+            {intl.formatMessage({ id: languageMap.testCore.tabValue })}
           </Box>
         </Box>
       </EditorToolbar>

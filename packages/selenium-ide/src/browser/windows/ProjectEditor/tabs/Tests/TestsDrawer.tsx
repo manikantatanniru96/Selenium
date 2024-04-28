@@ -4,7 +4,7 @@ import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
 import Stack from '@mui/material/Stack'
 import Tooltip from '@mui/material/Tooltip'
-import React, { FC, useContext, useEffect, useState } from 'react'
+import React, { FC, useContext } from 'react'
 import Drawer from 'browser/components/Drawer/Wrapper'
 import EditorToolbar from 'browser/components/Drawer/EditorToolbar'
 import RenamableListItem from 'browser/components/Drawer/RenamableListItem'
@@ -13,6 +13,8 @@ import { context as activeTestContext } from 'browser/contexts/active-test'
 import { context as suitesContext } from 'browser/contexts/suites'
 import { context as testsContext } from 'browser/contexts/tests'
 import { context as testResultsContext } from 'browser/contexts/playback-test-results'
+import { FormattedMessage, useIntl } from 'react-intl'
+import languageMap from 'browser/I18N/keys'
 
 const {
   state: { setActiveTest: setSelected, setActiveSuite },
@@ -20,6 +22,7 @@ const {
 } = window.sideAPI
 
 const TestsDrawer: FC = () => {
+  const intl = useIntl()
   const { activeSuiteID, activeTestID } = useContext(activeTestContext)
   const suites = useContext(suitesContext)
   const tests = useContext(testsContext)
@@ -31,21 +34,6 @@ const TestsDrawer: FC = () => {
         ?.tests.map((id) => tests.find((t) => t.id === id)!) ?? tests
     : tests
   const safeSuiteID = suites.find((s) => s.id === activeSuiteID)?.id ?? ''
-  const [languageMap, setLanguageMap] = useState<any>({
-    testsTab: {
-      allTests: '[All tests]',
-      deleteNotice: 'Delete this test?',
-      tooltip:
-        'double click to modify the name,right click to export or delete test case',
-      notDeleteNotice: 'only one test case is not allowed to be deleted!',
-    },
-  })
-
-  useEffect(() => {
-    window.sideAPI.system.getLanguageMap().then((result) => {
-      setLanguageMap(result)
-    })
-  }, [])
   return (
     <Drawer>
       <TestCreateDialog open={confirmNew} setOpen={setConfirmNew} />
@@ -56,14 +44,20 @@ const TestsDrawer: FC = () => {
             tests.length > 1
               ? () => {
                   const doDelete = window.confirm(
-                    languageMap.testsTab.deleteNotice
+                    intl.formatMessage({
+                      id: languageMap.testsTab.deleteNotice,
+                    })
                   )
                   if (doDelete) {
                     window.sideAPI.tests.delete(activeTestID)
                   }
                 }
               : () => {
-                  window.confirm(languageMap.testsTab.notDeleteNotice)
+                  window.confirm(
+                    intl.formatMessage({
+                      id: languageMap.testsTab.notDeleteNotice,
+                    })
+                  )
                 }
           }
         />
@@ -102,7 +96,9 @@ const TestsDrawer: FC = () => {
           .map(({ id, name }) => {
             const testState = testResults[id]?.state
             return (
-              <Tooltip title={languageMap.testsTab.tooltip}>
+              <Tooltip
+                title={<FormattedMessage id={languageMap.testsTab.tooltip} />}
+              >
                 <RenamableListItem
                   id={id}
                   key={id}

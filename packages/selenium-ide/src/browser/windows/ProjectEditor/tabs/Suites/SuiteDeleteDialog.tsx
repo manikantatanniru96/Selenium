@@ -4,6 +4,8 @@ import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
+import { FormattedMessage } from 'react-intl'
+import languageMap from 'browser/I18N/keys'
 
 type CloseReason = 'Delete' | 'Cancel'
 
@@ -20,17 +22,6 @@ const SuiteDeleteDialog: React.FC<SuiteDeleteDialogProps> = ({
   suiteID,
   suiteName,
 }) => {
-  const [languageMap, setLanguageMap] = React.useState<any>({
-    suitesTab: {
-      deleteNotice: 'Are you sure you want to delete suite SUITE_NAME?',
-    },
-  })
-
-  React.useEffect(() => {
-    window.sideAPI.system.getLanguageMap().then((result) => {
-      setLanguageMap(result)
-    })
-  }, [])
   const handleClose = async (value: CloseReason) => {
     if (value === 'Delete') {
       await window.sideAPI.suites.delete(suiteID)
@@ -62,7 +53,10 @@ const SuiteDeleteDialog: React.FC<SuiteDeleteDialogProps> = ({
     >
       <DialogContent>
         <DialogContentText>
-          {languageMap.suitesTab.deleteNotice.replace('SUITE_NAME', suiteName)}
+          <FormattedMessage
+            id={languageMap.suitesTab.deleteNotice}
+            values={{ name: suiteName }}
+          />
         </DialogContentText>
       </DialogContent>
       <DialogActions>

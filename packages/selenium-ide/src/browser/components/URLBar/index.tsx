@@ -1,24 +1,16 @@
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { TabShape } from '../PlaybackTabBar/tab'
+import { FormattedMessage } from 'react-intl'
+import languageMap from 'browser/I18N/keys'
 
 const {
   windows: { navigatePlaybackWindow },
 } = window.sideAPI
 
 const URLBar: React.FC<{ tab: null | TabShape }> = ({ tab }) => {
-  const [languageMap, setLanguageMap] = useState<any>({
-    playback: {
-      url: 'URL',
-    },
-  })
-  useEffect(() => {
-    window.sideAPI.system.getLanguageMap().then((result) => {
-      setLanguageMap(result)
-    })
-  }, [])
   const tabURL = tab?.url ?? ''
   const ref = React.useRef<HTMLInputElement>(null)
   React.useEffect(() => {
@@ -29,7 +21,9 @@ const URLBar: React.FC<{ tab: null | TabShape }> = ({ tab }) => {
   return (
     <>
       <Box className="flex flex-col flex-initial" justifyContent="center">
-        <Typography>{languageMap.playback.url}</Typography>
+        <Typography>
+          <FormattedMessage id={languageMap.playback.url} />
+        </Typography>
       </Box>
       <Box className="flex-1 justify-content-center no-window-drag px-3">
         <TextField

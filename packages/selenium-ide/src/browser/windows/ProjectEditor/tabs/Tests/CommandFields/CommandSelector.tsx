@@ -8,6 +8,7 @@ import React, { FC, useMemo } from 'react'
 import { setField, updateACField } from './utils'
 import { CommandSelectorProps } from '../types'
 import { FormattedMessage } from 'react-intl'
+import languageMap from 'browser/I18N/keys'
 
 const setCommandFactory = setField('command')
 const setOpensWindowFactory = setField<boolean>('opensWindow')
@@ -22,16 +23,14 @@ const CommandSelector: FC<CommandSelectorProps> = ({
   const commandsList = useMemo(
     () =>
       Object.entries(commands)
-        .map(([id, { name }]) => ({ id, name }))
+        .map(([id, { name }]: [string, { name: string }]) => ({ id, name }))
         .sort((a, b) => a.name.localeCompare(b.name)),
     []
   )
   if (commandsList.length === 0) {
     return null
   }
-  const commandData = languageMap.commandMap
-    ? languageMap.commandMap[command.command]
-    : commands[command.command]
+  const description = languageMap.commandMap[command.command]?.description
   const setCommand = setCommandFactory(testID, command.id)
   const setOpensWindow = setOpensWindowFactory(testID, command.id)
   const commandOptions = commandsList.map((item) => {
@@ -66,9 +65,13 @@ const CommandSelector: FC<CommandSelectorProps> = ({
         <Tooltip
           className="flex-initial ms-4 my-auto"
           title={
-            command.opensWindow
-              ? languageMap.testCore.openNewWindow
-              : languageMap.testCore.notOpenNewWindow
+            <FormattedMessage
+              id={
+                command.opensWindow
+                  ? languageMap.testCore.openNewWindow
+                  : languageMap.testCore.notOpenNewWindow
+              }
+            />
           }
           placement="top-end"
         >
@@ -82,9 +85,13 @@ const CommandSelector: FC<CommandSelectorProps> = ({
         <Tooltip
           className="flex-initial my-auto"
           title={
-            isDisabled
-              ? languageMap.testCore.enableCommand
-              : languageMap.testCore.disableCommand
+            <FormattedMessage
+              id={
+                isDisabled
+                  ? languageMap.testCore.enableCommand
+                  : languageMap.testCore.disableCommand
+              }
+            />
           }
           placement="top-end"
         >
@@ -99,7 +106,7 @@ const CommandSelector: FC<CommandSelectorProps> = ({
         </Tooltip>
         <Tooltip
           className="flex-initial mx-2 my-auto"
-          title={commandData.description}
+          title={<FormattedMessage id={description as string} />}
           placement="top-end"
         >
           <HelpCenter />

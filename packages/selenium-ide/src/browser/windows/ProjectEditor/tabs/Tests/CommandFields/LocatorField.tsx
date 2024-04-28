@@ -7,20 +7,21 @@ import IconButton from '@mui/material/IconButton'
 import TextField from '@mui/material/TextField'
 import Tooltip from '@mui/material/Tooltip'
 import capitalize from 'lodash/fp/capitalize'
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useEffect } from 'react'
 import { updateField, updateFieldAutoComplete } from './utils'
 import { CommandArgFieldProps } from '../types'
-import { Commands } from '@seleniumhq/side-model'
+import languageMap from 'browser/I18N/keys'
+import { useIntl } from 'react-intl'
 
 type PluralField = 'targets' | 'values'
 
 const CommandLocatorField: FC<CommandArgFieldProps> = ({
   command,
-  commands,
   disabled,
   fieldName,
   testID,
 }) => {
+  const intl = useIntl()
   const fieldNames = (fieldName + 's') as PluralField
   const FieldName = capitalize(fieldName)
 
@@ -35,40 +36,26 @@ const CommandLocatorField: FC<CommandArgFieldProps> = ({
     setLocalValue(value)
     updateTargetAutoComplete(testID, command.id)(e, value)
   }
-  const [languageMap, setLanguageMap] = useState<any>({
-    testCore: {
-      comment: 'Comment',
-      target: 'Target',
-      value: 'Value',
-    },
-    commandMap: Commands,
-  })
   useEffect(() => {
     setLocalValue(command[fieldName])
-    window.sideAPI.system.getLanguageMap().then((result) => {
-      setLanguageMap(result)
-    })
   }, [command.id])
 
   // 处理label标签
   const handleLabel = (value: string) => {
     switch (value) {
       case 'Comment':
-        return languageMap.testCore.comment
+        return intl.formatMessage({ id: languageMap.testCore.comment })
       case 'Target':
-        return languageMap.testCore.target
+        return intl.formatMessage({ id: languageMap.testCore.target })
       case 'Value':
-        return languageMap.testCore.value
+        return intl.formatMessage({ id: languageMap.testCore.value })
       default:
         return value
     }
   }
-  // 一定会使用languageMap.commandMap,其实是为了兼容参数commands
-  const targetCommandMap = languageMap.commandMap
-    ? languageMap.commandMap
-    : commands
-  const fullnote =
-    targetCommandMap[command.command][fieldName]?.description ?? ''
+  const fullnote = intl.formatMessage({
+    id: languageMap.commandMap[command.command][fieldName]?.description,
+  });
   const label = fullnote
     ? handleLabel(FieldName) + ' - ' + fullnote
     : handleLabel(FieldName)

@@ -1,4 +1,5 @@
 import { Commands as commandMapEnglish } from '@seleniumhq/side-model'
+import { flattenNestedObject } from '../util'
 
 const windowTabEnglish = {
   file: '&File',
@@ -112,7 +113,7 @@ const suitesTabEnglish = {
   suiteName: 'Suite Name',
   cancel: 'Cancel',
   create: 'Create',
-  deleteNotice: 'Delete this suite?',
+  deleteNotice: 'Are you sure you want to delete suite {name}?',
   tooltip:
     'double click to modify the name,right click to export or delete suites',
   notDeleteNotice: 'only one suites is not allowed to be deleted!',
@@ -195,7 +196,7 @@ const testCoreEnglish = {
   playFromStart: 'Play From Start',
 }
 
-const langaugeMap = {
+export const langaugeMapEn = {
   windowTab: windowTabEnglish,
   electronMenuTree: electronMenuTreeEnglish,
   fileMenuTree: fileMenuTreeEnglish,
@@ -217,6 +218,7 @@ const langaugeMap = {
 
 // Creating a type of this so other locales are prompted to be filled in by
 // the developer
-export type LanguageMap = typeof langaugeMap
+export type LanguageMap = typeof langaugeMapEn
 
-export default langaugeMap
+const flattenedMap = flattenNestedObject(langaugeMapEn)
+export default flattenedMap

@@ -5,7 +5,8 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import TextField from '@mui/material/TextField'
-import { useEffect, useState } from 'react'
+import languageMap from 'browser/I18N/keys'
+import { FormattedMessage } from 'react-intl'
 
 const {
   state: { setActiveTest: setSelected },
@@ -41,21 +42,6 @@ const TestNewDialog: React.FC<TestNewDialogProps> = ({ open, setOpen }) => {
       handleClose('Create')
     }
   }
-  const [languageMap, setLanguageMap] = useState<any>({
-    testsTab: {
-      dialogTitle: 'Please specify the new test name',
-      testName: 'Test Name',
-      cancel: 'Cancel',
-      create: 'Create',
-    },
-  })
-
-  useEffect(() => {
-    window.sideAPI.system.getLanguageMap().then((result) => {
-      setLanguageMap(result)
-    })
-  }, [])
-
   return (
     <Dialog
       classes={{
@@ -66,13 +52,13 @@ const TestNewDialog: React.FC<TestNewDialogProps> = ({ open, setOpen }) => {
     >
       <DialogContent>
         <DialogContentText>
-          {languageMap.testsTab.dialogTitle}
+          {<FormattedMessage id={languageMap.testsTab.dialogTitle} />}
         </DialogContentText>
         <TextField
           autoFocus
           fullWidth
           id="name"
-          label={languageMap.testsTab.testName}
+          label={<FormattedMessage id={languageMap.testsTab.testName} />}
           margin="dense"
           onChange={(e) => setTestName(e.target.value)}
           onKeyDown={onKeyDown}
@@ -81,10 +67,10 @@ const TestNewDialog: React.FC<TestNewDialogProps> = ({ open, setOpen }) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={() => handleClose('Cancel')}>
-          {languageMap.testsTab.cancel}
+          {<FormattedMessage id={languageMap.testsTab.cancel} />}
         </Button>
         <Button onClick={() => handleClose('Create')}>
-          {languageMap.testsTab.create}
+          {<FormattedMessage id={languageMap.testsTab.create} />}
         </Button>
       </DialogActions>
     </Dialog>

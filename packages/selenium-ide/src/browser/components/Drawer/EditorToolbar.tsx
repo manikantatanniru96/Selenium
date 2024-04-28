@@ -6,9 +6,11 @@ import Box from '@mui/material/Box'
 import { PaperProps } from '@mui/material/Paper'
 import Tooltip from '@mui/material/Tooltip'
 import IconButton from '@mui/material/IconButton'
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC } from 'react'
 import DrawerHeader from './Header'
 import baseControlProps from '../Controls/BaseProps'
+import languageMap from 'browser/I18N/keys'
+import { FormattedMessage } from 'react-intl'
 
 export interface EditorToolbarIconsProps {
   disabled?: boolean
@@ -32,89 +34,80 @@ export const EditorToolbarIcons: FC<EditorToolbarIconsProps> = ({
   removeText = 'Remove',
   onView,
   viewText = 'View',
-}) => {
-  const [languageMap, setLanguageMap] = useState<any>({
-    testsTab: {
-      add: 'Add',
-      remove: 'Remove',
-    },
-  })
-  useEffect(() => {
-    window.sideAPI.system.getLanguageMap().then((result) => {
-      setLanguageMap(result)
-    })
-  }, [])
-  return (
-    <>
-      {onRemove ? (
-        <Box sx={{ flex: 0 }}>
-          <Tooltip
-            title={
-              languageMap.testsTab.remove
-                ? languageMap.testsTab.remove
-                : removeText
-            }
+}) => (
+  <>
+    {onRemove ? (
+      <Box sx={{ flex: 0 }}>
+        <Tooltip
+          title={
+            <FormattedMessage
+              id={languageMap.testsTab.remove}
+              defaultMessage={removeText}
+            />
+          }
+        >
+          <IconButton
+            {...baseControlProps}
+            color="warning"
+            disabled={disabled}
+            onClick={onRemove}
           >
-            <IconButton
-              {...baseControlProps}
-              color="warning"
-              disabled={disabled}
-              onClick={onRemove}
-            >
-              <RemoveIcon />
-            </IconButton>
-          </Tooltip>
-        </Box>
-      ) : null}
-      {onEdit ? (
-        <Box sx={{ flex: 0 }}>
-          <Tooltip title={editText}>
-            <IconButton
-              {...baseControlProps}
-              color="info"
-              disabled={disabled}
-              onClick={onEdit}
-            >
-              <EditIcon />
-            </IconButton>
-          </Tooltip>
-        </Box>
-      ) : null}
-      {onView ? (
-        <Box sx={{ flex: 0 }}>
-          <Tooltip title={viewText}>
-            <IconButton
-              {...baseControlProps}
-              color="info"
-              disabled={disabled}
-              onClick={onView}
-            >
-              <VisibilityIcon />
-            </IconButton>
-          </Tooltip>
-        </Box>
-      ) : null}
-      {onAdd ? (
-        <Box sx={{ flex: 0 }}>
-          <Tooltip
-            title={
-              languageMap.testsTab.add ? languageMap.testsTab.add : addText
-            }
+            <RemoveIcon />
+          </IconButton>
+        </Tooltip>
+      </Box>
+    ) : null}
+    {onEdit ? (
+      <Box sx={{ flex: 0 }}>
+        <Tooltip title={editText}>
+          <IconButton
+            {...baseControlProps}
+            color="info"
+            disabled={disabled}
+            onClick={onEdit}
           >
-            <IconButton
-              {...baseControlProps}
-              color="success"
-              disabled={disabled}
-              onClick={onAdd}
-            >
-              <AddIcon />
-            </IconButton>
-          </Tooltip>
-        </Box>
-      ) : null}
-    </>
-  )
-}
+            <EditIcon />
+          </IconButton>
+        </Tooltip>
+      </Box>
+    ) : null}
+    {onView ? (
+      <Box sx={{ flex: 0 }}>
+        <Tooltip title={viewText}>
+          <IconButton
+            {...baseControlProps}
+            color="info"
+            disabled={disabled}
+            onClick={onView}
+          >
+            <VisibilityIcon />
+          </IconButton>
+        </Tooltip>
+      </Box>
+    ) : null}
+    {onAdd ? (
+      <Box sx={{ flex: 0 }}>
+        <Tooltip
+          title={
+            <FormattedMessage
+              id={languageMap.testsTab.add}
+              defaultMessage={addText}
+            />
+          }
+        >
+          <IconButton
+            {...baseControlProps}
+            color="success"
+            disabled={disabled}
+            onClick={onAdd}
+          >
+            <AddIcon />
+          </IconButton>
+        </Tooltip>
+      </Box>
+    ) : null}
+  </>
+)
 
 export const EditorToolbarShell: FC<PaperProps> = ({
   children,

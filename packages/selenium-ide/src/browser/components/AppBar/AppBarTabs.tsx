@@ -2,8 +2,9 @@ import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import React from 'react'
 import { PROJECT_TAB, SUITES_TAB, TESTS_TAB } from 'browser/enums/tab'
-import { PROJECT_TAB, SUITES_TAB, TESTS_TAB } from 'browser/I18N/keys'
+import languageMap from 'browser/I18N/keys'
 import { SIDEMainProps } from '../types'
+import { FormattedMessage } from 'react-intl'
 
 /**********顶部菜单栏tab*************/
 function a11yProps(index: number) {

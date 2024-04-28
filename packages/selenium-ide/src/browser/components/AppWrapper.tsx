@@ -30,9 +30,16 @@ const AppWrapper: FC<AppWrapperProps> = ({ children }) => {
       }),
     [prefersDarkMode]
   )
+  const [languageMap, setLanguageMap] = React.useState<any>({})
+  React.useEffect(() => {
+    window.sideAPI.system.getLanguageMap().then((result) => {
+      console.log(result)
+      setLanguageMap(result)
+    })
+  }, [])
 
   return (
-    <IntlProvider defaultLocale='en'>
+    <IntlProvider defaultLocale="en" messages={languageMap}>
       {/* @ts-expect-error react-intl has funky versions */}
       <ThemeProvider theme={theme}>
         <CssBaseline />

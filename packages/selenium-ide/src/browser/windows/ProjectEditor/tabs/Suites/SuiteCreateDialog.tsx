@@ -5,7 +5,8 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import TextField from '@mui/material/TextField'
-import { useEffect, useState } from 'react'
+import { FormattedMessage } from 'react-intl'
+import languageMap from 'browser/I18N/keys'
 
 const {
   state: { setActiveSuite: setSelected },
@@ -41,20 +42,6 @@ const SuiteNewDialog: React.FC<SuiteNewDialogProps> = ({ open, setOpen }) => {
       handleClose('Create')
     }
   }
-  const [languageMap, setLanguageMap] = useState<any>({
-    suitesTab: {
-      dialogTitle: 'Please specify the new suite name',
-      suiteName: 'Suite Name',
-      cancel: 'Cancel',
-      create: 'Create',
-    },
-  })
-
-  useEffect(() => {
-    window.sideAPI.system.getLanguageMap().then((result) => {
-      setLanguageMap(result)
-    })
-  }, [])
   return (
     <Dialog
       classes={{
@@ -65,13 +52,13 @@ const SuiteNewDialog: React.FC<SuiteNewDialogProps> = ({ open, setOpen }) => {
     >
       <DialogContent>
         <DialogContentText>
-          {languageMap.suitesTab.dialogTitle}
+          {<FormattedMessage id={languageMap.suitesTab.dialogTitle} />}
         </DialogContentText>
         <TextField
           autoFocus
           fullWidth
           id="name"
-          label={languageMap.suitesTab.suiteName}
+          label={<FormattedMessage id={languageMap.suitesTab.suiteName} />}
           margin="dense"
           onChange={(e) => setSuiteName(e.target.value)}
           onKeyDown={onKeyDown}
@@ -80,10 +67,10 @@ const SuiteNewDialog: React.FC<SuiteNewDialogProps> = ({ open, setOpen }) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={() => handleClose('Cancel')}>
-          {languageMap.suitesTab.cancel}
+          {<FormattedMessage id={languageMap.suitesTab.cancel} />}
         </Button>
         <Button onClick={() => handleClose('Create')}>
-          {languageMap.suitesTab.create}
+          {<FormattedMessage id={languageMap.suitesTab.create} />}
         </Button>
       </DialogActions>
     </Dialog>

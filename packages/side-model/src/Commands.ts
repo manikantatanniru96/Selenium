@@ -24,7 +24,7 @@ export interface CommandType {
   value?: ArgType
 }
 
-export default {
+const commands = {
   acceptAlert: {
     name: 'accept alert',
     description: `Affects a currently showing alert. This 
@@ -630,3 +630,8 @@ export default {
     value: ArgTypes.loopLimit,
   },
 }
+
+export default commands
+
+export type CommandTypes = typeof commands
+export type CommandKey = keyof CommandTypes

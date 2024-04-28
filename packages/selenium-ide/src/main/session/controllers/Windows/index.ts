@@ -111,7 +111,7 @@ export default class WindowsController extends BaseController {
           'waitForElementVisible',
         ].map((cmd) => {
           return {
-            label: Commands[cmd].name,
+            label: Commands[cmd as keyof typeof Commands].name,
             click() {
               handled = true
               resolve({

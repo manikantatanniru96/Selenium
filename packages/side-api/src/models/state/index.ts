@@ -1,4 +1,4 @@
-import { CommandShape } from '@seleniumhq/side-model'
+import { CommandShape, Commands } from '@seleniumhq/side-model'
 import { CommandTypes } from '@seleniumhq/side-model/dist/Commands'
 import { badIndex } from '../../constants/badIndex'
 import { loadingID } from '../../constants/loadingID'
@@ -112,7 +112,7 @@ export const state: StateShape = {
   activeSuiteID: loadingID,
   activeTestID: loadingID,
   breakpoints: [],
-  commands: {},
+  commands: Commands,
   editor: defaultEditorState,
   locators: [
     'css:data-test-id',

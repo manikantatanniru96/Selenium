@@ -5,7 +5,7 @@ import {
   getActiveCommand,
   getActiveTest,
 } from '@seleniumhq/side-api/dist/helpers/getActiveData'
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useContext, useRef } from 'react'
 import CommandEditor from './TestCommandEditor'
 import CommandList from './TestCommandList'
 import CommandTable from './TestCommandTable'
@@ -13,31 +13,20 @@ import { loadingID } from '@seleniumhq/side-api/dist/constants/loadingID'
 import MainHeader from 'browser/components/Main/Header'
 import TestSelector from './TestSelector'
 import { context } from 'browser/contexts/session'
+import { FormattedMessage } from 'react-intl'
+import languageMap from 'browser/I18N/keys'
 
 const sxCenter = { textAlign: 'center' }
-const NoTestFound = () => {
-  const [languageMap, setLanguageMap] = useState<any>({
-    testsTab: {
-      noTestSelected: 'No Test Selected',
-    },
-  })
-
-  useEffect(() => {
-    window.sideAPI.system.getLanguageMap().then((result) => {
-      setLanguageMap(result)
-    })
-  }, [])
-  return (
+const NoTestFound = () => (
     <>
       <MainHeader />
       <Paper className="p-4" elevation={1} id="command-editor" square>
         <Typography sx={sxCenter}>
-          {languageMap.testsTab.noTestSelected}
+          <FormattedMessage id={languageMap.testsTab.noTestSelected} />
         </Typography>
       </Paper>
     </>
   )
-}
 
 const TestsTab: React.FC = () => {
   const session = useContext(context)

@@ -2,9 +2,11 @@ import TabUnselectedIcon from '@mui/icons-material/TabUnselected'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { Checkbox, Tooltip } from '@mui/material'
 import { context } from 'browser/contexts/session'
+import languageMap from 'browser/I18N/keys'
+import { FormattedMessage } from 'react-intl'
 
 const {
   state: { set },
@@ -22,19 +24,8 @@ const PlaybackDimensionControls: React.FC = () => {
   const session = useContext(context)
   const [panelWidth, setPanelWidth] = React.useState(0)
   const [panelHeight, setPanelHeight] = React.useState(0)
-  const [languageMap, setLanguageMap] = useState<any>({
-    playback: {
-      windowSize:
-        'Force panel window dimensions (will zoom out if larger than panel and crop if smaller)',
-      width: 'W',
-      height: 'H',
-    },
-  })
   const { active, width, height } = session.state.editor.overrideWindowSize
   React.useEffect(() => {
-    window.sideAPI.system.getLanguageMap().then((result) => {
-      setLanguageMap(result)
-    })
     if (active) {
       return
     }
@@ -53,7 +44,10 @@ const PlaybackDimensionControls: React.FC = () => {
   }, [active])
   return (
     <>
-      <Tooltip placement="left" title={languageMap.playback.windowSize}>
+      <Tooltip
+        placement="left"
+        title={<FormattedMessage id={languageMap.playback.windowSize} />}
+      >
         <Box
           className="flex flex-row flex-initial ps-3"
           justifyContent="center"
@@ -73,7 +67,9 @@ const PlaybackDimensionControls: React.FC = () => {
         </Box>
       </Tooltip>
       <Box className="flex flex-col flex-initial pe-3" justifyContent="center">
-        <Typography>{languageMap.playback.width}</Typography>
+        <Typography>
+          <FormattedMessage id={languageMap.playback.width} />
+        </Typography>
       </Box>
       <Box className="flex-initial">
         <TextField
@@ -92,7 +88,9 @@ const PlaybackDimensionControls: React.FC = () => {
         />
       </Box>
       <Box className="flex flex-col flex-initial px-3" justifyContent="center">
-        <Typography>{languageMap.playback.height}</Typography>
+        <Typography>
+          <FormattedMessage id={languageMap.playback.height} />
+        </Typography>
       </Box>
       <Box className="flex-initial pe-4">
         <TextField
