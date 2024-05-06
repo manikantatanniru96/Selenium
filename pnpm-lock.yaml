@@ -324,8 +324,8 @@ importers:
         specifier: ^3.0.10
         version: 3.0.10
       selenium-webdriver:
-        specifier: ^4.16.0
-        version: 4.16.0
+        specifier: ^4.20.0
+        version: 4.20.0
       side-code-export:
         specifier: ^4.0.5
         version: link:../side-code-export
@@ -358,8 +358,8 @@ importers:
         specifier: ^18.2.7
         version: 18.2.7
       '@types/selenium-webdriver':
-        specifier: ^4.1.21
-        version: 4.1.21
+        specifier: ^4.1.22
+        version: 4.1.22
       '@types/webpack-env':
         specifier: ^1.16.0
         version: 1.18.0
@@ -3721,12 +3721,6 @@ packages:
   /@types/scheduler@0.16.2:
     resolution: {integrity: sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==}
 
-  /@types/selenium-webdriver@4.1.21:
-    resolution: {integrity: sha512-QGURnImvxYlIQz5DVhvHdqpYNLBjhJ2Vm+cnQI2G9QZzkWlZm0LkLcvDcHp+qE6N2KBz4CeuvXgPO7W3XQ0Tyw==}
-    dependencies:
-      '@types/ws': 8.5.3
-    dev: true
-
   /@types/selenium-webdriver@4.1.22:
     resolution: {integrity: sha512-MCL4l7q8dwxejr2Q2NXLyNwHWMPdlWE0Kpn6fFwJtvkJF7PTkG5jkvbH/X1IAAQxgt/L1dA8u2GtDeekvSKvOA==}
     dependencies:
@@ -3803,12 +3797,6 @@ packages:
     resolution: {integrity: sha512-vmQSUcfalpIq0R9q7uTo2lXs6eGIpt9wtnLdMv9LVpIjCA/+ufZRozlVoVelIYixx1ugCBKDhn89vnsEGOCx9A==}
     dependencies:
       '@types/node': 16.11.64
-
-  /@types/ws@8.5.3:
-    resolution: {integrity: sha512-6YOoWjruKj1uLf3INHH7D3qTXwFfEsg1kf3c0uDdSBJwfa/llkwIjrAGV7j7mVgGNbzTQ3HiHKKDXl6bJPD97w==}
-    dependencies:
-      '@types/node': 16.11.64
-    dev: true
 
   /@types/xml-escape@1.1.0:
     resolution: {integrity: sha512-N8/W8PkPrzkxPls5QMTA8TQrKgD456BarGG2XTJK3Ax2suCAyqUthbpfBccgpGTBhT7hNuGUSuJd4XlwSXlmuA==}
@@ -10250,6 +10238,7 @@ packages:
     hasBin: true
     dependencies:
       glob: 7.2.3
+    dev: true
 
   /rimraf@5.0.1:
     resolution: {integrity: sha512-OfFZdwtd3lZ+XZzYP/6gTACubwFcHdLRqS9UX3UwpU2dnGQYkPFISRwvM3w9IiB2w7bW5qGo/uAwE4SmXXSKvg==}
@@ -10396,18 +10385,6 @@ packages:
   /select-hose@2.0.0:
     resolution: {integrity: sha512-mEugaLK+YfkijB4fx0e6kImuJdCIt2LxCRcbEYPqRGCs4F2ogyfZU5IAZRdjCP8JPq2AtdNoC/Dux63d9Kiryg==}
     dev: true
-
-  /selenium-webdriver@4.16.0:
-    resolution: {integrity: sha512-IbqpRpfGE7JDGgXHJeWuCqT/tUqnLvZ14csSwt+S8o4nJo3RtQoE9VR4jB47tP/A8ArkYsh/THuMY6kyRP6kuA==}
-    engines: {node: '>= 14.20.0'}
-    dependencies:
-      jszip: 3.10.1
-      tmp: 0.2.1
-      ws: 8.14.2
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
-    dev: false
 
   /selenium-webdriver@4.20.0:
     resolution: {integrity: sha512-s/G44lGQ1xB3tmtX6NNPomlkpL6CxLdmAvp/AGWWwi4qv5Te1+qji7tPSyr6gyuoPpdYiof1rKnWe3luy0MrYA==}
@@ -11233,14 +11210,8 @@ packages:
   /tmp-promise@3.0.3:
     resolution: {integrity: sha512-RwM7MoPojPxsOBYnyd2hy0bxtIlVrihNs9pj5SUvY8Zz1sQcQG2tG1hSr8PDxfgEB8RNKDhqbIlroIarSNDNsQ==}
     dependencies:
-      tmp: 0.2.1
+      tmp: 0.2.3
     dev: true
-
-  /tmp@0.2.1:
-    resolution: {integrity: sha512-76SUhtfqR2Ijn+xllcI5P1oyannHNHByD80W1q447gU3mp9G9PSpGdWmjUOHRDPiHYacIk66W7ubDTuPF3BEtQ==}
-    engines: {node: '>=8.17.0'}
-    dependencies:
-      rimraf: 3.0.2
 
   /tmp@0.2.3:
     resolution: {integrity: sha512-nZD7m9iCPC5g0pYmcaxogYKggSfLsdxl8of3Q/oIbqCqLLIO9IAF0GWjX1z9NZRHPiXv8Wex4yDCaZsgEw0Y8w==}

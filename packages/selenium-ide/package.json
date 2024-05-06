@@ -143,7 +143,7 @@
     "react-intl": "^6.6.5",
     "react-resizable-panels": "^1.0.8",
     "scroll-into-view-if-needed": "^3.0.10",
-    "selenium-webdriver": "^4.16.0",
+    "selenium-webdriver": "^4.20.0",
     "side-code-export": "^4.0.5",
     "v8-compile-cache": "^2.3.0"
   },
@@ -156,7 +156,7 @@
     "@types/lodash": "^4.14.199",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
-    "@types/selenium-webdriver": "^4.1.21",
+    "@types/selenium-webdriver": "^4.1.22",
     "@types/webpack-env": "^1.16.0",
     "copy-webpack-plugin": "^10.2.4",
     "css-loader": "^6.8.1",
