@@ -131,11 +131,11 @@ importers:
   packages/code-export-csharp-commons:
     dependencies:
       side-code-export:
-        specifier: ^4.0.4
+        specifier: ^4.0.5
         version: link:../side-code-export
     devDependencies:
       '@seleniumhq/side-model':
-        specifier: ^4.0.1
+        specifier: ^4.0.2
         version: link:../side-model
 
   packages/code-export-csharp-nunit:
@@ -144,7 +144,7 @@ importers:
         specifier: ^4.0.1
         version: link:../code-export-csharp-commons
       side-code-export:
-        specifier: ^4.0.4
+        specifier: ^4.0.5
         version: link:../side-code-export
 
   packages/code-export-csharp-xunit:
@@ -153,51 +153,51 @@ importers:
         specifier: ^4.0.1
         version: link:../code-export-csharp-commons
       side-code-export:
-        specifier: ^4.0.4
+        specifier: ^4.0.5
         version: link:../side-code-export
     devDependencies:
       '@seleniumhq/side-model':
-        specifier: ^4.0.1
+        specifier: ^4.0.2
         version: link:../side-model
 
   packages/code-export-java-junit:
     dependencies:
       side-code-export:
-        specifier: ^4.0.4
+        specifier: ^4.0.5
         version: link:../side-code-export
     devDependencies:
       '@seleniumhq/side-model':
-        specifier: ^4.0.1
+        specifier: ^4.0.2
         version: link:../side-model
 
   packages/code-export-javascript-mocha:
     dependencies:
       side-code-export:
-        specifier: ^4.0.4
+        specifier: ^4.0.5
         version: link:../side-code-export
     devDependencies:
       '@seleniumhq/side-model':
-        specifier: ^4.0.1
+        specifier: ^4.0.2
         version: link:../side-model
 
   packages/code-export-python-pytest:
     dependencies:
       side-code-export:
-        specifier: ^4.0.4
+        specifier: ^4.0.5
         version: link:../side-code-export
     devDependencies:
       '@seleniumhq/side-model':
-        specifier: ^4.0.1
+        specifier: ^4.0.2
         version: link:../side-model
 
   packages/code-export-ruby-rspec:
     dependencies:
       side-code-export:
-        specifier: ^4.0.4
+        specifier: ^4.0.5
         version: link:../side-code-export
     devDependencies:
       '@seleniumhq/side-model':
-        specifier: ^4.0.1
+        specifier: ^4.0.2
         version: link:../side-model
 
   packages/get-driver:
@@ -209,8 +209,8 @@ importers:
         specifier: ^2.6.0
         version: 2.6.7
       tar:
-        specifier: ^5.0.5
-        version: 5.0.11
+        specifier: ^7.1.0
+        version: 7.1.0
       unzipper:
         specifier: ^0.10.5
         version: 0.10.11
@@ -221,9 +221,6 @@ importers:
       '@types/node-fetch':
         specifier: ^2.5.2
         version: 2.6.2
-      '@types/tar':
-        specifier: ^4.0.3
-        version: 4.0.5
       '@types/unzipper':
         specifier: ^0.10.0
         version: 0.10.5
@@ -249,37 +246,37 @@ importers:
         specifier: ^5.15.13
         version: 5.15.13(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)
       '@seleniumhq/code-export-csharp-nunit':
-        specifier: ^4.0.3
+        specifier: ^4.0.4
         version: link:../code-export-csharp-nunit
       '@seleniumhq/code-export-csharp-xunit':
-        specifier: ^4.0.3
+        specifier: ^4.0.4
         version: link:../code-export-csharp-xunit
       '@seleniumhq/code-export-java-junit':
-        specifier: ^4.0.3
+        specifier: ^4.0.4
         version: link:../code-export-java-junit
       '@seleniumhq/code-export-javascript-mocha':
-        specifier: ^4.0.3
+        specifier: ^4.0.4
         version: link:../code-export-javascript-mocha
       '@seleniumhq/code-export-python-pytest':
-        specifier: ^4.0.3
+        specifier: ^4.0.4
         version: link:../code-export-python-pytest
       '@seleniumhq/code-export-ruby-rspec':
-        specifier: ^4.0.3
+        specifier: ^4.0.4
         version: link:../code-export-ruby-rspec
       '@seleniumhq/get-driver':
-        specifier: ^4.0.1
+        specifier: ^4.0.2
         version: link:../get-driver
       '@seleniumhq/side-api':
-        specifier: ^4.0.7
+        specifier: ^4.0.8
         version: link:../side-api
       '@seleniumhq/side-commons':
         specifier: ^4.0.1
         version: link:../side-commons
       '@seleniumhq/side-model':
-        specifier: ^4.0.1
+        specifier: ^4.0.2
         version: link:../side-model
       '@seleniumhq/side-runtime':
-        specifier: ^4.0.6
+        specifier: ^4.0.7
         version: link:../side-runtime
       dnd-core:
         specifier: ^16.0.1
@@ -330,7 +327,7 @@ importers:
         specifier: ^4.16.0
         version: 4.16.0
       side-code-export:
-        specifier: ^4.0.4
+        specifier: ^4.0.5
         version: link:../side-code-export
       v8-compile-cache:
         specifier: ^2.3.0
@@ -430,13 +427,13 @@ importers:
         specifier: ^4.0.1
         version: link:../browser-info
       '@seleniumhq/get-driver':
-        specifier: ^4.0.1
+        specifier: ^4.0.2
         version: link:../get-driver
       '@seleniumhq/side-model':
-        specifier: ^4.0.1
+        specifier: ^4.0.2
         version: link:../side-model
       '@seleniumhq/side-runtime':
-        specifier: ^4.0.6
+        specifier: ^4.0.7
         version: link:../side-runtime
       lodash:
         specifier: ^4.17.21
@@ -477,10 +474,10 @@ importers:
   packages/side-code-export:
     dependencies:
       '@seleniumhq/side-model':
-        specifier: ^4.0.1
+        specifier: ^4.0.2
         version: link:../side-model
       '@seleniumhq/side-runtime':
-        specifier: ^4.0.6
+        specifier: ^4.0.7
         version: link:../side-runtime
       commander:
         specifier: ^9.4.0
@@ -494,11 +491,11 @@ importers:
         specifier: ^4.0.1
         version: link:../code-export-python-pytest
       side-code-export:
-        specifier: ^4.0.4
+        specifier: ^4.0.5
         version: link:../side-code-export
     devDependencies:
       '@seleniumhq/side-api':
-        specifier: ^4.0.7
+        specifier: ^4.0.8
         version: link:../side-api
 
   packages/side-migrate:
@@ -525,19 +522,13 @@ importers:
 
   packages/side-model: {}
 
-  packages/side-model-locale-data:
-    dependencies:
-      '@seleniumhq/side-model':
-        specifier: ^4.0.1
-        version: link:../side-model
-
   packages/side-runner:
     dependencies:
       '@seleniumhq/side-model':
-        specifier: ^4.0.1
+        specifier: ^4.0.2
         version: link:../side-model
       '@seleniumhq/side-runtime':
-        specifier: ^4.0.6
+        specifier: ^4.0.7
         version: link:../side-runtime
       commander:
         specifier: ^11.0.0
@@ -592,24 +583,18 @@ importers:
         specifier: ^4.0.1
         version: link:../side-commons
       '@seleniumhq/side-model':
-        specifier: ^4.0.1
+        specifier: ^4.0.2
         version: link:../side-model
       '@types/selenium-webdriver':
-        specifier: ^4.1.21
-        version: 4.1.21
+        specifier: ^4.1.22
+        version: 4.1.22
       selenium-webdriver:
-        specifier: ^4.16.0
-        version: 4.16.0
+        specifier: ^4.20.0
+        version: 4.20.0
     devDependencies:
       '@seleniumhq/get-driver':
-        specifier: ^4.0.1
+        specifier: ^4.0.2
         version: link:../get-driver
-      '@seleniumhq/side-testkit':
-        specifier: ^4.0.1
-        version: link:../side-testkit
-      '@seleniumhq/webdriver-testkit':
-        specifier: ^4.0.1
-        version: link:../webdriver-testkit
 
   packages/side-testkit:
     dependencies:
@@ -627,7 +612,7 @@ importers:
         specifier: ^4.0.1
         version: link:../browser-info
       '@seleniumhq/get-driver':
-        specifier: ^4.0.1
+        specifier: ^4.0.2
         version: link:../get-driver
       fs-extra:
         specifier: ^8.1.0
@@ -637,11 +622,11 @@ importers:
         specifier: ^8.0.1
         version: 8.1.2
       '@types/selenium-webdriver':
-        specifier: ^4.1.21
-        version: 4.1.21
+        specifier: ^4.1.22
+        version: 4.1.22
       selenium-webdriver:
-        specifier: ^4.16.0
-        version: 4.16.0
+        specifier: ^4.20.0
+        version: 4.20.0
 
 packages:
 
@@ -2599,6 +2584,13 @@ packages:
       wrap-ansi: 8.1.0
       wrap-ansi-cjs: /wrap-ansi@7.0.0
 
+  /@isaacs/fs-minipass@4.0.1:
+    resolution: {integrity: sha512-wgm9Ehl2jpeqP3zw/7mo3kRHFp5MEDhqAdwy1fTGkHAwnkGOVsgpvQhL8B5n1qlb01jV3n/bI0ZfZp5lWA1k4w==}
+    engines: {node: '>=18.0.0'}
+    dependencies:
+      minipass: 7.1.0
+    dev: false
+
   /@istanbuljs/load-nyc-config@1.1.0:
     resolution: {integrity: sha512-VjeHSlIzpv/NyD3N0YuHfXOPDIixcA1q2ZV98wsMqcYlPmv2n3Yb2lYP9XMElnaFVXg5A7YLTeLu6V84uQDjmQ==}
     engines: {node: '>=8'}
@@ -3624,13 +3616,6 @@ packages:
     resolution: {integrity: sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==}
     dev: true
 
-  /@types/minipass@3.3.5:
-    resolution: {integrity: sha512-M2BLHQdEmDmH671h0GIlOQQJrgezd1vNqq7PVj1VOsHZ2uQQb4iPiQIl0SlMdhxZPUsLIfEklmeEHXg8DJRewA==}
-    deprecated: This is a stub types definition. minipass provides its own type definitions, so you do not need this installed.
-    dependencies:
-      minipass: 3.3.4
-    dev: true
-
   /@types/ms@0.7.31:
     resolution: {integrity: sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==}
     dev: true
@@ -3734,6 +3719,12 @@ packages:
     resolution: {integrity: sha512-QGURnImvxYlIQz5DVhvHdqpYNLBjhJ2Vm+cnQI2G9QZzkWlZm0LkLcvDcHp+qE6N2KBz4CeuvXgPO7W3XQ0Tyw==}
     dependencies:
       '@types/ws': 8.5.3
+    dev: true
+
+  /@types/selenium-webdriver@4.1.22:
+    resolution: {integrity: sha512-MCL4l7q8dwxejr2Q2NXLyNwHWMPdlWE0Kpn6fFwJtvkJF7PTkG5jkvbH/X1IAAQxgt/L1dA8u2GtDeekvSKvOA==}
+    dependencies:
+      '@types/ws': 8.5.10
 
   /@types/semver@7.5.0:
     resolution: {integrity: sha512-G8hZ6XJiHnuhQKR7ZmysCeJWE08o8T0AXtk5darsCaTVsYZhhgUrq53jizaR2FvsoeCwJhlmwTjkXBY5Pn/ZHw==}
@@ -3776,13 +3767,6 @@ packages:
   /@types/stack-utils@2.0.1:
     resolution: {integrity: sha512-Hl219/BT5fLAaz6NDkSuhzasy49dwQS/DSdu4MdggFB8zcXv7vflBI3xp7FEmkmdDkBUI2bPUNeMttp2knYdxw==}
 
-  /@types/tar@4.0.5:
-    resolution: {integrity: sha512-cgwPhNEabHaZcYIy5xeMtux2EmYBitfqEceBUi2t5+ETy4dW6kswt6WX4+HqLeiiKOo42EXbGiDmVJ2x+vi37Q==}
-    dependencies:
-      '@types/minipass': 3.3.5
-      '@types/node': 16.11.64
-    dev: true
-
   /@types/testing-library__jest-dom@5.14.5:
     resolution: {integrity: sha512-SBwbxYoyPIvxHbeHxTZX2Pe/74F/tX2/D3mMvzabdeJ25bBojfW0TyB8BHrbq/9zaaKICJZjLP+8r6AeZMFCuQ==}
     dependencies:
@@ -3813,12 +3797,12 @@ packages:
     resolution: {integrity: sha512-vmQSUcfalpIq0R9q7uTo2lXs6eGIpt9wtnLdMv9LVpIjCA/+ufZRozlVoVelIYixx1ugCBKDhn89vnsEGOCx9A==}
     dependencies:
       '@types/node': 16.11.64
-    dev: true
 
   /@types/ws@8.5.3:
     resolution: {integrity: sha512-6YOoWjruKj1uLf3INHH7D3qTXwFfEsg1kf3c0uDdSBJwfa/llkwIjrAGV7j7mVgGNbzTQ3HiHKKDXl6bJPD97w==}
     dependencies:
       '@types/node': 16.11.64
+    dev: true
 
   /@types/xml-escape@1.1.0:
     resolution: {integrity: sha512-N8/W8PkPrzkxPls5QMTA8TQrKgD456BarGG2XTJK3Ax2suCAyqUthbpfBccgpGTBhT7hNuGUSuJd4XlwSXlmuA==}
@@ -4918,14 +4902,15 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /chownr@1.1.4:
-    resolution: {integrity: sha512-jJ0bqzaylmJtVnNgzTeSOs8DPavpbYgEr/b0YL8/2GO3xJEhInFmhKMUnEJQjZumK7KXGFhUy89PrsJWlakBVg==}
-    dev: false
-
   /chownr@2.0.0:
     resolution: {integrity: sha512-bIomtDF5KGpdogkLd9VspvFzk9KfpyyGlS8YFVZl7TGPBHL5snIOnxeshwVgPteQ9b4Eydl+pVbIyE1DcvCWgQ==}
     engines: {node: '>=10'}
     dev: true
+
+  /chownr@3.0.0:
+    resolution: {integrity: sha512-+IxzY9BZOQd/XuYPRmrvEVjF/nqj5kgT4kEq7VofrDoM1MxoRjEWkrCC3EtLi59TVawxTAn+orJwFQcrqEN1+g==}
+    engines: {node: '>=18'}
+    dev: false
 
   /chrome-trace-event@1.0.3:
     resolution: {integrity: sha512-p3KULyQg4S7NIHixdwbGX+nFHkoBiA4YQmyWtjb8XngSKV124nJmRysgAeujbUVb15vh+RvFUfCPqU7rXk+hZg==}
@@ -6762,6 +6747,7 @@ packages:
     engines: {node: '>= 8'}
     dependencies:
       minipass: 3.3.4
+    dev: true
 
   /fs-monkey@1.0.3:
     resolution: {integrity: sha512-cybjIfiiE+pTWicSCLFHSrXZ6EilF30oh91FDP9S2B051prEa7QWfrVTQm10/dDpswBDXZugPa1Ogu8Yh+HV0Q==}
@@ -6894,7 +6880,6 @@ packages:
       minimatch: 9.0.2
       minipass: 6.0.2
       path-scurry: 1.10.1
-    dev: true
 
   /glob@7.2.3:
     resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}
@@ -7833,7 +7818,6 @@ packages:
       '@isaacs/cliui': 8.0.2
     optionalDependencies:
       '@pkgjs/parseargs': 0.11.0
-    dev: true
 
   /jake@10.8.5:
     resolution: {integrity: sha512-sVpxYeuAhWt0OTWITwT98oyV0GsXyMlXCF+3L1SuafBVUIr/uILGRB+NqwkzhgXKvoJpDIpQvqkUALgdmQsQxw==}
@@ -8648,7 +8632,7 @@ packages:
       whatwg-encoding: 2.0.0
       whatwg-mimetype: 3.0.0
       whatwg-url: 11.0.0
-      ws: 8.14.2
+      ws: 8.16.0
       xml-name-validator: 4.0.0
     transitivePeerDependencies:
       - bufferutil
@@ -9095,6 +9079,7 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       yallist: 4.0.0
+    dev: true
 
   /minipass@5.0.0:
     resolution: {integrity: sha512-3FnjYuehv9k6ovOEbyOswadCDPX1piCfhV8ncmYtHOjuPwylVWsghTLo7rabjC3Rx5xD4HDx8Wm1xnMF7S5qFQ==}
@@ -9105,12 +9090,26 @@ packages:
     resolution: {integrity: sha512-MzWSV5nYVT7mVyWCwn2o7JH13w2TBRmmSqSRCKzTw+lmft9X4z+3wjvs06Tzijo5z4W/kahUCDpRXTF+ZrmF/w==}
     engines: {node: '>=16 || 14 >=14.17'}
 
+  /minipass@7.1.0:
+    resolution: {integrity: sha512-oGZRv2OT1lO2UF1zUcwdTb3wqUwI0kBGTgt/T7OdSj6M6N5m3o5uPf0AIW6lVxGGoiWUR7e2AwTE+xiwK8WQig==}
+    engines: {node: '>=16 || 14 >=14.17'}
+    dev: false
+
   /minizlib@2.1.2:
     resolution: {integrity: sha512-bAxsR8BVfj60DWXHE3u30oHzfl4G7khkSuPW+qvpd7jFRHm7dLxOjUk1EHACJ/hxLY8phGJ0YhYHZo7jil7Qdg==}
     engines: {node: '>= 8'}
     dependencies:
       minipass: 3.3.4
       yallist: 4.0.0
+    dev: true
+
+  /minizlib@3.0.1:
+    resolution: {integrity: sha512-umcy022ILvb5/3Djuu8LWeqUa8D68JaBzlttKeMWen48SjabqS3iY5w/vzeMzMUNhLDifyhbOwKDSznB1vvrwg==}
+    engines: {node: '>= 18'}
+    dependencies:
+      minipass: 7.1.0
+      rimraf: 5.0.5
+    dev: false
 
   /mkdirp@0.5.6:
     resolution: {integrity: sha512-FP+p8RB8OWpF3YZBCrP5gtADmtXApB5AMLn+vdyA+PyxCjrCs00mjyUozssO33cwDeT3wNGdLxJ5M//YqtHAJw==}
@@ -9123,6 +9122,12 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
     dev: true
+
+  /mkdirp@3.0.1:
+    resolution: {integrity: sha512-+NsyUUAZDmo6YVHzL/stxSu3t9YS1iljliy3BSDrXJ/dkn1KYdmtZODGGjLcc9XLgVVpH4KshHB8XmZgMhaBXg==}
+    engines: {node: '>=10'}
+    hasBin: true
+    dev: false
 
   /ms@2.0.0:
     resolution: {integrity: sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==}
@@ -9573,7 +9578,6 @@ packages:
     dependencies:
       lru-cache: 10.0.0
       minipass: 6.0.2
-    dev: true
 
   /path-to-regexp@0.1.7:
     resolution: {integrity: sha512-5DFkuoqlv1uYQKxy8omFBeJPQcdoE07Kv2sferDCrAq1ohOU+MSDswDIbnx3YAM60qIOnYa53wBhXW0EbMonrQ==}
@@ -10254,7 +10258,6 @@ packages:
     hasBin: true
     dependencies:
       glob: 10.3.10
-    dev: true
 
   /roarr@2.15.4:
     resolution: {integrity: sha512-CHhPh+UNHD2GTXNYhPWLnU8ONHdI+5DI+4EYIAOaiD63rHeYlZvyh8P+in5999TTSFgUYuKUAjzRI4mdh/p+2A==}
@@ -10395,6 +10398,18 @@ packages:
       jszip: 3.10.1
       tmp: 0.2.1
       ws: 8.14.2
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+    dev: false
+
+  /selenium-webdriver@4.20.0:
+    resolution: {integrity: sha512-s/G44lGQ1xB3tmtX6NNPomlkpL6CxLdmAvp/AGWWwi4qv5Te1+qji7tPSyr6gyuoPpdYiof1rKnWe3luy0MrYA==}
+    engines: {node: '>= 14.20.0'}
+    dependencies:
+      jszip: 3.10.1
+      tmp: 0.2.3
+      ws: 8.16.0
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -11103,18 +11118,6 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /tar@5.0.11:
-    resolution: {integrity: sha512-E6q48d5y4XSCD+Xmwc0yc8lXuyDK38E0FB8N4S/drQRtXOMUhfhDxbB0xr2KKDhNfO51CFmoa6Oz00nAkWsjnA==}
-    engines: {node: '>= 8'}
-    dependencies:
-      chownr: 1.1.4
-      fs-minipass: 2.1.0
-      minipass: 3.3.4
-      minizlib: 2.1.2
-      mkdirp: 0.5.6
-      yallist: 4.0.0
-    dev: false
-
   /tar@6.1.15:
     resolution: {integrity: sha512-/zKt9UyngnxIT/EAGYuxaMYgOIJiP81ab9ZfkILq4oNLPFX50qyYmu7jRj9qeXoxmJHjGlbH0+cm2uy1WCs10A==}
     engines: {node: '>=10'}
@@ -11126,6 +11129,18 @@ packages:
       mkdirp: 1.0.4
       yallist: 4.0.0
     dev: true
+
+  /tar@7.1.0:
+    resolution: {integrity: sha512-ENhg4W6BmjYxl8GTaE7/h99f0aXiSWv4kikRZ9n2/JRxypZniE84ILZqimAhxxX7Zb8Px6pFdheW3EeHfhnXQQ==}
+    engines: {node: '>=18'}
+    dependencies:
+      '@isaacs/fs-minipass': 4.0.1
+      chownr: 3.0.0
+      minipass: 7.1.0
+      minizlib: 3.0.1
+      mkdirp: 3.0.1
+      yallist: 5.0.0
+    dev: false
 
   /temp-file@3.4.0:
     resolution: {integrity: sha512-C5tjlC/HCtVUOi3KWVokd4vHVViOmGjtLwIh4MuzPo/nMYTV/p1urt3RnMz2IWXDdKEGJH3k5+KPxtqRsUYGtg==}
@@ -11220,6 +11235,10 @@ packages:
     engines: {node: '>=8.17.0'}
     dependencies:
       rimraf: 3.0.2
+
+  /tmp@0.2.3:
+    resolution: {integrity: sha512-nZD7m9iCPC5g0pYmcaxogYKggSfLsdxl8of3Q/oIbqCqLLIO9IAF0GWjX1z9NZRHPiXv8Wex4yDCaZsgEw0Y8w==}
+    engines: {node: '>=14.14'}
 
   /tmpl@1.0.5:
     resolution: {integrity: sha512-3f0uOEAQwIqGuWW2MVzYg8fV/QNnc/IpuJNG837rLuczAaLVHslWHZQj4IGiEl5Hs3kkbhwL9Ab7Hrsmuj+Smw==}
@@ -12009,6 +12028,7 @@ packages:
         optional: true
       utf-8-validate:
         optional: true
+    dev: false
 
   /ws@8.16.0:
     resolution: {integrity: sha512-HS0c//TP7Ina87TfiPUz1rQzMhHrl/SG2guqRcTOIUYD2q8uhUdNHZYJUaQ8aTGPzCh+c6oawMKW35nFl1dxyQ==}
@@ -12021,7 +12041,6 @@ packages:
         optional: true
       utf-8-validate:
         optional: true
-    dev: true
 
   /xml-escape@1.1.0:
     resolution: {integrity: sha512-B/T4sDK8Z6aUh/qNr7mjKAwwncIljFuUP+DO/D5hloYFj+90O88z8Wf7oSucZTHxBAsC1/CTP4rtx/x1Uf72Mg==}
@@ -12061,6 +12080,11 @@ packages:
 
   /yallist@4.0.0:
     resolution: {integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==}
+
+  /yallist@5.0.0:
+    resolution: {integrity: sha512-YgvUTfwqyc7UXVMrB+SImsVYSmTS8X/tSrtdNZMImM+n7+QTriRXyXim0mBrTXNeqzVF0KWGgHPeiyViFFrNDw==}
+    engines: {node: '>=18'}
+    dev: false
 
   /yaml@1.10.2:
     resolution: {integrity: sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==}

@@ -13,12 +13,6 @@
     },
     {
       "path": "../side-model"
-    },
-    {
-      "path": "../side-testkit"
-    },
-    {
-      "path": "../webdriver-testkit"
     }
   ],
   "types": ["node", "jest"]
