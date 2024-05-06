@@ -595,6 +595,12 @@ importers:
       '@seleniumhq/get-driver':
         specifier: ^4.0.2
         version: link:../get-driver
+      '@seleniumhq/side-testkit':
+        specifier: ^4.0.1
+        version: link:../side-testkit
+      '@seleniumhq/webdriver-testkit':
+        specifier: ^4.0.2
+        version: link:../webdriver-testkit
 
   packages/side-testkit:
     dependencies:
