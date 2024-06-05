@@ -1845,16 +1845,17 @@ WebDriverExecutor.prototype.doAssertPrompt = composePreprocessors(
   WebDriverExecutor.prototype.doAssertPrompt
 )
 
-WebDriverExecutor.prototype.doAssertSelectedLabel = composePreprocessors(
+WebDriverExecutor.prototype.doAssertNotText = composePreprocessors(
   interpolateString,
   interpolateString,
   { targetFallback: preprocessArray(interpolateString) },
-  WebDriverExecutor.prototype.doAssertSelectedLabel
+  WebDriverExecutor.prototype.doAssertNotText
 )
 
 WebDriverExecutor.prototype.doAssertText = composePreprocessors(
   interpolateString,
   interpolateString,
+  { targetFallback: preprocessArray(interpolateString) },
   WebDriverExecutor.prototype.doAssertText
 )
 
@@ -1869,6 +1870,57 @@ WebDriverExecutor.prototype.doAssertValue = composePreprocessors(
   interpolateString,
   { targetFallback: preprocessArray(interpolateString) },
   WebDriverExecutor.prototype.doAssertValue
+)
+
+WebDriverExecutor.prototype.doAssertNotValue = composePreprocessors(
+  interpolateString,
+  interpolateString,
+  { targetFallback: preprocessArray(interpolateString) },
+  WebDriverExecutor.prototype.doAssertNotValue
+)
+
+WebDriverExecutor.prototype.doAssertChecked = composePreprocessors(
+  interpolateString,
+  { targetFallback: preprocessArray(interpolateString) },
+  WebDriverExecutor.prototype.doAssertChecked
+)
+
+WebDriverExecutor.prototype.doAssertNotChecked = composePreprocessors(
+  interpolateString,
+  { targetFallback: preprocessArray(interpolateString) },
+  WebDriverExecutor.prototype.doAssertNotChecked
+)
+
+WebDriverExecutor.prototype.doAssertNotChecked = composePreprocessors(
+  interpolateString,
+  { targetFallback: preprocessArray(interpolateString) },
+  WebDriverExecutor.prototype.doAssertNotChecked
+)
+
+WebDriverExecutor.prototype.doAssertSelectedValue = composePreprocessors(
+  interpolateString,
+  { targetFallback: preprocessArray(interpolateString) },
+  WebDriverExecutor.prototype.doAssertSelectedValue
+)
+
+WebDriverExecutor.prototype.doAssertNotSelectedValue = composePreprocessors(
+  interpolateString,
+  { targetFallback: preprocessArray(interpolateString) },
+  WebDriverExecutor.prototype.doAssertNotSelectedValue
+)
+
+WebDriverExecutor.prototype.doAssertSelectedLabel = composePreprocessors(
+  interpolateString,
+  interpolateString,
+  { targetFallback: preprocessArray(interpolateString) },
+  WebDriverExecutor.prototype.doAssertSelectedLabel
+)
+
+WebDriverExecutor.prototype.doAssertNotSelectedLabel = composePreprocessors(
+  interpolateString,
+  interpolateString,
+  { targetFallback: preprocessArray(interpolateString) },
+  WebDriverExecutor.prototype.doAssertSelectedLabel
 )
 
 WebDriverExecutor.prototype.doEcho = composePreprocessors(
