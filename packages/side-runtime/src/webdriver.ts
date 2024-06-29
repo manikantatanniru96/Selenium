@@ -1445,6 +1445,10 @@ export default class WebDriverExecutor {
     const elementLocator = parseLocator(locator)
     const matches = await this.driver.findElements(elementLocator)
     if (matches.length > 0) return matches[0]
+    return null
+    // Fallback selectors are not visible or editable enough for now.
+    // They create points of user confusion and are not necessary for the vast majority of cases.
+    /*
     const fallbacks = _fallbacks.filter(Boolean).flat() as [string, string][]
     for (let i = 0; i < fallbacks.length; i++) {
       const loc = parseLocator(fallbacks[i][0])
@@ -1452,6 +1456,7 @@ export default class WebDriverExecutor {
       if (fallbackMatches.length) return fallbackMatches[0]
     }
     return null
+    */
   }
 
   withCancel<T extends () => Promise<any>>(poller: T) {

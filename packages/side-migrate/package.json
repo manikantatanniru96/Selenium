@@ -1,6 +1,6 @@
 {
   "name": "@seleniumhq/side-migrate",
-  "version": "4.0.10",
+  "version": "4.0.11",
   "private": false,
   "description": "Selenium IDE format migrations",
   "author": "Tomer <tomer@corevo.io>",
