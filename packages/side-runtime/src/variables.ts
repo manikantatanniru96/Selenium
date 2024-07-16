@@ -21,22 +21,52 @@ export default class Variables {
   }
   storedVars: Map<string, any>
 
+  static getKeySegments(key: string) {
+    return key.split(/[.[\]]+/g).filter(Boolean)
+  }
+
   get(key: string) {
     if (key.startsWith('env:')) {
       return process.env[key.slice(4)]
     }
-    return this.storedVars.get(key)
+    const [firstSegment, ...segments] = Variables.getKeySegments(key)
+    let returnValue = this.storedVars.get(firstSegment)
+    while (segments.length > 0) {
+      const segment = segments.shift()!
+      returnValue = returnValue[segment]
+    }
+    return returnValue
   }
 
   set(key: string, value: any) {
-    this.storedVars.set(key, value)
+    const [firstSegment, ...segments] = Variables.getKeySegments(key)
+    if (key === firstSegment) {
+      this.storedVars.set(key, value)
+    } else {
+      let returnValue = this.storedVars.get(firstSegment)
+      while (segments.length > 1) {
+        const segment = segments.shift()!
+        if (!returnValue[segment]) {
+          returnValue[segment] = {}
+        }
+        returnValue = returnValue[segment]
+      }
+      returnValue[segments[0]] = value
+    }
   }
 
   has(key: string) {
     if (key.startsWith('env:')) {
       return true
     }
-    return this.storedVars.has(key)
+    const [firstSegment, ...segments] = Variables.getKeySegments(key)
+    let returnValue = this.storedVars.get(firstSegment)
+    while (segments.length > 0) {
+      if (returnValue === undefined) return false
+      const segment = segments.shift()!
+      returnValue = returnValue[segment]
+    }
+    return returnValue !== undefined
   }
 
   delete(key: string) {

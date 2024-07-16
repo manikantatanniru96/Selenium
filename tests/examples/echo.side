@@ -27,6 +27,24 @@
           "target": "This is a test string ${number}",
           "value": "",
           "id": "9e61266a-9cb0-49b6-b5bf-a362bd181b58"
+        },
+        {
+          "command": "executeScript",
+          "target": "return [1, 2, 3];",
+          "value": "array",
+          "id": "7899df2b-d53c-404b-b0c7-1e36e6c49d88"
+        },
+        {
+          "command": "echo",
+          "target": "This is a test string ${array.0}",
+          "value": "",
+          "id": "ab443535-6f3c-4f53-9f0c-a9d0f4d94adc"
+        },
+        {
+          "command": "echo",
+          "target": "This is a test string ${array[0]}",
+          "value": "",
+          "id": "09287f73-2707-46a5-9573-03d11a611464"
         }
       ]
     }
