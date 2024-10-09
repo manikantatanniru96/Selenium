@@ -22,6 +22,12 @@ export default class ProjectsController {
   project: ProjectShape
   session: Session
 
+  UpdatedJsonStringify(json: string): string {
+  return json.replace(/("(?:\\"|[^"])*")\s*:/g, (_, p1) => {
+    return p1.replace(/\s/g, '') + ':';
+  });
+}
+
   async executeHook(
     hookName: keyof Pick<
       BaseController,
@@ -198,7 +204,7 @@ export default class ProjectsController {
   }
 
   async save_v3(filepath: string): Promise<boolean> {
-    await fs.writeFile(filepath, JSON.stringify(this.project, undefined, 2))
+    await fs.writeFile(filepath, this.UpdatedJsonStringify(JSON.stringify(this.project, undefined, 2)))
     this.recentProjects.add(filepath)
     this.session.projects.filepath = filepath
     return true
