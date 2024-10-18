@@ -23,10 +23,10 @@ export default class ProjectsController {
   session: Session
 
   UpdatedJsonStringify(json: string): string {
-  return json.replace(/("(?:\\"|[^"])*")\s*:/g, (_, p1) => {
-    return p1.replace(/\s/g, '') + ':';
-  });
-}
+    return json.replace(/("(?:\\"|[^"])*")\s*:/g, (_, value) => {
+      return value.replace(/\s/g, '') + ':';
+    });
+  }
 
   async executeHook(
     hookName: keyof Pick<
