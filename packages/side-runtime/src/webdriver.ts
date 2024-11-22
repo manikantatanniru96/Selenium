@@ -860,7 +860,9 @@ export default class WebDriverExecutor {
       commandObject.fallbackTargets
     )
     await element.clear()
-    await element.sendKeys(value)
+    if (value) {
+      await element.sendKeys(value)
+    }
   }
 
   async doSendKeys(
