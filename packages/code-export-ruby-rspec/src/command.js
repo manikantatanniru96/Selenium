@@ -421,7 +421,7 @@ async function emitMouseDown(locator) {
     {
       level: 0,
       statement:
-        '@driver.action.move_to_element(element).click_and_hold.perform',
+        '@driver.action.move_to(element).click_and_hold.perform',
     },
   ]
   return Promise.resolve({ commands })
@@ -435,7 +435,7 @@ async function emitMouseMove(locator) {
         locator
       )})`,
     },
-    { level: 0, statement: '@driver.action.move_to_element(element).perform' },
+    { level: 0, statement: '@driver.action.move_to(element).perform' },
   ]
   return Promise.resolve({ commands })
 }
@@ -448,7 +448,7 @@ async function emitMouseOut() {
     },
     {
       level: 0,
-      statement: '@driver.action.move_to_element(element, 0, 0).perform',
+      statement: '@driver.action.move_to(element, 0, 0).perform',
     },
   ]
   return Promise.resolve({ commands })
@@ -464,7 +464,7 @@ async function emitMouseUp(locator) {
     },
     {
       level: 0,
-      statement: '@driver.action.move_to_element(element).release.perform',
+      statement: '@driver.action.move_to(element).release.perform',
     },
   ]
   return Promise.resolve({ commands })
