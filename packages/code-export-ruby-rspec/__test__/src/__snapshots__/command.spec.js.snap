@@ -173,43 +173,43 @@ Object {
 
 exports[`command code emitter should emit \`mouse down at\` event 1`] = `
 "element = @driver.find_element(:id, 'button')
-@driver.action.move_to_element(element).click_and_hold.perform"
+@driver.action.move_to(element).click_and_hold.perform"
 `;
 
 exports[`command code emitter should emit \`mouse down\` command 1`] = `
 "element = @driver.find_element(:id, 'button')
-@driver.action.move_to_element(element).click_and_hold.perform"
+@driver.action.move_to(element).click_and_hold.perform"
 `;
 
 exports[`command code emitter should emit \`mouse move at\` event 1`] = `
 "element = @driver.find_element(:id, 'button')
-@driver.action.move_to_element(element).perform"
+@driver.action.move_to(element).perform"
 `;
 
 exports[`command code emitter should emit \`mouse move\` event 1`] = `
 "element = self.driver.find_element(By.ID, \\"button\\")
 actions = ActionChains(self.driver)
-actions.move_to_element(element).perform()"
+actions.move_to(element).perform()"
 `;
 
 exports[`command code emitter should emit \`mouse out\` event 1`] = `
 "element = @driver.find_element(By.CSS_SELECTOR, 'body')
-@driver.action.move_to_element(element, 0, 0).perform"
+@driver.action.move_to(element, 0, 0).perform"
 `;
 
 exports[`command code emitter should emit \`mouse over\` event 1`] = `
 "element = @driver.find_element(:id, 'button')
-@driver.action.move_to_element(element).perform"
+@driver.action.move_to(element).perform"
 `;
 
 exports[`command code emitter should emit \`mouse up at\` event 1`] = `
 "element = @driver.find_element(:id, 'button')
-@driver.action.move_to_element(element).release.perform"
+@driver.action.move_to(element).release.perform"
 `;
 
 exports[`command code emitter should emit \`mouse up\` event 1`] = `
 "element = @driver.find_element(:id, 'button')
-@driver.action.move_to_element(element).release.perform"
+@driver.action.move_to(element).release.perform"
 `;
 
 exports[`command code emitter should emit \`open\` with absolute url 1`] = `"@driver.get('https://www.seleniumhq.org/')"`;
