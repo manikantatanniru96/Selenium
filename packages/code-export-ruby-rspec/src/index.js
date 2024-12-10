@@ -44,7 +44,7 @@ function generateMethodDeclaration(name) {
   )}`
 }
 function generateSuiteDeclaration(name) {
-  return `describe '${exporter.parsers.capitalize(
+  return `RSpec.describe '${exporter.parsers.capitalize(
     exporter.parsers.sanitizeName(name)
   )}' do`
 }
